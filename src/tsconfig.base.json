@@ -1,0 +1,11 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "baseUrl": ".",
+        "paths": {
+            "@adobe/aem-spa-page-model-manager": ["./"],
+            "@adobe/aem-spa-page-model-manager/*": ["./*"]
+        }
+    }
+}

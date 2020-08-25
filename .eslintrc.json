@@ -1,0 +1,29 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "globals": {
+    "CustomEvent": true,
+    "console": true,
+    "document": true,
+    "fetch": true,
+    "history": true,
+    "Promise": true,
+    "window": true,
+    "XMLHttpRequest": true,
+    "module": true,
+    "__dirname": true,
+    "require": true,
+    "arguments": true
+  },
+  "rules": {
+    "no-console": "off",
+    "@typescript-eslint/ban-ts-comment": 1,
+    "@typescript-eslint/ban-ts-ignore": 0
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ]
+}
