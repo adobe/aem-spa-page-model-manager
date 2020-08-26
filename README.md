@@ -39,3 +39,11 @@ ModelManager.getData("/content/site/page/jcr:content/path/to/component").then(..
 ## Documentation 
 
 The [technical documentation](https://www.adobe.com/go/aem6_4_docs_spa_en) is available, but if you are unable to solve your problem or you found a bug you can always create an issue or through other means [contact us](https://www.adobe.com/go/aem6_4_support_en) and ask for help!
+
+### Contributing
+
+Contributions are welcome! Read the [Contributing Guide](CONTRIBUTING.md) for more information.
+
+### Licensing
+
+This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
