@@ -19,11 +19,10 @@
   },
   "rules": {
     "no-console": "off",
-    "@typescript-eslint/ban-ts-comment": 1,
+    "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/ban-ts-ignore": 0
   },
   "extends": [
-    "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
   ]
 }
