@@ -123,6 +123,12 @@ export class ModelManager {
         // 2. consider the meta property value
         // 3. fallback to the model path contained in the URL
         const rootModelURL = path || metaPropertyModelUrl || sanitizedCurrentPathname;
+        // @ts-ignore
+        const rootModelPath = PathUtils.sanitize(rootModelURL);
+
+        if (!rootModelPath) {
+            throw new Error('No root modelpath resolved! This should never happen.');
+        }
 
         if (!rootModelURL) {
             throw new Error("ModelManager.js Cannot initialize without an URL to fetch the root model");
@@ -133,14 +139,10 @@ export class ModelManager {
         }
 
         this._editorClient = new EditorClient(this);
-        this._modelStore = (initialModel) ? new ModelStore(rootModelURL, initialModel) : new ModelStore(rootModelURL);
+        this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
+
 
         this._initPromise = this._checkDependencies().then(() => {
-            const rootModelPath = PathUtils.sanitize(rootModelURL);
-
-            if (!rootModelPath) {
-                throw new Error('No root modelpath resolved! This should never happen.');
-            }
 
             const data = this.modelStore.getData(rootModelPath);
 
