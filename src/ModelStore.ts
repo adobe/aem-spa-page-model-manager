@@ -153,10 +153,10 @@ export class ModelStore {
 
         const isItem = PathUtils.isItem(path);
 
-         if (!isItem && this._data) {
+        if (!isItem && this._data) {
 
             // Page data
-            if(!this._data[Constants.CHILDREN_PROP]){
+            if (!this._data[Constants.CHILDREN_PROP]){
                 this._data[Constants.CHILDREN_PROP] = {};
             }
             // @ts-ignore
