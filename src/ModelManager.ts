@@ -122,8 +122,8 @@ export class ModelManager {
         // 1. consider the provided page path
         // 2. consider the meta property value
         // 3. fallback to the model path contained in the URL
-         const rootModelURL = path || metaPropertyModelUrl || sanitizedCurrentPathname;
-        //@ts-ignore
+        const rootModelURL = path || metaPropertyModelUrl || sanitizedCurrentPathname;
+        // @ts-ignore
         const rootModelPath = PathUtils.sanitize(rootModelURL);
 
         if (!rootModelPath) {
@@ -141,7 +141,7 @@ export class ModelManager {
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
 
-        
+
         this._initPromise = this._checkDependencies().then(() => {
 
             const data = this.modelStore.getData(rootModelPath);
