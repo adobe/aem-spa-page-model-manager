@@ -3,6 +3,8 @@
   * [Installation](#installation)
   * [Usage](#usage)
   * [Documentation](#documentation)
+    * [Contributing](#contributing)
+    * [Licensing](#licensing)
 
 
 ## Installation
