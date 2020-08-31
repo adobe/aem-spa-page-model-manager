@@ -24,6 +24,9 @@ export class ModelClient {
         this._apiHost = apiHost || '';
         this._fetchPromises = {};
     }
+    get apiHost(): string | null {
+        return this._apiHost;
+    }
 
     /**
      * Fetches a model using the given a resource path.

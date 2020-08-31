@@ -100,7 +100,8 @@ export class ModelManager {
         this.destroy();
         let path;
         let initialModel = null;
-
+        let domain = "";
+        let asyncFlag = false;
         if (!config || (typeof config === 'string')) {
             path = config;
         } else if (config) {
@@ -137,7 +138,30 @@ export class ModelManager {
         if (!this._modelClient) {
             this._modelClient = new ModelClient();
         }
-
+        // Extract apiHost from the modelClient. The decision for exposing the apiHost still needs to be finalized.
+        if (this._modelClient) {
+            domain = this._modelClient.apiHost != null ? this._modelClient.apiHost : "";
+        }
+        // Check if async is required. This will be true only in remote rendering.
+        asyncFlag = domain === window.location.hostname ? false : true;
+        // Before triggering pagemodelloader check if async required and if editor is in edit mode
+        const isWcmEdit = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === "edit" ? true : false;
+        if (asyncFlag && isWcmEdit) {
+            let clientLibPath = '';
+            if (pageModelRoot != null) {
+                clientLibPath = domain + '/etc.clientlibs/' +  pageModelRoot.split("/")[2] + '/clientlibs/clientlib-react.min.js';
+            }
+            else {
+                throw new Error('Clientlib path cannot be determined! This should never happen.');
+            }
+            const clientLibUrl = clientLibPath + domain;
+            const script = document.createElement('script');
+            const scripts = document.getElementsByTagName('script')[0];
+            script.src = clientLibUrl.toString();
+            if (scripts.parentNode) {
+                scripts.parentNode.insertBefore(script, scripts);
+            }
+        }
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
 
