@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+var foo = 123;
+console.log(foo);
+
 /**
  * Useful variables for interacting with CQ/AEM components.
  *
