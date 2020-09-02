@@ -1,15 +1,15 @@
 {
-    "extends": "tslint:latest",
-    "rules": {
-        "curly": true,
-        "max-line-length": false,
-        "interface-name": false,
-        "variable-name": false,
-        "no-shadowed-variable": false,
-        "no-console": false
-    },
-    "jsRules": {
-        "curly": true
-    },
-    "rulesDirectory": []
+  "extends": "tslint:latest",
+  "rules": {
+    "curly": true,
+    "max-line-length": false,
+    "interface-name": false,
+    "variable-name": false,
+    "no-shadowed-variable": false,
+    "no-console": false
+  },
+  "jsRules": {
+    "curly": true
+  },
+  "rulesDirectory": []
 }
