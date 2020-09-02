@@ -23,8 +23,8 @@ module.exports = {
         '/lib/',
         '/dist/',
         '/node/',
-        'src/index.ts',
-        'src/types.ts'
+        'src/types.ts',
+        'src/aem-spa-page-model-manager.ts'
     ],
     moduleFileExtensions: [
         'ts',
