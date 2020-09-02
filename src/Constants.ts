@@ -10,14 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-let foo = 'foo' + 'bar';
-foo = 'new';
-const data = '1st';
-
-if (foo) {
-    const data = '123';
-}
-
 /**
  * Useful variables for interacting with CQ/AEM components.
  *
