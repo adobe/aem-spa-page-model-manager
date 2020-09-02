@@ -144,23 +144,9 @@ export class ModelManager {
         }
         // Check if async is required. This will be true only in remote rendering.
         asyncFlag = domain === window.location.hostname ? false : true;
-        // Before triggering pagemodelloader check if async required and if editor is in edit mode
-        const isWcmEdit = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === "edit" ? true : false;
-        if (asyncFlag && isWcmEdit) {
-            let clientLibPath = '';
-            if (pageModelRoot != null) {
-                clientLibPath = domain + '/etc.clientlibs/' +  pageModelRoot.split("/")[2] + '/clientlibs/clientlib-react.min.js';
-            }
-            else {
-                throw new Error('Clientlib path cannot be determined! This should never happen.');
-            }
-            const clientLibUrl = clientLibPath + domain;
-            const script = document.createElement('script');
-            const scripts = document.getElementsByTagName('script')[0];
-            script.src = clientLibUrl.toString();
-            if (scripts.parentNode) {
-                scripts.parentNode.insertBefore(script, scripts);
-            }
+        if (asyncFlag && PathUtils.isEditorInEditMode()) {
+            const clientLibUrl = this.generateClientLibsUrl(rootModelPath, domain);
+            this.appendClientLibs(clientLibUrl);
         }
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
@@ -202,6 +188,33 @@ export class ModelManager {
         });
 
         return this._initPromise;
+    }
+
+    /**
+     * Appends client lib to the page
+     */
+    private appendClientLibs(clientLibUrl : string) {
+        const script = document.createElement('script');
+        const scripts = document.getElementsByTagName('script')[0];
+        script.src = clientLibUrl;
+        if (scripts.parentNode) {
+            scripts.parentNode.insertBefore(script, scripts);
+        }
+    }
+
+    /**
+     * Generates clientlib url
+     */
+    private generateClientLibsUrl(pageModelRoot : string, domain : string) : string {
+        let clientLibPath = '';
+        if (pageModelRoot != null) {
+            clientLibPath = domain + '/etc.clientlibs/' +  pageModelRoot.split("/")[2] + '/clientlibs/clientlib-react.min.js';
+        }
+        else {
+            throw new Error('Clientlib path cannot be determined! This should never happen.');
+            return "";
+        }
+        return domain + clientLibPath;
     }
 
     /**

@@ -45,6 +45,15 @@ export class PathUtils {
     }
 
     /**
+     * Returns true if the editor is in Edit Mode
+     *
+     * @returns {Boolean} the result of the check of the Editor mode
+     */
+    public static isEditorInEditMode(): boolean {
+        return this.getMetaPropertyValue(MetaProperty.WCM_MODE) === "edit" ? true : false;
+    }
+
+    /**
      * Returns the context path of the given location.
      * If no location is provided, it fallbacks to the current location.
      * @param {String} [location] - Location to be used to detect the context path from.
