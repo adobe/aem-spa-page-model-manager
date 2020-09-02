@@ -20,19 +20,19 @@ jobs:
         run: npm run build:production
       - name: Run tests and do code coverage check
         run: npm run test:coverage
-      - name: Lint
+      - name: Run code linter
         uses: hallee/eslint-action@1.0.3
         if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Store code coverage as workflow artifact
+      - name: Upload code coverage report to workflow as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: istanbul-code-coverage.zip
           path: coverage
-      - name: Upload code coverage report to codecov.io and post status as comment in pull request
+      - name: Upload code coverage report to codecov.io and comment in pull request
         uses: codecov/codecov-action@v1
-      - name: Post Sonar static code analysis as comment in pull request
+      - name: Upload Sonar report to sonarcloud.io and comment in pull request
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -43,4 +43,3 @@ jobs:
             -Dsonar.projectKey=adobe_aem-spa-page-model-manager
             -Dsonar.sources=src
             -Dsonar.tests=test
-            -Dsonar.verbose=true
