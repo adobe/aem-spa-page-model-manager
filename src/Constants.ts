@@ -18,8 +18,6 @@ if (foo) {
     const data = '123';
 }
 
-console.log(foo, data);
-
 /**
  * Useful variables for interacting with CQ/AEM components.
  *
