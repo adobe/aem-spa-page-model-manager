@@ -11,10 +11,5 @@
     "jsRules": {
         "curly": true
     },
-    "rulesDirectory": [],
-    "linterOptions": {
-        "exclude": [
-            "test/*"
-        ]
-    }
+    "rulesDirectory": []
 }
