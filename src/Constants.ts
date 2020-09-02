@@ -12,7 +12,19 @@
 
 let foo = 'foo' + 'bar';
 foo = 'new';
-console.log(foo);
+const data = '1st';
+
+if (foo) {
+    const data = '123';
+} else {
+    const data = 123;
+
+    if (window) {
+        const data = 'data';
+    }
+}
+
+console.log(foo, data);
 
 /**
  * Useful variables for interacting with CQ/AEM components.
