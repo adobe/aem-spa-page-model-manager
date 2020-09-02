@@ -42,4 +42,6 @@ jobs:
           args: >
             -Dsonar.organization=adobeinc
             -Dsonar.projectKey=adobe_aem-spa-page-model-manager
+            -Dsonar.sources=src
+            -Dsonar.tests=test
             -Dsonar.verbose=true
