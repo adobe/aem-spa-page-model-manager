@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-var foo = 123;
+let unused = 123;
+let foo = 'foo' + 'bar';
 console.log(foo);
 
 /**
