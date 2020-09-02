@@ -16,12 +16,6 @@ const data = '1st';
 
 if (foo) {
     const data = '123';
-} else {
-    const data = 123;
-
-    if (window) {
-        const data = 'data';
-    }
 }
 
 console.log(foo, data);
