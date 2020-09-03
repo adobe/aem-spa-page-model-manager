@@ -10,11 +10,11 @@ export interface PageModel extends Model {
     title?: string;
     lastModifiedDate?: number;
     templateName?: string;
-    css_Class_Names?: string;
+    cssClassNames?: string;
     language?: string;
 }
 
-export interface ResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModel extends Model {
-    gridClassNames: string;
+export interface ResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModel extends Model {
+    GridC_lassNames: string;
     columnCount: number;
 }
