@@ -10,6 +10,11 @@ export interface PageModel extends Model {
     title?: string;
     lastModifiedDate?: number;
     templateName?: string;
-    cssClassNames?: string;
+    css_Class_Names?: string;
     language?: string;
+}
+
+export interface ResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModelResponsiveGridModel extends Model {
+    gridClassNames: string;
+    columnCount: number;
 }
