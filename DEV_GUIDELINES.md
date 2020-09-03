@@ -1,78 +1,48 @@
-# spa-page-model-manager
 
-The PageModelManager provides access to the model of the page
-
-## Development
+# Development
 
 Run npm install to get all node_modules that are necessary for development.
 
-### Build
+## Build
 
 ```sh
 $ npm run build
 ```
 
-or
-
-```sh
-$ npm run build:production
-```
-
-### Watch to rebuild
+## Watch to rebuild
 
 ```sh
 $ npm run build -- --watch
 ```
 
-### Test
+## Test
 
 ```sh
 $ npm run test
 ```
 
-or
+## Usage example
 
-```sh
-$ npm run test:debug
+This module provides the API to manage the model representation of the pages that are composing a SPA.
+
 ```
+// index.html
 
-### Generate docs and readme
+<head>
+...
+    <meta property="cq:pagemodel_root_url" content="... .model.json"/>
+...
+</head>
+...
 
-To generate the documents in the `/out` folder and pack them in the `DOCUMENTATION.md`:
+// Bootstrap: index.js
+import { ModelManager } from '@adobe/aem-spa-page-model-manager';
 
-```sh
-$ npm run docs
+ModelManager.initialize().then((model) => {
+    // Render the App content using the provided model
+    render(model);
+});
+
+// Loading a specific portion of model
+ModelManager.getData("/content/site/page/jcr:content/path/to/component").then(...); 
 ```
-
-To generate the `README.md` based on the `DOCUMENTATION.md` and `CHANGELOG.md`:
-
-```sh
-$ npm run readme
-```
-
-### Generate Changelog
-
-```sh
-$ auto-changelog
-```
-
-### Set current version
-
-```sh
-$ npm version X.Y.Z
-```
-
-This will (in order):
-
-- `preversion`
-  - run tests and check if `DOCUMENTATION.md` and `README.md` could be generated
-- `version`
-  - set the version to `X.Y.Z`
-  - generate `DOCUMENTATION.md` and `README.md` for this version
-  - commit all the files in one commit named `X.Y.Z` with a tag set to `vX.Y.Z`
-- `postversion`
-  - push the changes and tag
-
-### Links and transitive dependencies
-
-See the related [wiki page](https://wiki.corp.adobe.com/display/WEM/SPA+-+Working+with+NPM+modules+that+have+a+transitive+dependency)
