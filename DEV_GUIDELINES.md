@@ -9,11 +9,6 @@ Run npm install to get all node_modules that are necessary for development.
 $ npm run build
 ```
 
-## Watch to rebuild
-
-```sh
-$ npm run build -- --watch
-```
 
 ## Test
 
