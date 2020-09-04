@@ -1,51 +1,24 @@
-# Table of contents
+# Page Model Manager [![codecov](https://codecov.io/gh/adobe/aem-spa-page-model-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/adobe/aem-spa-page-model-manager) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=adobe_aem-spa-page-model-manager&metric=alert_status)](https://sonarcloud.io/dashboard?id=adobe_aem-spa-page-model-manager) [![Known Vulnerabilities](https://snyk.io/test/github/adobe/aem-spa-page-model-manager/badge.svg)](https://snyk.io/test/github/adobe/aem-spa-page-model-manager) 
 
-  * [Installation](#installation)
-  * [Usage](#usage)
-  * [Documentation](#documentation)
-    * [Contributing](#contributing)
-    * [Licensing](#licensing)
-
+An interpreter between Adobe Experience Manager Editor and the Adobe Experience Manager Single Page Application (SPA) Editor. The SPA Editor is recommended solution for projects that use SPA framework (React or Angular).
+For more information please see the [documentation](https://docs.adobe.com/content/help/en/experience-manager-65/developing/headless/spas/spa-page-component.html) 
 
 ## Installation
 ```
 npm install @adobe/aem-spa-page-model-manager
 ```
 
-## Usage
-
-This module provides the API to manage the model representation of the pages that are composing a SPA.
-
-```
-// index.html
-
-<head>
-...
-    <meta property="cq:pagemodel_root_url" content="... .model.json"/>
-...
-</head>
-...
-
-// Bootstrap: index.js
-import { ModelManager } from '@adobe/aem-spa-page-model-manager';
-
-ModelManager.initialize().then((model) => {
-    // Render the App content using the provided model
-    render(model);
-});
-
-// Loading a specific portion of model
-ModelManager.getData("/content/site/page/jcr:content/path/to/component").then(...); 
-```
-
 ## Documentation 
 
-The [technical documentation](https://www.adobe.com/go/aem6_4_docs_spa_en) is available, but if you are unable to solve your problem or you found a bug you can always create an issue or through other means [contact us](https://www.adobe.com/go/aem6_4_support_en) and ask for help!
+* [SPA Editor Overview](https://www.adobe.com/go/aem6_5_docs_spa_en)
+* [SPA Architecture](https://docs.adobe.com/content/help/en/experience-manager-65/developing/headless/spas/spa-architecture.html)
+* [Getting Started with the AEM SPA Editor and Angular](https://docs.adobe.com/content/help/en/experience-manager-learn/spa-angular-tutorial/overview.html)
+* [Getting Started with the AEM SPA Editor and React](https://docs.adobe.com/content/help/en/experience-manager-learn/spa-react-tutorial/overview.html)
 
-### Contributing
+## Contributing
 
 Contributions are welcome! Read the [Contributing Guide](CONTRIBUTING.md) for more information.
 
-### Licensing
+## Licensing
 
 This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
