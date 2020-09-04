@@ -100,8 +100,6 @@ export class ModelManager {
         this.destroy();
         let path;
         let initialModel = null;
-        let domain = "";
-        let asyncFlag = false;
         if (!config || (typeof config === 'string')) {
             path = config;
         } else if (config) {
@@ -138,13 +136,13 @@ export class ModelManager {
         if (!this._modelClient) {
             this._modelClient = new ModelClient();
         }
-        // Extract apiHost from the modelClient. The decision for exposing the apiHost still needs to be finalized.
+        let domain = "";
         if (this._modelClient) {
             domain = this._modelClient.apiHost != null ? this._modelClient.apiHost : "";
         }
         // Check if async is required. This will be true only in remote rendering.
-        asyncFlag = domain === window.location.hostname ? false : true;
-        if (asyncFlag && PathUtils.isEditorInEditMode()) {
+        const asyncFlag =  domain === PathUtils.getCurrentPathname() ? false : true;
+        if (asyncFlag && PathUtils.isEditMode()) {
             const clientLibUrl = this.generateClientLibsUrl(rootModelPath, domain);
             this.appendClientLibs(clientLibUrl);
         }

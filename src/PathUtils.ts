@@ -49,7 +49,7 @@ export class PathUtils {
      *
      * @returns {Boolean} the result of the check of the Editor mode
      */
-    public static isEditorInEditMode(): boolean {
+    public static isEditMode(): boolean {
         return this.getMetaPropertyValue(MetaProperty.WCM_MODE) === "edit" ? true : false;
     }
 
