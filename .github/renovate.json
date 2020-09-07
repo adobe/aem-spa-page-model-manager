@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "groupName": "@adobe fixes",
+      "updateTypes": ["patch", "pin", "digest", "minor", "major"],
+      "automerge": true,
+      "packagePatterns": ["^@adobe/"],
+      "schedule": ["at any time"]
+    },
+    {
+      "groupName": "external fixes",
+      "updateTypes": ["patch", "pin", "digest", "minor", "major"],
+      "automerge": false,
+      "schedule": ["after 1pm on Monday"],
+      "packagePatterns": ["^.+"],
+      "excludePackagePatterns": ["^@adobe/"]
+    }
+  ]
+}
