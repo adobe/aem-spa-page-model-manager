@@ -12,6 +12,7 @@
 
 import MetaProperty from "./MetaProperty";
 import {PathUtils} from "./PathUtils";
+import Constants from "./Constants";
 
 export class Utils {
 
@@ -21,13 +22,16 @@ export class Utils {
      * @returns {Boolean} the result of the check of the Editor mode
      */
     public static isEditMode(): boolean {
-        return PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === "edit" ? true : false;
+        const aemMode = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE);
+        const param = new URL(document.location.href).searchParams.get(Constants.AEM_MODE);
+        const val = aemMode || param;
+        return val === Constants.AEM_EDIT;
     }
 
     /**
-     * Appends client lib to the page
+     * Appends javascript to the page
      */
-    public static appendClientLibs(clientLibUrl : string) {
+    public static appendScripts(clientLibUrl : string) {
         const script = document.createElement('script');
         const scripts = document.getElementsByTagName('script')[0];
         script.src = clientLibUrl;
@@ -35,20 +39,50 @@ export class Utils {
             scripts.parentNode.insertBefore(script, scripts);
         }
     }
-
+    /**
+     * Appends stylesheets to the page
+     */
+    public static appendStyleSheets(clientLibUrl : string) {
+        const link = document.createElement('link');
+        const links = document.getElementsByTagName('link')[0];
+        link.href = clientLibUrl;
+        if (links.parentNode) {
+            links.parentNode.insertBefore(link, links);
+        }
+    }
 
     /**
      * Generates clientlib url
      */
-    public static generateClientLibsUrl(pageModelRoot : string, domain : string) : string {
-        let clientLibPath = '';
-        if (pageModelRoot != null) {
-            clientLibPath = domain + '/etc.clientlibs/' +  pageModelRoot.split("/")[2] + '/clientlibs/clientlib-base.min.js';
-        }
-        else {
-            throw new Error('Clientlib path cannot be determined! This should never happen.');
-            return "";
-        }
-        return clientLibPath;
+    public static generateClientLibsUrl(domain : string) : string[] {
+        const clientlibs: string[] =  Array<string>();
+        const path = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/';
+        clientlibs.push(`${domain}${path}page.js`);
+        clientlibs.push(`${domain}${path}page.css`);
+        clientlibs.push(`${domain}${path}pagemodel/messaging.js`);
+        clientlibs.push(`${domain}${path}messaging.js`);
+        return clientlibs;
+    }
+
+    /**
+     * Returns true if editor loaded remotely
+     */
+    public static appendClientLibs(domain : string) {
+        const clientLibUrls = Utils.generateClientLibsUrl(domain);
+        clientLibUrls.forEach(lib => {
+            if (lib.endsWith('.js')) {
+                this.appendScripts(lib);
+            }
+            else {
+                this.appendStyleSheets(lib);
+            }
+        });
+    }
+
+    /**
+     * Returns true if editor loaded remotely
+     */
+    public static isAsync(domain : string) : boolean {
+        return domain === PathUtils.getCurrentPathname() ? false :  true;
     }
 }

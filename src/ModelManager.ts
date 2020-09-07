@@ -141,11 +141,8 @@ export class ModelManager {
         if (this._modelClient) {
             domain = this._modelClient.apiHost != null ? this._modelClient.apiHost : "";
         }
-        // Check if async is required. This will be true only in remote rendering.
-        const asyncFlag =  domain === PathUtils.getCurrentPathname() ? false : true;
-        if (asyncFlag && Utils.isEditMode()) {
-            const clientLibUrl = Utils.generateClientLibsUrl(rootModelPath, domain);
-            Utils.appendClientLibs(clientLibUrl);
+        if (Utils.isAsync(domain) && Utils.isEditMode()) {
+            Utils.appendClientLibs(domain);
         }
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);

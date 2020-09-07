@@ -24,6 +24,11 @@ export class ModelClient {
         this._apiHost = apiHost || '';
         this._fetchPromises = {};
     }
+
+    /**
+     * Returns http host of the API
+     * @returns {string|null}
+     */
     get apiHost(): string | null {
         return this._apiHost;
     }
