@@ -7,7 +7,8 @@
 
 [![codecov](https://codecov.io/gh/adobe/aem-spa-page-model-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/adobe/aem-spa-page-model-manager)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=adobe_aem-spa-page-model-manager&metric=alert_status)](https://sonarcloud.io/dashboard?id=adobe_aem-spa-page-model-manager)
-[![Known Vulnerabilities](https://snyk.io/test/github/adobe/aem-spa-page-model-manager/badge.svg)](https://snyk.io/test/github/adobe/aem-spa-page-model-manager) 
+[![Known Vulnerabilities](https://snyk.io/test/github/adobe/aem-spa-page-model-manager/badge.svg)](https://snyk.io/test/github/adobe/aem-spa-page-model-manager)
+[![Dependencies](https://badges.renovateapi.com/github/adobe/aem-spa-page-model-manager)](https://app.renovatebot.com/dashboard#github/adobe/aem-spa-page-model-manager)
 
 An interpreter between Adobe Experience Manager Editor and the Adobe Experience Manager Single Page Application (SPA) Editor. The SPA Editor is recommended solution for projects that use SPA framework (React or Angular).
 For more information please see the [documentation](https://docs.adobe.com/content/help/en/experience-manager-65/developing/headless/spas/spa-page-component.html) 
