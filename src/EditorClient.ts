@@ -39,7 +39,6 @@ export class EditorClient {
 
     constructor(ModelManager: ModelManager) {
         this._modelManager = ModelManager;
-
         this._windowListener = (event: any) => {
             if (!event || !event.detail || !event.detail.msg) {
                 console.error('EditorService.js', 'No message passed to cq-pagemodel-update', event);

@@ -17,7 +17,7 @@ import { Model } from './Model';
 import { ModelClient } from './ModelClient';
 import { ModelStore } from './ModelStore';
 import { PathUtils } from './PathUtils';
-import {Utils} from "./Utils";
+import { Utils } from "./Utils";
 
 /**
  * Does the provided model object contains an entry for the given child path
@@ -56,6 +56,7 @@ export interface ModelManagerConfiguration {
     model?: Model;
     modelClient?: ModelClient;
     path?: string;
+    aemMode?: string;
 }
 
 export type ListenerFunction = () => void;
@@ -101,12 +102,14 @@ export class ModelManager {
         this.destroy();
         let path;
         let initialModel = null;
+        let aemMode = null;
         if (!config || (typeof config === 'string')) {
             path = config;
         } else if (config) {
             path = config.path;
             this._modelClient = config.modelClient;
             initialModel = config.model;
+            aemMode = config.aemMode;
         }
 
         this._listenersMap = {};
@@ -141,7 +144,9 @@ export class ModelManager {
         if (this._modelClient) {
             domain = this._modelClient.apiHost != null ? this._modelClient.apiHost : "";
         }
-        if (Utils.isAsync(domain) && Utils.isEditMode()) {
+
+        const isEdit = (aemMode === Constants.AEM_MODE_EDIT) || Utils.isEditMode();
+        if (domain && Utils.isAsync(domain) && isEdit) {
             Utils.appendClientLibs(domain);
         }
         this._editorClient = new EditorClient(this);

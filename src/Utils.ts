@@ -11,7 +11,7 @@
  */
 
 import MetaProperty from "./MetaProperty";
-import {PathUtils} from "./PathUtils";
+import { PathUtils } from "./PathUtils";
 import Constants from "./Constants";
 
 export class Utils {
@@ -23,15 +23,24 @@ export class Utils {
      */
     public static isEditMode(): boolean {
         const aemMode = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE);
-        const param = new URL(document.location.href).searchParams.get(Constants.AEM_MODE);
-        const val = aemMode || param;
-        return val === Constants.AEM_EDIT;
+        if (aemMode != null) {
+            return aemMode === Constants.AEM_MODE_EDIT;
+        }
+        else {
+            if (PathUtils.isBrowser()) {
+                const param = new URL(document.location.href).searchParams.get(Constants.AEM_MODE_KEY);
+                return param === Constants.AEM_MODE_EDIT;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     /**
      * Appends javascript to the page
      */
-    public static appendScripts(clientLibUrl : string) {
+    public static appendScripts(clientLibUrl : string) : void {
         const script = document.createElement('script');
         const scripts = document.getElementsByTagName('script')[0];
         script.src = clientLibUrl;
@@ -42,7 +51,7 @@ export class Utils {
     /**
      * Appends stylesheets to the page
      */
-    public static appendStyleSheets(clientLibUrl : string) {
+    public static appendStyleSheets(clientLibUrl : string) : void {
         const link = document.createElement('link');
         const links = document.getElementsByTagName('link')[0];
         link.href = clientLibUrl;
@@ -67,7 +76,7 @@ export class Utils {
     /**
      * Returns true if editor loaded remotely
      */
-    public static appendClientLibs(domain : string) {
+    public static appendClientLibs(domain : string) : void {
         const clientLibUrls = Utils.generateClientLibsUrl(domain);
         clientLibUrls.forEach(lib => {
             if (lib.endsWith('.js')) {

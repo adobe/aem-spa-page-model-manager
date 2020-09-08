@@ -54,12 +54,12 @@ export class Constants {
     /**
      * Query param for aem mode flag name.
      */
-    public static readonly AEM_MODE = 'aemmode';
+    public static readonly AEM_MODE_KEY = 'aemmode';
 
     /**
      * AEM mode: edit
      */
-    public static readonly AEM_EDIT = 'edit';
+    public static readonly AEM_MODE_EDIT = 'edit';
 
     private constructor() {
         // hide constructor
