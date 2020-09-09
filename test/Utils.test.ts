@@ -30,4 +30,29 @@ describe('Utils ->', () => {
             assert.equal(Utils.isEditMode(), false);
         });
     });
+    describe('appendClientLibs', () => {
+        it('Check if all the clientlibs are added to the page', () => {
+            const clientlibs = ['http://www.abc.com/xyz.js', 'http://www.abc.com/xyz.css'];
+            jest.spyOn(Utils, 'generateClientLibsUrl').mockReturnValue(clientlibs);
+            Utils.appendClientLibs("http://www.abc.com");
+            const scripts = document.getElementsByTagName('script')[0];
+            const link = document.getElementsByTagName('link')[0];
+            assert.equal(scripts.src,'http://www.abc.com/xyz.js');
+            assert.equal(link.href,'http://www.abc.com/xyz.css');
+        });
+    });
+    describe('isAsync', () => {
+        const domain = 'http://www.abc.com';
+        const asyncDomain = 'http://www.diffdomain.com'
+        it('Should return false in case of different domains', () => {
+            jest.spyOn(PathUtils, 'getCurrentPathname').mockReturnValue(asyncDomain);
+            const domainMatch = Utils.isAsync(domain);
+            expect(domainMatch).toEqual(true);
+        });
+        it('Should return false in case of different domains', () => {
+            jest.spyOn(PathUtils, 'getCurrentPathname').mockReturnValue(domain);
+            const domainMatch = Utils.isAsync(domain);
+            expect(domainMatch).toEqual(false);
+        });
+    });
 });

@@ -51,6 +51,7 @@ export class Utils {
      */
     public static appendScripts(clientLibUrl : string) : void {
         const script = document.createElement('script');
+        document.head.appendChild(script);
         const scripts = document.getElementsByTagName('script')[0];
         script.src = clientLibUrl;
         if (scripts.parentNode) {
@@ -62,6 +63,7 @@ export class Utils {
      */
     public static appendStyleSheets(clientLibUrl : string) : void {
         const link = document.createElement('link');
+        document.head.appendChild(link);
         const links = document.getElementsByTagName('link')[0];
         link.href = clientLibUrl;
         if (links.parentNode) {
