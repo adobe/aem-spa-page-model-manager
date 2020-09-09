@@ -28,13 +28,22 @@ export class Utils {
         }
         else {
             if (PathUtils.isBrowser()) {
-                const param = new URL(document.location.href).searchParams.get(Constants.AEM_MODE_KEY);
+                const param = Utils.getEditParam();
                 return param === Constants.AEM_MODE_EDIT;
             }
             else {
                 return false;
             }
         }
+    }
+
+    /**
+     * Returns query parameter value for aem mode.
+     *
+     * @returns {String | null} the result of the check of the Editor mode
+     */
+    public static getEditParam() : string | null {
+        return new URL(document.location.href).searchParams.get(Constants.AEM_MODE_KEY);
     }
 
     /**
