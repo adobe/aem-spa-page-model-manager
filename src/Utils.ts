@@ -79,6 +79,7 @@ export class Utils {
 
     /**
      * Generates clientlib url
+     * @returns {string[]} all the clientlib urls
      */
     public static generateClientLibsUrl() : string[] {
         const clientlibs: string[] =  Array<string>();
@@ -94,6 +95,7 @@ export class Utils {
 
     /**
      * Gets the domain name of API host
+     * @returns {string} API host
      */
     public static getDomain() : string{
         return ModelManager._domain;
