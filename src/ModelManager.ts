@@ -66,6 +66,7 @@ export class ModelManager {
     private _fetchPromises: { [key: string]: Promise<Model> } = {};
     private _initPromise: any;
     private _editorClient: EditorClient | undefined;
+    public static _domain = "";
 
     public get modelClient() {
         if (!this._modelClient) {
@@ -137,7 +138,7 @@ export class ModelManager {
         if (!this._modelClient) {
             this._modelClient = new ModelClient();
         }
-
+        ModelManager._domain = this.modelClient.apiHost;
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
 

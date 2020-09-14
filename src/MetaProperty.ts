@@ -31,6 +31,11 @@ export class MetaProperty {
      */
     public static readonly PAGE_MODEL_ROUTER = 'cq:pagemodel_router';
 
+    /**
+     * Meta property pointing to wcm mode
+     */
+    public static readonly WCM_MODE = 'cq:wcmmode';
+
     private constructor() {
         // hide constructor
     }

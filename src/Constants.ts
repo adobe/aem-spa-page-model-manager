@@ -51,6 +51,26 @@ export class Constants {
      */
     public static readonly JCR_CONTENT = 'jcr:content';
 
+    /**
+     * States.
+     */
+    public static readonly AUTHORING = 'authoring';
+
+    /**
+     * Query param for aem mode flag name.
+     */
+    public static readonly AEM_MODE_KEY = 'aemmode';
+
+    /**
+     * AEM mode: edit
+     */
+    public static readonly AEM_MODE_EDIT = 'edit';
+
+    /**
+     * AEM mode: preview
+     */
+    public static readonly AEM_MODE_PREVIEW = 'preview';
+
     private constructor() {
         // hide constructor
     }
