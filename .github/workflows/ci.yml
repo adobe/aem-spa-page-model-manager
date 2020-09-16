@@ -43,4 +43,4 @@ jobs:
             -Dsonar.projectKey=adobe_aem-spa-page-model-manager
             -Dsonar.sources=src
             -Dsonar.tests=test
-            -Dsonar.javascript.lcov.reportPaths=${{ github.workspace }}/coverage/
+            -Dsonar.javascript.lcov.reportPaths=/github/workspace/coverage/lcov.info
