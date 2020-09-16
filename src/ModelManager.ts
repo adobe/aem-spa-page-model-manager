@@ -365,9 +365,6 @@ export class ModelManager {
      * @private
      */
     private destroy() {
-        delete this._fetchPromises;
-        delete this._listenersMap;
-
         if (this._modelClient && this._modelClient.destroy) {
             this._modelClient.destroy();
         }
