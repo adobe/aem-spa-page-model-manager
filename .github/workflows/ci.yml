@@ -32,16 +32,18 @@ jobs:
           path: coverage
       - name: Upload code coverage report to codecov.io and comment in pull request
         uses: codecov/codecov-action@v1
+      - name: Temp - ls
+        run: ls -lR ${{ github.workspace }}
       - name: Upload Sonar report to sonarcloud.io and comment in pull request
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          WORKSPACE: ${{ github.workspace }}
         with:
+          projectBaseDir: ${{ github.workspace }}
           args: >
             -Dsonar.organization=adobeinc
             -Dsonar.projectKey=adobe_aem-spa-page-model-manager
             -Dsonar.sources=src
             -Dsonar.tests=test
-            -Dsonar.javascript.lcov.reportPaths=${{ env.WORKSPACE }}/coverage
+            -Dsonar.javascript.lcov.reportPaths=coverage
