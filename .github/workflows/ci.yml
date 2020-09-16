@@ -40,10 +40,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: ${{ github.workspace }}
           args: >
             -Dsonar.organization=adobeinc
             -Dsonar.projectKey=adobe_aem-spa-page-model-manager
             -Dsonar.sources=src
             -Dsonar.tests=test
-            -Dsonar.javascript.lcov.reportPaths=coverage
+            -Dsonar.javascript.lcov.reportPaths=${{ github.workspace }}/coverage/lcov.info
