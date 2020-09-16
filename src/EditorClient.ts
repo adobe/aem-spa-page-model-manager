@@ -132,8 +132,6 @@ export class EditorClient {
      * @private
      */
     public destroy() {
-        delete this._modelManager;
-
         if (PathUtils.isBrowser()) {
             window.removeEventListener(EventType.PAGE_MODEL_UPDATE, this._windowListener);
         }
