@@ -39,10 +39,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           WORKSPACE: ${{ env.GITHUB_WORKSPACE }}
         with:
-          projectBaseDir: /home/runner/work/aem-spa-page-model-manager/aem-spa-page-model-manager
           args: >
             -Dsonar.organization=adobeinc
             -Dsonar.projectKey=adobe_aem-spa-page-model-manager
             -Dsonar.sources=src
             -Dsonar.tests=test
-            -Dsonar.javascript.lcov.reportPaths=${{ env.WORKSPACE }}/123/coverage
+            -Dsonar.javascript.lcov.reportPaths=/home/runner/work/aem-spa-page-model-manager/aem-spa-page-model-manager${{ WORKSPACE }}/coverage
