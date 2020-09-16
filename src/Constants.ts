@@ -62,18 +62,34 @@ export class Constants {
     public static readonly AEM_MODE_KEY = 'aemmode';
 
     /**
-     * AEM mode: edit
+     * Base path for editor clientlibs
      */
-    public static readonly AEM_MODE_EDIT = 'edit';
-
-    /**
-     * AEM mode: preview
-     */
-    public static readonly AEM_MODE_PREVIEW = 'preview';
+    public static readonly EDITOR_CLIENTLIB_PATH = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/';
 
     private constructor() {
         // hide constructor
     }
 }
 
+/**
+ * AEM modes
+ */
+export enum AEM_MODE {
+    EDIT = 'edit',
+    PREVIEW = 'preview'
+}
+/**
+ * Valid tag types
+ */
+export enum TAG_TYPE     {
+    JS = 'script',
+    STYLESHEET = 'stylesheet'
+}
+/**
+ * Valid tag attributes
+ */
+export enum TAG_ATTR     {
+    SRC = 'src',
+    HREF = 'href'
+}
 export default Constants;

@@ -1,7 +1,7 @@
 import * as assert from 'assert';
-import {Utils} from "../src/Utils";
-import Constants from "../src/Constants";
-import {PathUtils} from "../src/PathUtils";
+import { Utils } from "../src/Utils";
+import Constants, { AEM_MODE } from "../src/Constants";
+import { PathUtils } from "../src/PathUtils";
 
 describe('Utils ->', () => {
     afterEach(() => {
@@ -33,28 +33,28 @@ describe('Utils ->', () => {
         assert.equal(data, expectedResult);
     });
     it('Check authoring state from meta data', () => {
-        jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(Constants.AEM_MODE_EDIT);
+        jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.EDIT);
         jest.spyOn(PathUtils, 'isBrowser').mockReturnValue(true);
-        jest.spyOn(Utils, 'getEditParam').mockReturnValue(Constants.AEM_MODE_EDIT);
-        let data = Utils.isState(Constants.AUTHORING);
+        jest.spyOn(Utils, 'getEditParam').mockReturnValue(AEM_MODE.EDIT);
+        let data = Utils.isStateActive(Constants.AUTHORING);
         assert.equal(data, true);
-        jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(Constants.AEM_MODE_PREVIEW);
+        jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
         jest.spyOn(Utils, 'getEditParam').mockReturnValue(null);
-        data = Utils.isState(Constants.AUTHORING);
+        data = Utils.isStateActive(Constants.AUTHORING);
         assert.equal(data, false);
-        data = Utils.isState('');
+        data = Utils.isStateActive('');
         assert.equal(data, false);
     });
     it('Check authoring state from query param', () => {
         jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(null);
         jest.spyOn(PathUtils, 'isBrowser').mockReturnValue(true);
-        jest.spyOn(Utils, 'getEditParam').mockReturnValue(Constants.AEM_MODE_EDIT);
-        let data = Utils.isState(Constants.AUTHORING);
+        jest.spyOn(Utils, 'getEditParam').mockReturnValue(AEM_MODE.EDIT);
+        let data = Utils.isStateActive(Constants.AUTHORING);
         assert.equal(data, true);
         jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(null);
         jest.spyOn(PathUtils, 'isBrowser').mockReturnValue(true);
-        jest.spyOn(Utils, 'getEditParam').mockReturnValue(Constants.AEM_MODE_PREVIEW);
-        data = Utils.isState(Constants.AUTHORING);
+        jest.spyOn(Utils, 'getEditParam').mockReturnValue(AEM_MODE.PREVIEW);
+        data = Utils.isStateActive(Constants.AUTHORING);
         assert.equal(data, false);
     });
 });

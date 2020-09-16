@@ -21,15 +21,15 @@ export class ModelClient {
      * @param {string} [apiHost] - Http host of the API
      */
     constructor(apiHost?: string) {
-        this._apiHost = apiHost || '';
+        this._apiHost = apiHost || null;
         this._fetchPromises = {};
     }
     /**
      * Returns http host of the API
-     * @returns {string|null}
+     * @returns {string | null}
      */
-    get apiHost(): string {
-        return this._apiHost == null ? '' : this._apiHost;
+    get apiHost(): string | null {
+        return this._apiHost;
     }
 
     /**

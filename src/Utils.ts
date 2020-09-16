@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import Constants from "./Constants";
+import Constants, {AEM_MODE, TAG_ATTR, TAG_TYPE} from "./Constants";
 import { PathUtils } from "./PathUtils";
 import MetaProperty from "./MetaProperty";
 import { ModelManager } from "./ModelManager";
@@ -27,10 +27,10 @@ export class Utils {
             const clientLibs = this.generateClientLibsUrl();
             clientLibs.forEach(clientlib => {
                 if (clientlib.endsWith('.js')) {
-                    tags = tags.concat(this.generateElementString('script', 'src', clientlib));
+                    tags = tags.concat(this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, clientlib));
                 }
                 else if (clientlib.endsWith('.css')) {
-                    tags = tags.concat(this.generateElementString('stylesheet', 'href', clientlib));
+                    tags = tags.concat(this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, clientlib));
                 }
             });
         }
@@ -44,10 +44,10 @@ export class Utils {
      */
     private static generateElementString(tagType : string, attr : string, attrValue : string) : string {
         let tag = '';
-        if (tagType === 'script') {
+        if (tagType === TAG_TYPE.JS) {
             tag = `<script ${attr}='${attrValue}'></script>`;
         }
-        else if (tagType === 'stylesheet') {
+        else if (tagType === TAG_TYPE.STYLESHEET) {
             tag = `<link ${attr}='${attrValue}'/>`;
         }
         return tag;
@@ -58,10 +58,10 @@ export class Utils {
      *
      * @returns {boolean} the result of the check of the state
      */
-    public static isState(state : string) : boolean {
+    public static isStateActive(state : string) : boolean {
         if (state === Constants.AUTHORING) {
-            const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === Constants.AEM_MODE_EDIT;
-            const viaQueryParam = PathUtils.isBrowser() && (Utils.getEditParam() === Constants.AEM_MODE_EDIT);
+            const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.EDIT;
+            const viaQueryParam = PathUtils.isBrowser() && (Utils.getEditParam() === AEM_MODE.EDIT);
 
             return viaMetaProperty || viaQueryParam;
         }
@@ -74,7 +74,15 @@ export class Utils {
      * @returns {String | null} the result of the check of the Editor mode
      */
     public static getEditParam() : string | null {
-        return new URL(PathUtils.getCurrentURL()).searchParams.get(Constants.AEM_MODE_KEY);
+        let url : URL;
+        try {
+            url = new URL(PathUtils.getCurrentURL());
+            return url.searchParams.get(Constants.AEM_MODE_KEY);
+        }
+        catch (e) {
+            // Invalid current url
+        }
+        return null;
     }
 
     /**
@@ -82,8 +90,8 @@ export class Utils {
      * @returns {string[]} all the clientlib urls
      */
     public static generateClientLibsUrl() : string[] {
-        const clientlibs: string[] =  Array<string>();
-        const path = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/';
+        const clientlibs: string[] =  [];
+        const path = Constants.EDITOR_CLIENTLIB_PATH;
         const domain = this.getDomain();
         clientlibs.push(`${domain}${path}page.js`);
         clientlibs.push(`${domain}${path}page.css`);
@@ -97,7 +105,7 @@ export class Utils {
      * Gets the domain name of API host
      * @returns {string} API host
      */
-    public static getDomain() : string{
+    public static getDomain() : string | null{
         return ModelManager._domain;
     }
 }
