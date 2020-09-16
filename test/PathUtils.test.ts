@@ -154,6 +154,7 @@ describe('PathUtils ->', () => {
         let contextPathSpy;
         const CONTEXT_PATH = '/contextpath';
         const EXPECTED_PATH = {
+            '': null,
             '/content/page': '/content/page',
             '/content/page.selector': '/content/page',
             '/contextpath/content/page': '/content/page',
@@ -186,6 +187,10 @@ describe('PathUtils ->', () => {
                 const sanitizedPath = PathUtils.sanitize(path);
                 assert.equal(sanitizedPath, EXPECTED_PATH[path], 'Incorrect sanitized path for ' + path);
             }
+
+            assert.equal(PathUtils.sanitize(), null);
+            assert.equal(PathUtils.sanitize(null), null);
+            assert.equal(PathUtils.sanitize(undefined), null);
         });
     });
 
@@ -217,6 +222,18 @@ describe('PathUtils ->', () => {
             expect(dispatcher).not.toHaveBeenCalled();
             stub.mockRestore();
         });
+    });
+
+    it('isBrowser', () => {
+        // returns true when window is present
+        assert.equal(PathUtils.isBrowser(), true);
+
+        // returns false when window is not present
+        const windowSpy = jest.spyOn(global, 'window', 'get');
+
+        windowSpy.mockImplementation(() => undefined);
+        assert.equal(PathUtils.isBrowser(), false);
+        windowSpy.mockRestore();
     });
 
     it('join', () => {
@@ -293,5 +310,42 @@ describe('PathUtils ->', () => {
         assert.equal(PathUtils.trimStrings('jcr:content/jcr:content/path1/path2/jcr:content/jcr:content/path1/jcr:content/jcr:content', ['jcr:content']), 'path1/path2/jcr:content/jcr:content/path1');
         assert.equal(PathUtils.trimStrings('jcr:content/path1/path2/jcr:content', []), 'jcr:content/path1/path2/jcr:content');
         assert.equal(PathUtils.trimStrings('/path1/path2', []), '/path1/path2');
+    });
+
+    it('adaptPagePath', () => {
+        assert.equal(PathUtils.adaptPagePath(), '');
+        assert.equal(PathUtils.adaptPagePath(''), '');
+        assert.equal(PathUtils.adaptPagePath('/foobar'), '/foobar');
+        assert.equal(PathUtils.adaptPagePath('/foobar', '/hello'), '/foobar');
+        assert.equal(PathUtils.adaptPagePath('/hello/foobar', '/hello'), '/hello/foobar');
+    });
+
+    it('addExtension', () => {
+        assert.equal(PathUtils.addExtension(), undefined);
+        assert.equal(PathUtils.addExtension(null), undefined);
+        assert.equal(PathUtils.addExtension(''), '');
+        assert.equal(PathUtils.addExtension('/foobar'), '/foobar');
+        assert.equal(PathUtils.addExtension('/foobar.xyz', 'html'), '/foobar.xyz.html');
+        assert.equal(PathUtils.addExtension('/foobar.json', 'json'), '/foobar.json');
+        assert.equal(PathUtils.addExtension('/foobar', 'json'), '/foobar.json');
+    });
+
+    it('addSelector', () => {
+        assert.equal(PathUtils.addSelector(), undefined);
+        assert.equal(PathUtils.addSelector(null), undefined);
+        assert.equal(PathUtils.addSelector(''), '');
+        assert.equal(PathUtils.addSelector('/foobar'), '/foobar');
+        assert.equal(PathUtils.addSelector('/foobar.html', 'xyz'), '/foobar.xyz.html');
+        assert.equal(PathUtils.addSelector('/foobar.html', 'xyz.abc'), '/foobar.xyz.abc.html');
+        assert.equal(PathUtils.addSelector('/foobar.json', 'json'), '/foobar.json');
+        assert.equal(PathUtils.addSelector('/foobar', 'json'), '/foobar.json');
+    });
+
+    it('getParentNodePath', () => {
+        assert.equal(PathUtils.getParentNodePath(), null);
+        assert.equal(PathUtils.getParentNodePath(null), null);
+        assert.equal(PathUtils.getParentNodePath(''), null);
+        assert.equal(PathUtils.getParentNodePath('/foobar'), '');
+        assert.equal(PathUtils.getParentNodePath('/foobar/a/xyz'), '/foobar/a');
     });
 });
