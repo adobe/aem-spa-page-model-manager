@@ -37,11 +37,7 @@ export class PathUtils {
      * @returns {Boolean} the result of the check of the existance of the window object
      */
     public static isBrowser(): boolean {
-        try {
-            return (typeof window !== 'undefined');
-        } catch (e) {
-            return false;
-        }
+        return typeof window !== 'undefined';
     }
 
     /**
@@ -198,7 +194,7 @@ export class PathUtils {
      */
     public static sanitize(path: string | null) {
         if (!path || (typeof path !== 'string')) {
-            return;
+            return null;
         }
 
         // Parse URL, then remove protocol and domain (if they exist).
@@ -275,7 +271,7 @@ export class PathUtils {
 
         return (extensionPath.indexOf(extension) > -1)
             ? extensionPath
-            : (extensionPath + extension + queue);
+            : (extensionPath + extension + queue).replace(/\.\./g, '.');
     }
 
     /**

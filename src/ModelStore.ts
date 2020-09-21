@@ -263,10 +263,6 @@ export class ModelStore {
         this._data = null;
         this._rootPath = null;
         this._pageContentDelimiter = null;
-
-        delete this._data;
-        delete this._rootPath;
-        delete this._pageContentDelimiter;
     }
 
     /**

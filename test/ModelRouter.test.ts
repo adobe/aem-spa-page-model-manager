@@ -59,6 +59,8 @@ describe('ModelRouter ->', () => {
 
         it('should route the model based on the window URL', () => {
             const { location } = window;
+
+            // @ts-ignore
             delete window.location;
 
             // @ts-ignore
