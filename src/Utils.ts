@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import Constants, {AEM_MODE, TAG_ATTR, TAG_TYPE} from "./Constants";
+import Constants, { AEM_MODE, TAG_ATTR, TAG_TYPE } from "./Constants";
 import { PathUtils } from "./PathUtils";
 import MetaProperty from "./MetaProperty";
 
@@ -20,28 +20,32 @@ export class Utils {
     constructor(domain : string | null) {
         Utils._apiDomain = domain;
     }
+
     static getApiDomain(): string | null {
         return this._apiDomain;
     }
+
     /**
      * Returns all the tags for requested state
      *
      * @returns {String} all the tags for requested state
      */
     public static getTagsForState(state : string) : string {
-        let tags = '';
+        let tags = [];
+
         if (state === Constants.AUTHORING) {
             const clientLibs = this.generateClientLibsUrl();
-            clientLibs.forEach(clientlib => {
-                if (clientlib.endsWith('.js')) {
-                    tags = tags.concat(this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, clientlib));
-                }
-                else if (clientlib.endsWith('.css')) {
-                    tags = tags.concat(this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, clientlib));
+
+            tags = clientLibs.map(name => {
+                if (name.endsWith('.js')) {
+                    return this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, clientlib);
+                } else if (name.endsWith('.css')) {
+                    return this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, clientlib);
                 }
             });
         }
-        return tags;
+
+        return tags.join('');
     }
 
     /**
@@ -51,12 +55,13 @@ export class Utils {
      */
     private static generateElementString(tagType : string, attr : string, attrValue : string) : string {
         let tag = '';
+
         if (tagType === TAG_TYPE.JS) {
             tag = `<script ${attr}='${attrValue}'></script>`;
-        }
-        else if (tagType === TAG_TYPE.STYLESHEET) {
+        } else if (tagType === TAG_TYPE.STYLESHEET) {
             tag = `<link ${attr}='${attrValue}'/>`;
         }
+
         return tag;
     }
 
@@ -72,6 +77,7 @@ export class Utils {
 
             return viaMetaProperty || viaQueryParam;
         }
+
         return false;
     }
 
@@ -82,13 +88,14 @@ export class Utils {
      */
     public static getEditParam() : string | null {
         let url : URL;
+
         try {
             url = new URL(PathUtils.getCurrentURL());
             return url.searchParams.get(Constants.AEM_MODE_KEY);
-        }
-        catch (e) {
+        } catch (e) {
             // Invalid current url
         }
+
         return null;
     }
 
@@ -100,12 +107,14 @@ export class Utils {
         const clientlibs: string[] =  [];
         const path = Constants.EDITOR_CLIENTLIB_PATH;
         const domain = Utils.getApiDomain();
+
         if (domain) {
             clientlibs.push(`${domain}${path}page.js`);
             clientlibs.push(`${domain}${path}page.css`);
             clientlibs.push(`${domain}${path}pagemodel/messaging.js`);
             clientlibs.push(`${domain}${path}messaging.js`);
         }
+
         return clientlibs;
     }
 }
