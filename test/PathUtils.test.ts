@@ -59,6 +59,9 @@ describe('PathUtils ->', () => {
 
         it('should determine correctly the current location', () => {
             const url = 'http://www.abc.com';
+            jest.spyOn(PathUtils, 'isBrowser')
+                .mockReturnValueOnce(true)
+                .mockReturnValueOnce(false);
             global.window = Object.create(window);
             Object.defineProperty(window, 'location', {
                 value: {
@@ -66,6 +69,7 @@ describe('PathUtils ->', () => {
                 }
             });
             assert.strictEqual(PathUtils.getCurrentURL(), url);
+            assert.strictEqual(PathUtils.getCurrentURL(), '');
         });
     });
 
