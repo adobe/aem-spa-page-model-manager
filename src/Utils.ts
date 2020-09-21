@@ -31,7 +31,7 @@ export class Utils {
      * @returns {String} all the tags for requested state
      */
     public static getTagsForState(state : string) : string {
-        let tags: string[] = [];
+        let tags = '';
 
         if (state === Constants.AUTHORING) {
             const clientLibs = this.generateClientLibsUrl();
@@ -42,10 +42,10 @@ export class Utils {
                 } else if (resource.endsWith('.css')) {
                     return this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, resource);
                 }
-            });
+            }).join('');
         }
 
-        return tags.join('');
+        return tags;
     }
 
     /**
