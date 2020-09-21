@@ -78,18 +78,21 @@ export enum AEM_MODE {
     EDIT = 'edit',
     PREVIEW = 'preview'
 }
+
 /**
  * Valid tag types
  */
-export enum TAG_TYPE     {
+export enum TAG_TYPE {
     JS = 'script',
     STYLESHEET = 'stylesheet'
 }
+
 /**
  * Valid tag attributes
  */
-export enum TAG_ATTR     {
+export enum TAG_ATTR {
     SRC = 'src',
     HREF = 'href'
 }
+
 export default Constants;
