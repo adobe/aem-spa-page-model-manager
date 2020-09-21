@@ -31,16 +31,16 @@ export class Utils {
      * @returns {String} all the tags for requested state
      */
     public static getTagsForState(state : string) : string {
-        let tags = [];
+        let tags: string[] = [];
 
         if (state === Constants.AUTHORING) {
             const clientLibs = this.generateClientLibsUrl();
 
-            tags = clientLibs.map(name => {
-                if (name.endsWith('.js')) {
-                    return this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, clientlib);
-                } else if (name.endsWith('.css')) {
-                    return this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, clientlib);
+            tags = clientLibs.map(resource => {
+                if (resource.endsWith('.js')) {
+                    return this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, resource);
+                } else if (resource.endsWith('.css')) {
+                    return this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, resource);
                 }
             });
         }
