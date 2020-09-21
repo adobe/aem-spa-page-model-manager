@@ -17,6 +17,7 @@ import { Model } from './Model';
 import { ModelClient } from './ModelClient';
 import { ModelStore } from './ModelStore';
 import { PathUtils } from './PathUtils';
+import { Utils } from "./Utils";
 
 /**
  * Does the provided model object contains an entry for the given child path
@@ -66,13 +67,12 @@ export class ModelManager {
     private _fetchPromises: { [key: string]: Promise<Model> } = {};
     private _initPromise: any;
     private _editorClient: EditorClient | undefined;
-    public static _domain : string;
+    private _clientlibUtil: Utils | undefined;
 
     public get modelClient() {
         if (!this._modelClient) {
             throw new Error('ModelClient is undefined. Call initialize first!');
         }
-
         return this._modelClient;
     }
 
@@ -109,7 +109,6 @@ export class ModelManager {
             this._modelClient = config.modelClient;
             initialModel = config.model;
         }
-
         this._listenersMap = {};
         this._fetchPromises = {};
         this._initPromise = null;
@@ -138,7 +137,7 @@ export class ModelManager {
         if (!this._modelClient) {
             this._modelClient = new ModelClient();
         }
-        ModelManager._domain = this.modelClient.apiHost != null ? this.modelClient.apiHost : '';
+        this._clientlibUtil = new Utils(this.modelClient.apiHost);
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
 

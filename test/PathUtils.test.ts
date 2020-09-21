@@ -48,13 +48,24 @@ describe('PathUtils ->', () => {
         it('should detect the context path from the given location', () => {
             for (const keyPath in EXPECTED_CONTEXT_PATH) {
                 const contextPath = PathUtils.getContextPath(keyPath);
-                assert.equal(contextPath, EXPECTED_CONTEXT_PATH[keyPath], 'Incorrect context path detected for ' + keyPath);
+                assert.strictEqual(contextPath, EXPECTED_CONTEXT_PATH[keyPath], 'Incorrect context path detected for ' + keyPath);
             }
         });
 
         it('should detect the context path from the current location', () => {
             const contextPath = PathUtils.getContextPath();
-            assert.equal(contextPath, '', 'Incorrect context path detected');
+            assert.strictEqual(contextPath, '', 'Incorrect context path detected');
+        });
+
+        it('should determine correctly the current location', () => {
+            const url = 'http://www.abc.com';
+            global.window = Object.create(window);
+            Object.defineProperty(window, 'location', {
+                value: {
+                    href: url
+                }
+            });
+            assert.strictEqual(PathUtils.getCurrentURL(), url);
         });
     });
 
@@ -88,7 +99,7 @@ describe('PathUtils ->', () => {
                 }
 
                 const externalizedPath = PathUtils.externalize(keyPath);
-                assert.equal(externalizedPath, EXPECTED_EXTERNALIZED_PATHS[keyPath]);
+                assert.strictEqual(externalizedPath, EXPECTED_EXTERNALIZED_PATHS[keyPath]);
             }
         });
     });
@@ -125,7 +136,7 @@ describe('PathUtils ->', () => {
                 }
 
                 const internalizedPath = PathUtils.internalize(path);
-                assert.equal(internalizedPath, EXPECTED_INTERNALIZED_PATHS[path]);
+                assert.strictEqual(internalizedPath, EXPECTED_INTERNALIZED_PATHS[path]);
             }
         });
     });
@@ -136,17 +147,17 @@ describe('PathUtils ->', () => {
         const COMPONENT_MODEL_URL = COMPONENT_PATH + InternalConstants.DEFAULT_MODEL_JSON_EXTENSION;
 
         it('should adapt the provided path', () => {
-            assert.equal(PathUtils.getModelUrl(COMPONENT_PATH_HTML), COMPONENT_MODEL_URL);
+            assert.strictEqual(PathUtils.getModelUrl(COMPONENT_PATH_HTML), COMPONENT_MODEL_URL);
         });
 
         it('should return the provided meta property', () => {
             metaProps[MetaProperty.PAGE_MODEL_ROOT_URL] = COMPONENT_MODEL_URL;
-            assert.equal(PathUtils.getModelUrl(), COMPONENT_MODEL_URL);
+            assert.strictEqual(PathUtils.getModelUrl(), COMPONENT_MODEL_URL);
         });
 
         it('should return the currentPathname', () => {
             currentPathName = COMPONENT_MODEL_URL;
-            assert.equal(PathUtils.getModelUrl(), COMPONENT_MODEL_URL);
+            assert.strictEqual(PathUtils.getModelUrl(), COMPONENT_MODEL_URL);
         });
     });
 
@@ -184,7 +195,7 @@ describe('PathUtils ->', () => {
         it('should return paths that are ready to be stored', () => {
             for (const path in EXPECTED_PATH) {
                 const sanitizedPath = PathUtils.sanitize(path);
-                assert.equal(sanitizedPath, EXPECTED_PATH[path], 'Incorrect sanitized path for ' + path);
+                assert.strictEqual(sanitizedPath, EXPECTED_PATH[path], 'Incorrect sanitized path for ' + path);
             }
         });
     });
@@ -199,7 +210,7 @@ describe('PathUtils ->', () => {
             const eventName = 'customEvt';
 
             window.addEventListener(eventName, (event) => {
-                assert.equal(event.type, eventName);
+                assert.strictEqual(event.type, eventName);
                 // @ts-ignore
                 assert.deepEqual(event.detail, detail, 'Returns the page model object');
                 done();
@@ -220,78 +231,78 @@ describe('PathUtils ->', () => {
     });
 
     it('join', () => {
-        assert.equal(PathUtils.join(['path', '/path1', '//path1']), 'path/path1/path1');
-        assert.equal(PathUtils.join(['']), '');
-        assert.equal(PathUtils.join([]), '');
-        assert.equal(PathUtils.join(), '');
-        assert.equal(PathUtils.join(['/path', 'path1', 'path2']), '/path/path1/path2');
+        assert.strictEqual(PathUtils.join(['path', '/path1', '//path1']), 'path/path1/path1');
+        assert.strictEqual(PathUtils.join(['']), '');
+        assert.strictEqual(PathUtils.join([]), '');
+        assert.strictEqual(PathUtils.join(), '');
+        assert.strictEqual(PathUtils.join(['/path', 'path1', 'path2']), '/path/path1/path2');
     });
 
     it('normalize', () => {
-        assert.equal(PathUtils.normalize('path1//path2/path3'), 'path1/path2/path3');
-        assert.equal(PathUtils.normalize('/path1/path2/path3'), '/path1/path2/path3');
-        assert.equal(PathUtils.normalize('pathme'), 'pathme');
-        assert.equal(PathUtils.normalize(), '');
+        assert.strictEqual(PathUtils.normalize('path1//path2/path3'), 'path1/path2/path3');
+        assert.strictEqual(PathUtils.normalize('/path1/path2/path3'), '/path1/path2/path3');
+        assert.strictEqual(PathUtils.normalize('pathme'), 'pathme');
+        assert.strictEqual(PathUtils.normalize(), '');
     });
 
     it('makeAbsolute', () => {
-        assert.equal(PathUtils.makeAbsolute('path1/path2/path3'), '/path1/path2/path3');
-        assert.equal(PathUtils.makeAbsolute('/path1/path2/path3'), '/path1/path2/path3');
-        assert.equal(PathUtils.makeAbsolute(''), '');
-        assert.equal(PathUtils.makeAbsolute(), '');
+        assert.strictEqual(PathUtils.makeAbsolute('path1/path2/path3'), '/path1/path2/path3');
+        assert.strictEqual(PathUtils.makeAbsolute('/path1/path2/path3'), '/path1/path2/path3');
+        assert.strictEqual(PathUtils.makeAbsolute(''), '');
+        assert.strictEqual(PathUtils.makeAbsolute(), '');
     });
 
     it('makeRelative', () => {
-        assert.equal(PathUtils.makeRelative('path1/path2/path3'), 'path1/path2/path3');
-        assert.equal(PathUtils.makeRelative('/path1/path2/path3'), 'path1/path2/path3');
-        assert.equal(PathUtils.makeRelative(''), '');
-        assert.equal(PathUtils.makeRelative(), '');
+        assert.strictEqual(PathUtils.makeRelative('path1/path2/path3'), 'path1/path2/path3');
+        assert.strictEqual(PathUtils.makeRelative('/path1/path2/path3'), 'path1/path2/path3');
+        assert.strictEqual(PathUtils.makeRelative(''), '');
+        assert.strictEqual(PathUtils.makeRelative(), '');
     });
 
     it('getNodeName', () => {
-        assert.equal(PathUtils.getNodeName(), null);
-        assert.equal(PathUtils.getNodeName(undefined), null);
-        assert.equal(PathUtils.getNodeName(null), null);
-        assert.equal(PathUtils.getNodeName(null), null);
-        assert.equal(PathUtils.getNodeName(true), null);
-        assert.equal(PathUtils.getNodeName(0), null);
-        assert.equal(PathUtils.getNodeName(123), null);
-        assert.equal(PathUtils.getNodeName(123.45), null);
-        assert.equal(PathUtils.getNodeName(0x123), null);
-        assert.equal(PathUtils.getNodeName(0o123), null);
-        assert.equal(PathUtils.getNodeName(0b1001010), null);
-        assert.equal(PathUtils.getNodeName([]), null);
-        assert.equal(PathUtils.getNodeName(new Date()), null);
-        assert.equal(PathUtils.getNodeName(''), null);
-        assert.equal(PathUtils.getNodeName('foo'), 'foo');
-        assert.equal(PathUtils.getNodeName('/foo'), 'foo');
-        assert.equal(PathUtils.getNodeName('/foo///'), 'foo');
-        assert.equal(PathUtils.getNodeName('/foo/bar/12345'), '12345');
-        assert.equal(PathUtils.getNodeName('/foo/bar/12345////xyz'), 'xyz');
+        assert.strictEqual(PathUtils.getNodeName(), null);
+        assert.strictEqual(PathUtils.getNodeName(undefined), null);
+        assert.strictEqual(PathUtils.getNodeName(null), null);
+        assert.strictEqual(PathUtils.getNodeName(null), null);
+        assert.strictEqual(PathUtils.getNodeName(true), null);
+        assert.strictEqual(PathUtils.getNodeName(0), null);
+        assert.strictEqual(PathUtils.getNodeName(123), null);
+        assert.strictEqual(PathUtils.getNodeName(123.45), null);
+        assert.strictEqual(PathUtils.getNodeName(0x123), null);
+        assert.strictEqual(PathUtils.getNodeName(0o123), null);
+        assert.strictEqual(PathUtils.getNodeName(0b1001010), null);
+        assert.strictEqual(PathUtils.getNodeName([]), null);
+        assert.strictEqual(PathUtils.getNodeName(new Date()), null);
+        assert.strictEqual(PathUtils.getNodeName(''), null);
+        assert.strictEqual(PathUtils.getNodeName('foo'), 'foo');
+        assert.strictEqual(PathUtils.getNodeName('/foo'), 'foo');
+        assert.strictEqual(PathUtils.getNodeName('/foo///'), 'foo');
+        assert.strictEqual(PathUtils.getNodeName('/foo/bar/12345'), '12345');
+        assert.strictEqual(PathUtils.getNodeName('/foo/bar/12345////xyz'), 'xyz');
     });
 
     it('subpath', () => {
-        assert.equal(PathUtils.subpath('path1/path2/path3', 'path1'), 'path2/path3');
-        assert.equal(PathUtils.subpath('path1/path2/path3', 'path1/path2'), 'path3');
-        assert.equal(PathUtils.subpath('path1/path2/path3', 'path2/path3'), 'path1/path2/path3');
-        assert.equal(PathUtils.subpath('/path1/path2/path3', 'path1/path2'), 'path3');
-        assert.equal(PathUtils.subpath('/path1/path2/path3'), '/path1/path2/path3');
-        assert.equal(PathUtils.subpath(), '');
+        assert.strictEqual(PathUtils.subpath('path1/path2/path3', 'path1'), 'path2/path3');
+        assert.strictEqual(PathUtils.subpath('path1/path2/path3', 'path1/path2'), 'path3');
+        assert.strictEqual(PathUtils.subpath('path1/path2/path3', 'path2/path3'), 'path1/path2/path3');
+        assert.strictEqual(PathUtils.subpath('/path1/path2/path3', 'path1/path2'), 'path3');
+        assert.strictEqual(PathUtils.subpath('/path1/path2/path3'), '/path1/path2/path3');
+        assert.strictEqual(PathUtils.subpath(), '');
     });
 
     it('splitByDelimitators', () => {
-        assert.deepEqual(PathUtils.splitByDelimitators('/path1/path2/delim/path3/path4/delim/path/delim', ['delim']), ['/path1/path2', 'path3/path4', 'path']);
-        assert.deepEqual(PathUtils.splitByDelimitators('/path1/path2/delim', []), ['/path1/path2/delim']);
-        assert.deepEqual(PathUtils.splitByDelimitators('delim', ['delim']), []);
-        assert.deepEqual(PathUtils.splitByDelimitators('/path1/path2/delim1/path3/path4/delim2/path5/path6/delim3', ['delim1', 'delim2', 'delim3']), ['/path1/path2', 'path3/path4', 'path5/path6']);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim/path3/path4/delim/path/delim', ['delim']), ['/path1/path2', 'path3/path4', 'path']);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim', []), ['/path1/path2/delim']);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('delim', ['delim']), []);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim1/path3/path4/delim2/path5/path6/delim3', ['delim1', 'delim2', 'delim3']), ['/path1/path2', 'path3/path4', 'path5/path6']);
     });
 
     it('trimStrings', () => {
-        assert.equal(PathUtils.trimStrings('jcr:content/path1/path2', ['jcr:content']), 'path1/path2');
-        assert.equal(PathUtils.trimStrings('path1/path2', ['jcr:content']), 'path1/path2');
-        assert.equal(PathUtils.trimStrings('path1/path2/jcr:content', ['jcr:content']), 'path1/path2');
-        assert.equal(PathUtils.trimStrings('jcr:content/jcr:content/path1/path2/jcr:content/jcr:content/path1/jcr:content/jcr:content', ['jcr:content']), 'path1/path2/jcr:content/jcr:content/path1');
-        assert.equal(PathUtils.trimStrings('jcr:content/path1/path2/jcr:content', []), 'jcr:content/path1/path2/jcr:content');
-        assert.equal(PathUtils.trimStrings('/path1/path2', []), '/path1/path2');
+        assert.strictEqual(PathUtils.trimStrings('jcr:content/path1/path2', ['jcr:content']), 'path1/path2');
+        assert.strictEqual(PathUtils.trimStrings('path1/path2', ['jcr:content']), 'path1/path2');
+        assert.strictEqual(PathUtils.trimStrings('path1/path2/jcr:content', ['jcr:content']), 'path1/path2');
+        assert.strictEqual(PathUtils.trimStrings('jcr:content/jcr:content/path1/path2/jcr:content/jcr:content/path1/jcr:content/jcr:content', ['jcr:content']), 'path1/path2/jcr:content/jcr:content/path1');
+        assert.strictEqual(PathUtils.trimStrings('jcr:content/path1/path2/jcr:content', []), 'jcr:content/path1/path2/jcr:content');
+        assert.strictEqual(PathUtils.trimStrings('/path1/path2', []), '/path1/path2');
     });
 });

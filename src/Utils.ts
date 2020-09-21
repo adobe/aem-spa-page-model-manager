@@ -13,9 +13,16 @@
 import Constants, {AEM_MODE, TAG_ATTR, TAG_TYPE} from "./Constants";
 import { PathUtils } from "./PathUtils";
 import MetaProperty from "./MetaProperty";
-import { ModelManager } from "./ModelManager";
 
 export class Utils {
+    private static _apiDomain: string | null;
+
+    constructor(domain : string | null) {
+        Utils._apiDomain = domain;
+    }
+    static getApiDomain(): string | null {
+        return this._apiDomain;
+    }
     /**
      * Returns all the tags for requested state
      *
@@ -92,20 +99,13 @@ export class Utils {
     public static generateClientLibsUrl() : string[] {
         const clientlibs: string[] =  [];
         const path = Constants.EDITOR_CLIENTLIB_PATH;
-        const domain = this.getDomain();
-        clientlibs.push(`${domain}${path}page.js`);
-        clientlibs.push(`${domain}${path}page.css`);
-        clientlibs.push(`${domain}${path}pagemodel/messaging.js`);
-        clientlibs.push(`${domain}${path}messaging.js`);
+        const domain = Utils.getApiDomain();
+        if (domain) {
+            clientlibs.push(`${domain}${path}page.js`);
+            clientlibs.push(`${domain}${path}page.css`);
+            clientlibs.push(`${domain}${path}pagemodel/messaging.js`);
+            clientlibs.push(`${domain}${path}messaging.js`);
+        }
         return clientlibs;
-    }
-
-
-    /**
-     * Gets the domain name of API host
-     * @returns {string} API host
-     */
-    public static getDomain() : string | null{
-        return ModelManager._domain;
     }
 }
