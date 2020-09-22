@@ -99,12 +99,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#aem_mode_key" class="tsd-kind-icon">AEM_<wbr>MODE_<wbr>KEY</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#authoring_libraries" class="tsd-kind-icon">AUTHORING_<wbr>LIBRARIES</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#children_prop" class="tsd-kind-icon">CHILDREN_<wbr>PROP</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#editor_clientlib_path" class="tsd-kind-icon">EDITOR_<wbr>CLIENTLIB_<wbr>PATH</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#hierarchy_type_prop" class="tsd-kind-icon">HIERARCHY_<wbr>TYPE_<wbr>PROP</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#items_order_prop" class="tsd-kind-icon">ITEMS_<wbr>ORDER_<wbr>PROP</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#items_prop" class="tsd-kind-icon">ITEMS_<wbr>PROP</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#jcr_content" class="tsd-kind-icon">JCR_<wbr>CONTENT</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#path_prop" class="tsd-kind-icon">PATH_<wbr>PROP</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#state_authoring" class="tsd-kind-icon">STATE_<wbr>AUTHORING</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="constants.html#type_prop" class="tsd-kind-icon">TYPE_<wbr>PROP</a></li>
 							</ul>
 						</section>
@@ -123,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L52">src/Constants.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L76">src/Constants.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="constants.html" class="tsd-signature-type">Constants</a></h4>
@@ -134,12 +138,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="aem_mode_key" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> AEM_<wbr>MODE_<wbr>KEY</h3>
+					<div class="tsd-signature tsd-kind-icon">AEM_<wbr>MODE_<wbr>KEY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"aemmode"</span><span class="tsd-signature-symbol"> = &quot;aemmode&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L61">src/Constants.ts:61</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Flag name (query parameter) to determine AEM mode.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="authoring_libraries" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> AUTHORING_<wbr>LIBRARIES</h3>
+					<div class="tsd-signature tsd-kind-icon">AUTHORING_<wbr>LIBRARIES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&#x27;page.js&#x27;,&#x27;page.css&#x27;,&#x27;pagemodel/messaging.js&#x27;,&#x27;messaging.js&#x27;]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L71">src/Constants.ts:71</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Authoring libraries.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
 					<a name="children_prop" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> CHILDREN_<wbr>PROP</h3>
 					<div class="tsd-signature tsd-kind-icon">CHILDREN_<wbr>PROP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">":children"</span><span class="tsd-signature-symbol"> = &quot;:children&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L42">src/Constants.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L41">src/Constants.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -149,12 +183,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="editor_clientlib_path" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> EDITOR_<wbr>CLIENTLIB_<wbr>PATH</h3>
+					<div class="tsd-signature tsd-kind-icon">EDITOR_<wbr>CLIENTLIB_<wbr>PATH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/"</span><span class="tsd-signature-symbol"> = &quot;/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L66">src/Constants.ts:66</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Base path for editor clientlibs.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
 					<a name="hierarchy_type_prop" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> HIERARCHY_<wbr>TYPE_<wbr>PROP</h3>
 					<div class="tsd-signature tsd-kind-icon">HIERARCHY_<wbr>TYPE_<wbr>PROP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">":hierarchyType"</span><span class="tsd-signature-symbol"> = &quot;:hierarchyType&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L47">src/Constants.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L46">src/Constants.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -169,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">ITEMS_<wbr>ORDER_<wbr>PROP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">":itemsOrder"</span><span class="tsd-signature-symbol"> = &quot;:itemsOrder&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L32">src/Constants.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L31">src/Constants.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">ITEMS_<wbr>PROP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">":items"</span><span class="tsd-signature-symbol"> = &quot;:items&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L27">src/Constants.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L26">src/Constants.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +248,7 @@
 					<div class="tsd-signature tsd-kind-icon">JCR_<wbr>CONTENT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"jcr:content"</span><span class="tsd-signature-symbol"> = &quot;jcr:content&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L52">src/Constants.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L51">src/Constants.ts:51</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -214,7 +263,7 @@
 					<div class="tsd-signature tsd-kind-icon">PATH_<wbr>PROP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">":path"</span><span class="tsd-signature-symbol"> = &quot;:path&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L37">src/Constants.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L36">src/Constants.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -224,12 +273,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="state_authoring" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> STATE_<wbr>AUTHORING</h3>
+					<div class="tsd-signature tsd-kind-icon">STATE_<wbr>AUTHORING<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"authoring"</span><span class="tsd-signature-symbol"> = &quot;authoring&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L56">src/Constants.ts:56</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>AEM state <code>authoring</code>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
 					<a name="type_prop" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> TYPE_<wbr>PROP</h3>
 					<div class="tsd-signature tsd-kind-icon">TYPE_<wbr>PROP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">":type"</span><span class="tsd-signature-symbol"> = &quot;:type&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/f8d2f4f/src/Constants.ts#L22">src/Constants.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/Constants.ts#L21">src/Constants.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -250,6 +314,18 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="../enums/aem_mode.html" class="tsd-kind-icon">AEM_<wbr>MODE</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="../enums/tag_attr.html" class="tsd-kind-icon">TAG_<wbr>ATTR</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="../enums/tag_type.html" class="tsd-kind-icon">TAG_<wbr>TYPE</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="authoringutils.html" class="tsd-kind-icon">Authoring<wbr>Utils</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -259,7 +335,16 @@
 								<a href="constants.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="constants.html#aem_mode_key" class="tsd-kind-icon">AEM_<wbr>MODE_<wbr>KEY</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="constants.html#authoring_libraries" class="tsd-kind-icon">AUTHORING_<wbr>LIBRARIES</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="constants.html#children_prop" class="tsd-kind-icon">CHILDREN_<wbr>PROP</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="constants.html#editor_clientlib_path" class="tsd-kind-icon">EDITOR_<wbr>CLIENTLIB_<wbr>PATH</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="constants.html#hierarchy_type_prop" class="tsd-kind-icon">HIERARCHY_<wbr>TYPE_<wbr>PROP</a>
@@ -275,6 +360,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="constants.html#path_prop" class="tsd-kind-icon">PATH_<wbr>PROP</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="constants.html#state_authoring" class="tsd-kind-icon">STATE_<wbr>AUTHORING</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="constants.html#type_prop" class="tsd-kind-icon">TYPE_<wbr>PROP</a>

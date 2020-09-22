@@ -1,0 +1,470 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>AuthoringUtils | @adobe/aem-spa-page-model-manager</title>
+	<meta name="description" content="Documentation for @adobe/aem-spa-page-model-manager">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@adobe/aem-spa-page-model-manager</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="authoringutils.html">AuthoringUtils</a>
+				</li>
+			</ul>
+			<h1>Class AuthoringUtils</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">AuthoringUtils</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="authoringutils.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="authoringutils.html#_apidomain" class="tsd-kind-icon">_api<wbr>Domain</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="authoringutils.html#generateclientliburls" class="tsd-kind-icon">generate<wbr>Client<wbr>Lib<wbr>Urls</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="authoringutils.html#generateelementstring" class="tsd-kind-icon">generate<wbr>Element<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="authoringutils.html#getapidomain" class="tsd-kind-icon">get<wbr>Api<wbr>Domain</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="authoringutils.html#gettagsforstate" class="tsd-kind-icon">get<wbr>Tags<wbr>For<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="authoringutils.html#getaemmode" class="tsd-kind-icon">get<wbr>Aem<wbr>Mode</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="authoringutils.html#isstateactive" class="tsd-kind-icon">is<wbr>State<wbr>Active</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Authoring<wbr>Utils<span class="tsd-signature-symbol">(</span>domain<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L18">src/AuthoringUtils.ts:18</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>domain: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_apidomain" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _api<wbr>Domain</h3>
+					<div class="tsd-signature tsd-kind-icon">_api<wbr>Domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L18">src/AuthoringUtils.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="generateclientliburls" class="tsd-anchor"></a>
+					<h3>generate<wbr>Client<wbr>Lib<wbr>Urls</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">generate<wbr>Client<wbr>Lib<wbr>Urls<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L102">src/AuthoringUtils.ts:102</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates urls to authoring clientlibs.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>Clientlib URLs.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="generateelementstring" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> generate<wbr>Element<wbr>String</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">generate<wbr>Element<wbr>String<span class="tsd-signature-symbol">(</span>tagType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, attr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, attrValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L54">src/AuthoringUtils.ts:54</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns string value of all the concatenated tags.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tagType: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>attr: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>attrValue: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Concatenated tags.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getapidomain" class="tsd-anchor"></a>
+					<h3>get<wbr>Api<wbr>Domain</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Api<wbr>Domain<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L24">src/AuthoringUtils.ts:24</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="gettagsforstate" class="tsd-anchor"></a>
+					<h3>get<wbr>Tags<wbr>For<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Tags<wbr>For<wbr>State<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L32">src/AuthoringUtils.ts:32</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns all the tags for requested state.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>state: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Serialized tags.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="getaemmode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> get<wbr>Aem<wbr>Mode</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Aem<wbr>Mode<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L85">src/AuthoringUtils.ts:85</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks AEM mode.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+							<p>AEM mode or <code>null</code>.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="isstateactive" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> is<wbr>State<wbr>Active</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>State<wbr>Active<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/859802f/src/AuthoringUtils.ts#L70">src/AuthoringUtils.ts:70</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks status of requested state.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>state: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p><code>true</code> if requested state is active.</p>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="../enums/aem_mode.html" class="tsd-kind-icon">AEM_<wbr>MODE</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="../enums/tag_attr.html" class="tsd-kind-icon">TAG_<wbr>ATTR</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="../enums/tag_type.html" class="tsd-kind-icon">TAG_<wbr>TYPE</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="authoringutils.html" class="tsd-kind-icon">Authoring<wbr>Utils</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="authoringutils.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="authoringutils.html#_apidomain" class="tsd-kind-icon">_api<wbr>Domain</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="authoringutils.html#generateclientliburls" class="tsd-kind-icon">generate<wbr>Client<wbr>Lib<wbr>Urls</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="authoringutils.html#generateelementstring" class="tsd-kind-icon">generate<wbr>Element<wbr>String</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="authoringutils.html#getapidomain" class="tsd-kind-icon">get<wbr>Api<wbr>Domain</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="authoringutils.html#gettagsforstate" class="tsd-kind-icon">get<wbr>Tags<wbr>For<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="authoringutils.html#getaemmode" class="tsd-kind-icon">get<wbr>Aem<wbr>Mode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="authoringutils.html#isstateactive" class="tsd-kind-icon">is<wbr>State<wbr>Active</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="constants.html" class="tsd-kind-icon">Constants</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="editorclient.html" class="tsd-kind-icon">Editor<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="eventtype.html" class="tsd-kind-icon">Event<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="internalconstants.html" class="tsd-kind-icon">Internal<wbr>Constants</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="metaproperty.html" class="tsd-kind-icon">Meta<wbr>Property</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="modelclient.html" class="tsd-kind-icon">Model<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="modelmanager.html" class="tsd-kind-icon">Model<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="modelstore.html" class="tsd-kind-icon">Model<wbr>Store</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="pathutils.html" class="tsd-kind-icon">Path<wbr>Utils</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="routermodes.html" class="tsd-kind-icon">Router<wbr>Modes</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/itemwrapper.html" class="tsd-kind-icon">Item<wbr>Wrapper</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/model.html" class="tsd-kind-icon">Model</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/modelmanagerconfiguration.html" class="tsd-kind-icon">Model<wbr>Manager<wbr>Configuration</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#listenerfunction" class="tsd-kind-icon">Listener<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#context_path_regexp" class="tsd-kind-icon">CONTEXT_<wbr>PATH_<wbr>REGEXP</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#default_sling_model_selector" class="tsd-kind-icon">DEFAULT_<wbr>SLING_<wbr>MODEL_<wbr>SELECTOR</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#jcr_content_pattern" class="tsd-kind-icon">JCR_<wbr>CONTENT_<wbr>PATTERN</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="../globals.html#dispatchroutechanged" class="tsd-kind-icon">dispatch<wbr>Route<wbr>Changed</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#getmodelpath" class="tsd-kind-icon">get<wbr>Model<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="../globals.html#getroutefilters" class="tsd-kind-icon">get<wbr>Route<wbr>Filters</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="../globals.html#haschildofpath" class="tsd-kind-icon">has<wbr>Child<wbr>OfPath</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="../globals.html#ismodelrouterenabled" class="tsd-kind-icon">is<wbr>Model<wbr>Router<wbr>Enabled</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="../globals.html#ispageurlroot" class="tsd-kind-icon">is<wbr>PageURLRoot</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="../globals.html#isrouteexcluded" class="tsd-kind-icon">is<wbr>Route<wbr>Excluded</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="../globals.html#routemodel" class="tsd-kind-icon">route<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#triggerpagemodelloaded" class="tsd-kind-icon">trigger<wbr>Page<wbr>Model<wbr>Loaded</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
