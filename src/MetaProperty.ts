@@ -11,9 +11,7 @@
  */
 
 /**
- * Names of the meta properties associated with the PageModelProvider and ModelRouter
- *
- * @type {{PAGE_MODEL_ROOT_URL: string, PAGE_MODEL_ROUTE_FILTERS: string, PAGE_MODEL_ROUTER: string}}
+ * Meta property names associated with the PageModelProvider and ModelRouter.
  */
 export class MetaProperty {
     /**
@@ -30,6 +28,11 @@ export class MetaProperty {
      * Meta property pointing to model router.
      */
     public static readonly PAGE_MODEL_ROUTER = 'cq:pagemodel_router';
+
+    /**
+     * Meta property pointing to wcm mode.
+     */
+    public static readonly WCM_MODE = 'cq:wcmmode';
 
     private constructor() {
         // hide constructor

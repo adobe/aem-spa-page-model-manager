@@ -17,6 +17,7 @@ import { Model } from './Model';
 import { ModelClient } from './ModelClient';
 import { ModelStore } from './ModelStore';
 import { PathUtils } from './PathUtils';
+import { AuthoringUtils } from './AuthoringUtils';
 
 /**
  * Does the provided model object contains an entry for the given child path
@@ -38,12 +39,10 @@ function hasChildOfPath(model: any, childPath: string): boolean {
 }
 
 /**
- * Does the provided page path correspond to the model root path
- *
- * @param {string} pagePath         - path of the page model
- * @param {string} modelRootPath    - current model root path
- * @return {boolean}
- *
+ * Checks whether provided path corresponds to model root path.
+ * @param pagePath Page model path.
+ * @param modelRootPath Model root path.
+ * @returns `true` if provided page path is root
  * @private
  */
 function isPageURLRoot(pagePath: string, modelRootPath: string): boolean {
@@ -66,6 +65,7 @@ export class ModelManager {
     private _fetchPromises: { [key: string]: Promise<Model> } = {};
     private _initPromise: any;
     private _editorClient: EditorClient | undefined;
+    private _clientlibUtil: AuthoringUtils | undefined;
 
     public get modelClient() {
         if (!this._modelClient) {
@@ -138,12 +138,11 @@ export class ModelManager {
             this._modelClient = new ModelClient();
         }
 
+        this._clientlibUtil = new AuthoringUtils(this.modelClient.apiHost);
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
 
-
         this._initPromise = this._checkDependencies().then(() => {
-
             const data = this.modelStore.getData(rootModelPath);
 
             if (data && (Object.keys(data).length > 0)) {
@@ -182,8 +181,7 @@ export class ModelManager {
 
     /**
      * Returns the path of the data model root.
-     *
-     * @return {string}
+     * @returns Page model root path.
      */
     public get rootPath(): string {
         return this.modelStore.rootPath;

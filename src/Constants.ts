@@ -12,7 +12,6 @@
 
 /**
  * Useful variables for interacting with CQ/AEM components.
- *
  * @namespace Constants
  */
 export class Constants {
@@ -51,9 +50,58 @@ export class Constants {
      */
     public static readonly JCR_CONTENT = 'jcr:content';
 
+    /**
+     * AEM state `authoring`.
+     */
+    public static readonly STATE_AUTHORING = 'authoring';
+
+    /**
+     * Flag name (query parameter) to determine AEM mode.
+     */
+    public static readonly AEM_MODE_KEY = 'aemmode';
+
+    /**
+     * Base path for editor clientlibs.
+     */
+    public static readonly EDITOR_CLIENTLIB_PATH = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/';
+
+    /**
+     * Authoring libraries.
+     */
+    public static readonly AUTHORING_LIBRARIES = [
+        'page.js',
+        'page.css',
+        'pagemodel/messaging.js',
+        'messaging.js'
+    ];
+
     private constructor() {
         // hide constructor
     }
+}
+
+/**
+ * AEM modes.
+ */
+export enum AEM_MODE {
+    EDIT = 'edit',
+    PREVIEW = 'preview'
+}
+
+/**
+ * Supported tag types.
+ */
+export enum TAG_TYPE {
+    JS = 'script',
+    STYLESHEET = 'stylesheet'
+}
+
+/**
+ * Supported tag attributes.
+ */
+export enum TAG_ATTR {
+    SRC = 'src',
+    HREF = 'href'
 }
 
 export default Constants;

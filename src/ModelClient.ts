@@ -18,17 +18,24 @@ export class ModelClient {
 
     /**
      * @constructor
-     * @param {string} [apiHost] - Http host of the API
+     * @param [apiHost] Http host of the API.
      */
     constructor(apiHost?: string) {
-        this._apiHost = apiHost || '';
+        this._apiHost = apiHost || null;
         this._fetchPromises = {};
     }
 
     /**
+     * Returns http host of the API.
+     * @returns API host or `null`.
+     */
+    get apiHost(): string | null {
+        return this._apiHost;
+    }
+
+    /**
      * Fetches a model using the given a resource path.
-     *
-     * @param {string} modelPath - Absolute path to the model.
+     * @param modelPath Absolute path to the model.
      * @return {*}
      */
     public fetch<M extends Model>(modelPath: string): Promise<M> {

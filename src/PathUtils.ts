@@ -311,6 +311,14 @@ export class PathUtils {
     }
 
     /**
+     * Returns empty string or current URL if called in the browser.
+     * @returns Current URL.
+     */
+    public static getCurrentURL(): string {
+        return this.isBrowser() ? window.location.href : '';
+    }
+
+    /**
      * Dispatches a custom event on the window object, when in the browser context.
      *
      * @param  {String} eventName - the name of the custom event
