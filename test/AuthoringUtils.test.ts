@@ -47,7 +47,7 @@ describe('AuthoringUtils ->', () => {
             jest.spyOn(authoringUtils, 'generateClientLibUrls').mockReturnValue(clientLibUrls);
 
             // when
-            const actual = authoringUtils.getTagsForState(Constants.AUTHORING);
+            const actual = authoringUtils.getTagsForState(Constants.STATE_AUTHORING);
 
             // then
             assert.strictEqual(actual, expected);
@@ -120,7 +120,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(AuthoringUtils, 'getAemMode').mockReturnValue(null);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), false);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), false);
             });
 
             it('should return `false` if: in authoring mode and `aemmode` is anything (except: edit)', () => {
@@ -129,7 +129,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(AuthoringUtils, 'getAemMode').mockReturnValue(null);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), false);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), false);
             });
 
             it('should return `true`: if in authoring mode and `aemmode` is `edit`', () => {
@@ -138,7 +138,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(AuthoringUtils, 'getAemMode').mockReturnValue(null);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), true);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), true);
             });
         });
 
@@ -167,7 +167,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(null);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), false);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), false);
             });
 
             it('should return `false` if: in authoring mode and `aemmode` is anything (except: edit)', () => {
@@ -176,7 +176,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(null);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), false);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), false);
             });
 
             it('should return `true`: if in authoring mode and `aemmode` is `edit`', () => {
@@ -185,7 +185,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(null);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), true);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), true);
             });
         });
 
@@ -214,7 +214,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.EDIT);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), true);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), true);
             });
 
             it('should return `true` if: in authoring mode and `aemmode` is `edit` (query parameter) and `preview` (meta property)', () => {
@@ -223,7 +223,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), true);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), true);
             });
 
             it('should return `false`: if in authoring mode and `aemmode` is anything (query parameter) and anything (meta property)', () => {
@@ -232,7 +232,7 @@ describe('AuthoringUtils ->', () => {
                 jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue('foo');
 
                 // then
-                assert.strictEqual(AuthoringUtils.isStateActive(Constants.AUTHORING), false);
+                assert.strictEqual(AuthoringUtils.isStateActive(Constants.STATE_AUTHORING), false);
             });
         });
     });

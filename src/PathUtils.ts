@@ -311,8 +311,8 @@ export class PathUtils {
     }
 
     /**
-     * Returns the current browser url.
-     * @returns {String}
+     * Returns empty string or current URL if called in the browser.
+     * @returns Current URL.
      */
     public static getCurrentURL(): string {
         return this.isBrowser() ? window.location.href : '';

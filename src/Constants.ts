@@ -51,12 +51,12 @@ export class Constants {
     public static readonly JCR_CONTENT = 'jcr:content';
 
     /**
-     * States.
+     * AEM state `authoring`.
      */
-    public static readonly AUTHORING = 'authoring';
+    public static readonly STATE_AUTHORING = 'authoring';
 
     /**
-     * Query param for aem mode flag name.
+     * Flag name (query parameter) to determine AEM mode.
      */
     public static readonly AEM_MODE_KEY = 'aemmode';
 
@@ -81,7 +81,7 @@ export class Constants {
 }
 
 /**
- * AEM modes
+ * AEM modes.
  */
 export enum AEM_MODE {
     EDIT = 'edit',
@@ -89,7 +89,7 @@ export enum AEM_MODE {
 }
 
 /**
- * Valid tag types
+ * Supported tag types.
  */
 export enum TAG_TYPE {
     JS = 'script',
@@ -97,7 +97,7 @@ export enum TAG_TYPE {
 }
 
 /**
- * Valid tag attributes
+ * Supported tag attributes.
  */
 export enum TAG_ATTR {
     SRC = 'src',

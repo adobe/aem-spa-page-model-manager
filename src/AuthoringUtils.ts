@@ -32,7 +32,7 @@ export class AuthoringUtils {
     public getTagsForState(state: string): string {
         let tags = '';
 
-        if (state === Constants.AUTHORING) {
+        if (state === Constants.STATE_AUTHORING) {
             const clientLibs = this.generateClientLibUrls();
 
             tags = clientLibs.map(resource => {
@@ -68,7 +68,7 @@ export class AuthoringUtils {
      * @returns `true` if requested state is active.
      */
     public static isStateActive(state: string): boolean {
-        if (state === Constants.AUTHORING) {
+        if (state === Constants.STATE_AUTHORING) {
             const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.EDIT;
             const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getAemMode() === AEM_MODE.EDIT);
 
@@ -89,7 +89,7 @@ export class AuthoringUtils {
             url = new URL(PathUtils.getCurrentURL());
             return url.searchParams.get(Constants.AEM_MODE_KEY);
         } catch (e) {
-            // Invalid current url
+            // invalid url
         }
 
         return null;

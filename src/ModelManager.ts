@@ -39,12 +39,10 @@ function hasChildOfPath(model: any, childPath: string): boolean {
 }
 
 /**
- * Does the provided page path correspond to the model root path
- *
- * @param {string} pagePath         - path of the page model
- * @param {string} modelRootPath    - current model root path
- * @return {boolean}
- *
+ * Checks whether provided path corresponds to model root path.
+ * @param pagePath Page model path.
+ * @param modelRootPath Model root path.
+ * @returns `true` if provided page path is root
  * @private
  */
 function isPageURLRoot(pagePath: string, modelRootPath: string): boolean {
@@ -73,6 +71,7 @@ export class ModelManager {
         if (!this._modelClient) {
             throw new Error('ModelClient is undefined. Call initialize first!');
         }
+
         return this._modelClient;
     }
 
@@ -109,6 +108,7 @@ export class ModelManager {
             this._modelClient = config.modelClient;
             initialModel = config.model;
         }
+
         this._listenersMap = {};
         this._fetchPromises = {};
         this._initPromise = null;
@@ -181,8 +181,7 @@ export class ModelManager {
 
     /**
      * Returns the path of the data model root.
-     *
-     * @return {string}
+     * @returns Page model root path.
      */
     public get rootPath(): string {
         return this.modelStore.rootPath;
