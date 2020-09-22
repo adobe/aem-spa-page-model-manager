@@ -12,7 +12,7 @@
 
 import * as assert from 'assert';
 import { AuthoringUtils } from '../src/AuthoringUtils';
-import Constants, { AEM_MODE } from '../src/Constants';
+import Constants, { AEM_MODE, TAG_TYPE, TAG_ATTR } from '../src/Constants';
 import { PathUtils } from '../src/PathUtils';
 
 describe('AuthoringUtils ->', () => {
@@ -38,6 +38,64 @@ describe('AuthoringUtils ->', () => {
         assert.deepStrictEqual(actual, expected);
     });
 
+    it('should return empty array if domain is not provided', () => {
+        // given
+        jest.spyOn(authoringUtils, 'getApiDomain').mockReturnValue(null);
+
+        // when
+        const actual = authoringUtils.generateClientLibUrls();
+
+        // then
+        assert.deepStrictEqual(actual, []);
+    });
+
+    describe('generateElementString', () => {
+        let generateElementStringSpy: jest.SpyInstance<any, unknown[]>;
+
+        const mockParameters = (tagType: string, attr: string, attrValue: string) => {
+            // given
+             generateElementStringSpy = jest.spyOn(AuthoringUtils.prototype as any, 'generateElementString')
+                .mockImplementationOnce(() => generateElementStringSpy.getMockImplementation()(tagType, attr, attrValue));
+
+            jest.spyOn(authoringUtils, 'generateClientLibUrls').mockReturnValue([ 'http://foo/dummy-request.js' ]);
+
+            // when
+            authoringUtils.getTagsForState(Constants.STATE_AUTHORING);
+        };
+
+        it('should not generate any element if requested for empty tag name', () => {
+            // given and when
+            mockParameters('', 'src', 'foo');
+
+            // then
+            expect(generateElementStringSpy).toHaveReturnedWith('');
+        });
+
+        it('should not generate any element if requested for unsupported tag name', () => {
+            // given and when
+            mockParameters('', 'src', 'foo');
+
+            // then
+            expect(generateElementStringSpy).toHaveReturnedWith('');
+        });
+
+        it('should generate element markup if requested for supported tag type (script)', () => {
+            // given and when
+            mockParameters(TAG_TYPE.JS, TAG_ATTR.SRC, 'foo.bar');
+
+            // then
+            expect(generateElementStringSpy).toHaveReturnedWith(`<script src="foo.bar"></script>`);
+        });
+
+        it('should generate element markup if requested for supported tag type (stylesheet)', () => {
+            // given and when
+            mockParameters(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, 'foo.bar');
+
+            // then
+            expect(generateElementStringSpy).toHaveReturnedWith(`<link href="foo.bar"/>`);
+        });
+    });
+
     describe('getTagsForState', () => {
         it('should return html tags if in authoring mode', () => {
             // given
@@ -56,6 +114,19 @@ describe('AuthoringUtils ->', () => {
         it('should return empty string if not in authoring mode', () => {
             // when
             const actual = authoringUtils.getTagsForState('foobar');
+
+            // then
+            assert.strictEqual(actual, '');
+        });
+
+        it('should return empty string if unsupported resources were returned by `generateClientLibUrls`', () => {
+            // given
+            const clientLibUrls = [ 'http://foo/test.exe', 'http://foo/test.bat' ];
+
+            jest.spyOn(authoringUtils, 'generateClientLibUrls').mockReturnValue(clientLibUrls);
+
+            // when
+            const actual = authoringUtils.getTagsForState(Constants.STATE_AUTHORING);
 
             // then
             assert.strictEqual(actual, '');
@@ -88,6 +159,14 @@ describe('AuthoringUtils ->', () => {
         it('should return `null` if `aemmode` parameter is not provided', () => {
             // when
             jest.spyOn(PathUtils, 'getCurrentURL').mockReturnValue(`http://www.abc.com`);
+
+            // then
+            assert.strictEqual(AuthoringUtils.getAemMode(), null);
+        });
+
+        it('should return `null` if URL is malformed', () => {
+            // when
+            jest.spyOn(PathUtils, 'getCurrentURL').mockReturnValue(`foobar`);
 
             // then
             assert.strictEqual(AuthoringUtils.getAemMode(), null);
