@@ -1,0 +1,7 @@
+organization=adobeinc
+projectKey=adobe_aem-spa-page-model-manager
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.12387
+dashboardUrl=https://sonarcloud.io/dashboard?id=adobe_aem-spa-page-model-manager&branch=master
+ceTaskId=AXS2h9OToASgfC7Tjd0F
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXS2h9OToASgfC7Tjd0F

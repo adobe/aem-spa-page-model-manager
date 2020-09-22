@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.0.3...v1.1.0) (2020-09-22)
+
+
+### Features
+
+* conditionally add async tag in page editor clientlibs ([#19](https://github.com/adobe/aem-spa-page-model-manager/issues/19)) ([9c3e86b](https://github.com/adobe/aem-spa-page-model-manager/commit/9c3e86b2ac5c55a71ec2ff2bb65d44dc9fa4994d))
+
 ## [1.0.3](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.0.2...v1.0.3) (2020-08-30)
 
 
