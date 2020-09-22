@@ -12,7 +12,6 @@
 
 /**
  * Useful variables for interacting with CQ/AEM components.
- *
  * @namespace Constants
  */
 export class Constants {
@@ -62,9 +61,19 @@ export class Constants {
     public static readonly AEM_MODE_KEY = 'aemmode';
 
     /**
-     * Base path for editor clientlibs
+     * Base path for editor clientlibs.
      */
     public static readonly EDITOR_CLIENTLIB_PATH = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/';
+
+    /**
+     * Authoring libraries.
+     */
+    public static readonly AUTHORING_LIBRARIES = [
+        'page.js',
+        'page.css',
+        'pagemodel/messaging.js',
+        'messaging.js'
+    ];
 
     private constructor() {
         // hide constructor

@@ -17,7 +17,7 @@ import { Model } from './Model';
 import { ModelClient } from './ModelClient';
 import { ModelStore } from './ModelStore';
 import { PathUtils } from './PathUtils';
-import { Utils } from "./Utils";
+import { AuthoringUtils } from './AuthoringUtils';
 
 /**
  * Does the provided model object contains an entry for the given child path
@@ -67,7 +67,7 @@ export class ModelManager {
     private _fetchPromises: { [key: string]: Promise<Model> } = {};
     private _initPromise: any;
     private _editorClient: EditorClient | undefined;
-    private _clientlibUtil: Utils | undefined;
+    private _clientlibUtil: AuthoringUtils | undefined;
 
     public get modelClient() {
         if (!this._modelClient) {
@@ -137,13 +137,12 @@ export class ModelManager {
         if (!this._modelClient) {
             this._modelClient = new ModelClient();
         }
-        this._clientlibUtil = new Utils(this.modelClient.apiHost);
+
+        this._clientlibUtil = new AuthoringUtils(this.modelClient.apiHost);
         this._editorClient = new EditorClient(this);
         this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
 
-
         this._initPromise = this._checkDependencies().then(() => {
-
             const data = this.modelStore.getData(rootModelPath);
 
             if (data && (Object.keys(data).length > 0)) {
