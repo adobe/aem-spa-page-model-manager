@@ -17,9 +17,9 @@ import { PathUtils } from './PathUtils';
 
 /**
  * Broadcast an event to indicate the page model has been loaded
- *
- * @param {{}} model - model item to be added to the broadcast payload
+ * @param model - model item to be added to the broadcast payload
  * @fires cq-pagemodel-loaded
+ * @private
  */
 export function triggerPageModelLoaded(model: any): void {
     // Deep copy to protect the internal state of the page mode
@@ -32,13 +32,14 @@ export function triggerPageModelLoaded(model: any): void {
 
 /**
  * The EditorClient is responsible for the interactions with the Page Editor.
+ * @private
  */
 export class EditorClient {
     public _modelManager: ModelManager;
     public _windowListener: EventListenerOrEventListenerObject;
 
-    constructor(ModelManager: ModelManager) {
-        this._modelManager = ModelManager;
+    constructor(modelManager: ModelManager) {
+        this._modelManager = modelManager;
 
         this._windowListener = (event: any) => {
             if (!event || !event.detail || !event.detail.msg) {

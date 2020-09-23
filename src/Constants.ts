@@ -11,8 +11,8 @@
  */
 
 /**
- * Useful variables for interacting with CQ/AEM components.
- * @namespace Constants
+ * Variables for interacting with AEM components.
+ * @private
  */
 export class Constants {
     /**
@@ -90,6 +90,7 @@ export enum AEM_MODE {
 
 /**
  * Supported tag types.
+ * @private
  */
 export enum TAG_TYPE {
     JS = 'script',
@@ -98,6 +99,7 @@ export enum TAG_TYPE {
 
 /**
  * Supported tag attributes.
+ * @private
  */
 export enum TAG_ATTR {
     SRC = 'src',

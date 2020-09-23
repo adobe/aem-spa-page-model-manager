@@ -18,23 +18,26 @@ import MetaProperty from './MetaProperty';
 
 /**
  * Regexp used to extract the context path of a location.
- * The context path is extracted by assuming that the location starts with the context path followed by one of the following node names
+ * The context path is extracted by assuming that the location starts with the context path followed by one of the following node names.
+ * @private
  */
 const CONTEXT_PATH_REGEXP = /(?:\/)(?:content|apps|libs|etc|etc.clientlibs|conf|mnt\/overlay)(?:\/)/;
 
+/**
+ * @private
+ */
 const JCR_CONTENT_PATTERN = "(.+)/" + Constants.JCR_CONTENT + "/(.+)";
 
 /**
  * Helper functions related to path manipulation.
- *
- * @namespace PathUtils
+ * @private
  */
 export class PathUtils {
     /**
      * Returns if the code executes in the browser context or not by checking for the
      * existance of the window object
      *
-     * @returns {Boolean} the result of the check of the existance of the window object
+     * @returns The result of the check of the existance of the window object.
      */
     public static isBrowser(): boolean {
         return typeof window !== 'undefined';
@@ -43,8 +46,8 @@ export class PathUtils {
     /**
      * Returns the context path of the given location.
      * If no location is provided, it fallbacks to the current location.
-     * @param {String} [location] - Location to be used to detect the context path from.
-     * @returns {String}
+     * @param [location] Location to be used to detect the context path from.
+     * @returns
      */
     public static getContextPath(location?: string | null): string {
         const path = location || this.getCurrentPathname();
@@ -65,31 +68,30 @@ export class PathUtils {
      * Returns an empty string if the given path is equal to the root model path.
      * This function is a utility tool that converts a provided root model path into an internal specific empty path
      *
-     * @param {string} [path]   - raw model path
-     * @return {string} the valid model path
-     *
+     * @param [path] Raw model path.
      * @private
+     * @return The valid model path.
      */
     public static adaptPagePath(path: string, rootPath?: string) {
         if (!path) {
             return '';
         }
 
+        const localPath = PathUtils.internalize(path);
+
         if (!rootPath) {
-            return path;
+            return localPath;
         }
 
-        const localPath = PathUtils.internalize(path);
         const localRootModelPath = PathUtils.sanitize(rootPath);
 
         return (localPath === localRootModelPath) ? '' : localPath;
     }
 
     /**
-     * Returns the given URL externalized by adding the optional context path
-     *
-     * @param {string} url - URL to externalize
-     * @returns {string}
+     * Returns the given URL externalized by adding the optional context path.
+     * @param url URL to externalize.
+     * @returns
      */
     public static externalize(url: string): string {
         const contextPath = this.getContextPath();
@@ -99,10 +101,9 @@ export class PathUtils {
     }
 
     /**
-     * Returns the given URL internalized by removing the optional context path
-     *
-     * @param {string|null} url - URL to internalize
-     * @returns {string}
+     * Returns the given URL internalized by removing the optional context path.
+     * @param url URL to internalize.
+     * @returns
      */
     public static internalize(url: string | null): string {
         if (!url || (typeof url !== 'string')) {
@@ -116,10 +117,9 @@ export class PathUtils {
     }
 
     /**
-     * Returns the value of the meta property with the given key
-     *
-     * @param {string} propertyName  - name of the meta property
-     * @return {string|null}
+     * Returns the value of the meta property with the given key.
+     * @param propertyName Name of the meta property.
+     * @return
      */
     public static getMetaPropertyValue(propertyName: string): string | null {
         let value = null;
@@ -134,19 +134,15 @@ export class PathUtils {
     }
 
     /**
-     * Returns a model path for the given URL
-     *
-     * @param {string} url - Raw URL for which to get a model URL
-     * @return {string|undefined}
+     * Returns a model path for the given URL.
+     * @param url Raw URL for which to get a model URL.
      */
     public static convertToModelUrl(url: string): string | undefined {
         return url && url.replace && url.replace(/\.htm(l)?$/, InternalConstants.DEFAULT_MODEL_JSON_EXTENSION);
     }
 
     /**
-     * Returns the model URL as contained in the current page URL
-     *
-     * @return {string|null}
+     * Returns the model URL as contained in the current page URL.
      */
     public static getCurrentPageModelUrl(): string | null {
         // extract the model from the pathname
@@ -164,9 +160,8 @@ export class PathUtils {
      * Returns the URL of the page model to initialize the page model manager with.
      * It is either derived from a meta tag property called 'cq:pagemodel_root_url' or from the given location.
      * If no location is provided, it derives it from the current location.
-     *
-     * @param {String} [url]   - path or URL to be used to derive the page model URL from
-     * @returns {String}
+     * @param [url]   - path or URL to be used to derive the page model URL from
+     * @returns
      */
     public static getModelUrl(url?: string) {
         // Model path extracted from the given url
@@ -189,8 +184,7 @@ export class PathUtils {
      * Returns the given path after sanitizing it.
      * This function should be called on page paths before storing them in the page model,
      * to make sure only properly formatted paths (e.g., "/content/mypage") are stored.
-     * @param {string} path - Path of the page to be sanitized.
-     * @return {string}
+     * @param path - Path of the page to be sanitized.
      */
     public static sanitize(path: string | null) {
         if (!path || (typeof path !== 'string')) {
@@ -225,9 +219,8 @@ export class PathUtils {
 
     /**
      * Returns the given path extended with the given extension.
-     * @param {String} path - Path to be extended.
-     * @param {String} extension - Extension to be added.
-     * @returns {String}
+     * @param path - Path to be extended.
+     * @param extension - Extension to be added.
      */
     public static addExtension(path: string, extension: string): string {
         if (!extension || extension.length < 1) {
@@ -276,9 +269,8 @@ export class PathUtils {
 
     /**
      * Returns the given path extended with the given selector.
-     * @param {String} path - Path to be extended.
-     * @param {String} selector - Selector to be added.
-     * @returns {String}
+     * @param path - Path to be extended.
+     * @param selector - Selector to be added.
      */
     public static addSelector(path: string, selector: string) {
         if (!selector || (selector.length < 1)) {
@@ -304,7 +296,6 @@ export class PathUtils {
 
     /**
      * Returns the current location as a string.
-     * @returns {String}
      */
     public static getCurrentPathname(): string | null {
         return this.isBrowser() ? window.location.pathname : null;
@@ -320,9 +311,8 @@ export class PathUtils {
 
     /**
      * Dispatches a custom event on the window object, when in the browser context.
-     *
-     * @param  {String} eventName - the name of the custom event
-     * @param {Object} options - the custom event options
+     * @param eventName The name of the custom event.
+     * @param options The custom event options.
      */
     public static dispatchGlobalCustomEvent(eventName: string, options: any): void {
         if (this.isBrowser()) {
@@ -332,9 +322,6 @@ export class PathUtils {
 
     /**
      * Joins given path segments into a string using slash.
-     *
-     * @param paths
-     * @returns {string}
      */
     public static join(paths?: string[]): string {
         return paths ? this.normalize(paths.filter((path) => path).join('/')) : '';
@@ -342,9 +329,6 @@ export class PathUtils {
 
     /**
      * Normalizes given path by replacing repeated slash with a single one.
-     *
-     * @param {string} path
-     * @returns {string}
      */
     public static normalize(path?: string): string {
         const normalizedPath = path ? path.replace(/\/+/g, '/') : '';
@@ -354,9 +338,6 @@ export class PathUtils {
 
     /**
      * Returns path that starts with slash.
-     *
-     * @param {string} path
-     * @returns {string}
      */
     public static makeAbsolute(path?: string): string {
         if (!path || (typeof path !== 'string')) {
@@ -368,9 +349,6 @@ export class PathUtils {
 
     /**
      * Returns path without the leading slash.
-     *
-     * @param path
-     * @returns {string}
      */
     public static makeRelative(path?: string): string {
         if (!path || (typeof path !== 'string')) {
@@ -381,10 +359,7 @@ export class PathUtils {
     }
 
     /**
-     * Returns path to the direct parent
-     *
-     * @param path
-     * @returns {string|null}
+     * Returns path to the direct parent.
      */
     public static getParentNodePath(path: string | null) {
         if (path && (path.length > 0)) {
@@ -399,19 +374,14 @@ export class PathUtils {
     }
 
     /**
-     * Checks if given path is an JCR path
-     *
-     * @param path
-     * @returns {boolean}
+     * Checks if given path is an JCR path.
      */
     public static isItem(path: string): boolean {
         return new RegExp(JCR_CONTENT_PATTERN).test(path);
     }
 
     /**
-     * Returns the name of the last node of the given path
-     * @param {string} path
-     * @returns {string|null}
+     * Returns the name of the last node of the given path.
      */
     public static getNodeName(path: string): string | null {
         const chunks = (typeof path === 'string') ? path.replace(/\/+/g, '/').split(/\//).filter(Boolean) : [];
@@ -423,10 +393,6 @@ export class PathUtils {
     /**
      * Returns the subpath of the targetPath relative to the rootPath,
      * or the targetPath if the rootPath is not a root of the targetPath.
-     *
-     * @param targetPath
-     * @param rootPath
-     * @returns {*}
      */
     public static subpath(targetPath?: string, rootPath?: string) {
         if (!targetPath) {
@@ -457,10 +423,6 @@ export class PathUtils {
 
     /**
      * Returns an array of segments of the path, split by the custom set of delimitators passed as an array.
-     *
-     * @param {string} path
-     * @param {array} delimitators
-     * @returns {*}
      */
     public static splitByDelimitators(path: string, delimitators: string[]) {
         let paths = [path];
@@ -490,11 +452,9 @@ export class PathUtils {
     }
 
     /**
-     * Returns an JCR path based on pagePath and dataPath
-     *
-     * @param pagePath  path to the page
-     * @param dataPath  path to the item on the page
-     * @returns {string}
+     * Returns an JCR path based on pagePath and dataPath.
+     * @param pagePath Path to the page.
+     * @param dataPath Path to the item on the page.
      */
     public static _getJCRPath(pagePath: string, dataPath: string): string {
         return [ pagePath, Constants.JCR_CONTENT, dataPath ].join('/');
@@ -502,10 +462,7 @@ export class PathUtils {
 
     /**
      * Returns object containing pagePath (path to a page) and, if exists, itemPath (path to the item on that page)
-     * from the passed path
-     *
-     * @param {string} path
-     * @returns {{pagePath}}
+     * from the passed path.
      */
     public static splitPageContentPaths(path: string): {itemPath?: string; pagePath: string} | undefined {
         if (!path && (typeof path !== 'string')) {
@@ -527,11 +484,7 @@ export class PathUtils {
     }
 
     /**
-     * Returns path that is no longer prefixed nor suffixed by the set of strings passed as an array
-     *
-     * @param path
-     * @param {array} strings
-     * @returns {*}
+     * Returns path that is no longer prefixed nor suffixed by the set of strings passed as an array.
      */
     public static trimStrings(path: string, strings: string[]): string {
         strings.forEach((str) => {
