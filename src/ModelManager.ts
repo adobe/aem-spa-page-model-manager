@@ -93,90 +93,147 @@ export class ModelManager {
      * Once the initial model is loaded and if the data model doesn't contain the path of the current pathname, the library attempts to fetch a fragment of model.
      *
      * @param {string|InitializationConfig} [config]                - URL to the data model or configuration object
-     * @fires cq-pagemodel-loaded
      * @return {Promise}
      */
     public initialize<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
+        this.initializeAsync(config);
+        return this._initPromise;
+    }
+
+    /**
+     * Initializes the ModelManager asynchronously using the rootModelPath to resolve a data model.
+     * For remote apps with no defined root model, an empty store is initialized and data is fetched on demand by components.
+     *
+     * Once the initial model is loaded and if the data model doesn't contain the path of the current pathname,
+     * the library attempts to fetch a fragment of model.
+     *
+     * @param {string|InitializationConfig} [config]                - URL to the data model or configuration object
+     * @fires cq-pagemodel-loaded if root model path is available
+     */
+    public initializeAsync<M extends Model>(config?: ModelManagerConfiguration | string): void {
         this.destroy();
-        let path;
-        let initialModel = null;
 
-        if (!config || (typeof config === 'string')) {
-            path = config;
-        } else if (config) {
-            path = config.path;
-            this._modelClient = config.modelClient;
-            initialModel = config.model;
+        const modelConfig = this._toModelConfig(config);
+        this._initializeFields(modelConfig);
+
+        const initialModel = modelConfig && modelConfig.model;
+        const {
+            rootModelPath,
+            rootModelURL,
+            currentPathname,
+            sanitizedCurrentPathname,
+            metaPropertyModelUrl
+        } = this._getPathsForModel(modelConfig);
+
+        this._modelStore = new ModelStore(rootModelPath, initialModel);
+
+        if (rootModelPath) {
+            this._initPromise = (
+                this._checkDependencies().then(() => {
+                    const data = this.modelStore.getData(rootModelPath);
+
+                    if (data && (Object.keys(data).length > 0)) {
+                        triggerPageModelLoaded(data);
+                        return data;
+                    } else if (rootModelURL) {
+                        return this._fetchData(rootModelURL).then((rootModel: Model) => {
+                            this.modelStore.initialize(rootModelPath, rootModel);
+
+                            // Append the child page if the page model doesn't correspond to the URL of the root model
+                            // and if the model root path doesn't already contain the child model (asynchronous page load)
+                            if (!!currentPathname && !!sanitizedCurrentPathname) {
+                                if (!isPageURLRoot(currentPathname, metaPropertyModelUrl) && !hasChildOfPath(rootModel, currentPathname)) {
+                                    return this._fetchData(currentPathname).then((model: any) => {
+                                        this.modelStore.insertData(sanitizedCurrentPathname, model);
+                                        const data = this.modelStore.getData();
+                                        triggerPageModelLoaded(data);
+                                        return data;
+                                    });
+                                } else {
+                                    const data = this.modelStore.getData();
+                                    triggerPageModelLoaded(data);
+                                    return data;
+                                }
+                            } else if (!(this.modelClient.apiHost && (PathUtils.getCurrentURL() !== this.modelClient.apiHost))){
+                                throw new Error(`Attempting to retrieve model data from a non-browser.
+                                    Please provide the initial data with the property key model`
+                                );
+                            }
+                        });
+                    }
+                })
+            );
         }
+    }
 
+    /**
+     * Initializes the class fields for ModelManager
+     * If no path is provided, fallbacks are applied in the following order:
+     *
+     * @param {string|InitializationConfig} [config]                - configuration object
+     */
+    private _initializeFields(config?: ModelManagerConfiguration) {
         this._listenersMap = {};
         this._fetchPromises = {};
         this._initPromise = null;
 
+        this._modelClient = ((config && config.modelClient) || new ModelClient());
+
+        this._editorClient = new EditorClient(this);
+        this._clientlibUtil = new AuthoringUtils(this.modelClient.apiHost);
+    }
+
+    /**
+     * Returns paths required for fetching root model
+     * Order of preference for determining the root model url -
+     * 1. Page path provided via config
+     * 2. Meta property value for cq:pagemodel_root_url, if set
+     * 3. Model path contained in URL for default SPA.
+     * To add - For remote SPA opened within editor, path contained in parent i.e. AEM url
+     * 4. If none, it defaults to empty string
+     *
+     * @param {string|InitializationConfig} [config]                - configuration object
+     */
+    private _getPathsForModel(config?: ModelManagerConfiguration) {
+        // Model path explicitly provided by user in config
+        const path = config && config.path;
+
+        // Model path set statically via meta property
         const pageModelRoot = PathUtils.getMetaPropertyValue(MetaProperty.PAGE_MODEL_ROOT_URL);
         const metaPropertyModelUrl = PathUtils.internalize(pageModelRoot);
-        const currentPathname = PathUtils.getCurrentPathname();
-        const sanitizedCurrentPathname = currentPathname ? PathUtils.sanitize(currentPathname) : '';
+
+        const aemApiHost = this.modelClient.apiHost;
+        const isRemoteApp = aemApiHost && (PathUtils.getCurrentURL() !== aemApiHost);
+
+        const currentPathname = !isRemoteApp ? PathUtils.getCurrentPathname() : '';
+        // For remote apps in edit mode, to fetch path via parent URL
+
+        const sanitizedCurrentPathname = ((currentPathname && PathUtils.sanitize(currentPathname)) || '') as string;
 
         // Fetch the app root model
         // 1. consider the provided page path
         // 2. consider the meta property value
-        // 3. fallback to the model path contained in the URL
+        // 3. fallback to the model path contained in the URL for the default SPA
         const rootModelURL = path || metaPropertyModelUrl || sanitizedCurrentPathname;
-        // @ts-ignore
-        const rootModelPath = PathUtils.sanitize(rootModelURL);
+        const rootModelPath = PathUtils.sanitize(rootModelURL) || '';
 
-        if (!rootModelPath) {
-            throw new Error('No root modelpath resolved! This should never happen.');
-        }
-
-        if (!rootModelURL) {
-            throw new Error("ModelManager.js Cannot initialize without an URL to fetch the root model");
-        }
-
-        if (!this._modelClient) {
-            this._modelClient = new ModelClient();
-        }
-
-        this._clientlibUtil = new AuthoringUtils(this.modelClient.apiHost);
-        this._editorClient = new EditorClient(this);
-        this._modelStore = (initialModel) ? new ModelStore(rootModelPath, initialModel) : new ModelStore(rootModelPath);
-
-        this._initPromise = this._checkDependencies().then(() => {
-            const data = this.modelStore.getData(rootModelPath);
-
-            if (data && (Object.keys(data).length > 0)) {
-                triggerPageModelLoaded(data);
-                return data;
-            } else {
-                return this._fetchData(rootModelURL).then((rootModel: Model) => {
-                    this.modelStore.initialize(rootModelPath, rootModel);
-
-                    // Append the child page if the page model doesn't correspond to the URL of the root model
-                    // and if the model root path doesn't already contain the child model (asynchronous page load)
-                    if (!!currentPathname && !!sanitizedCurrentPathname) {
-                        if (!isPageURLRoot(currentPathname, metaPropertyModelUrl) && !hasChildOfPath(rootModel, currentPathname)) {
-                            return this._fetchData(currentPathname).then((model: any) => {
-                                this.modelStore.insertData(sanitizedCurrentPathname, model);
-                                const data = this.modelStore.getData();
-                                triggerPageModelLoaded(data);
-
-                                return data;
-                            });
-                        } else {
-                            const data = this.modelStore.getData();
-                            triggerPageModelLoaded(data);
-
-                            return data;
-                        }
-                    } else {
-                        throw new Error('Attempting to retrieve model data from a non-browser. Please provide the initial data with the property key model');
-                    }
-                });
+        if (!isRemoteApp) {
+            if (!rootModelPath) {
+                throw new Error('No root modelpath resolved! This should never happen.');
             }
-        });
 
-        return this._initPromise;
+            if (!rootModelURL) {
+                throw new Error("ModelManager.js Cannot initialize without an URL to fetch the root model");
+            }
+        }
+
+        return {
+            rootModelURL,
+            rootModelPath,
+            currentPathname,
+            sanitizedCurrentPathname,
+            metaPropertyModelUrl
+        };
     }
 
     /**
@@ -192,7 +249,7 @@ export class ModelManager {
      * @param {string|GetDataConfig} [config]     - Either the path of the data model or a configuration object. If no parameter is provided the complete model is returned
      * @return {Promise}
      */
-    public getData<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
+    public getData<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M>{
         let path: string;
         let forceReload = false;
 
@@ -383,11 +440,12 @@ export class ModelManager {
             isItem = PathUtils.isItem(path);
         }
 
-        this.modelStore.insertData(path, data);
-
-        // If the path correspond to an item notify either the parent item
-        // Otherwise notify the app root
-        this._notifyListeners(path);
+        if (data && (Object.keys(data).length > 0)) {
+            // this.modelStore.insertData(path, data);
+            // If the path correspond to an item notify either the parent item
+            // Otherwise notify the app root
+            this._notifyListeners(path);
+        }
 
         if (!isItem) {
             // As we are expecting a page, we notify the root
@@ -411,6 +469,23 @@ export class ModelManager {
 
         return PathUtils.makeAbsolute(url);
     }
+
+    /**
+     * Transforms the given config into a ModelManagerConfiguration object
+     * Removes redundant string or object check
+     * @param path
+     * @return {object}
+     * @private
+     */
+    private _toModelConfig(config?: ModelManagerConfiguration | string): ModelManagerConfiguration{
+        if (!config || typeof config !== 'string') {
+          return ((config || {}) as ModelManagerConfiguration);
+        }
+        return {
+          path: config
+        };
+    }
+
 
     /**
      * Verifies the integrity of the provided dependencies

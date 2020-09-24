@@ -43,8 +43,10 @@ export class ModelStore {
      * @param {string} [rootPath]     - Root path of the model
      * @param {{}} [data]             - Initial model
      */
-    constructor(rootPath: string, data?: Model) {
-        this.initialize(rootPath, data ? data : {});
+    constructor(rootPath?: string, data?: Model) {
+        if (rootPath) {
+            this.initialize(rootPath, data ? data : {});
+        }
         this._pageContentDelimiter = [Constants.JCR_CONTENT];
     }
 
