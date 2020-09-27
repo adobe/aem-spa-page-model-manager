@@ -30,13 +30,13 @@
   "types": "dist/types.d.ts",
   "scripts": {
     "clean": "rm -rf dist/",
-    "docs": "npm i && npx typedoc ./src --out ./dist/docs --mode file --ignoreCompilerErrors",
+    "docs": "npm i && npx typedoc --excludePrivate ./src --out ./dist/docs --mode file",
     "linter": "eslint .",
     "test": "jest --clearCache && jest",
     "test:coverage": "jest --clearCache && jest --coverage",
     "test:debug": "jest --coverage --watchAll",
-    "build": "npm run clean && npm run linter && cross-env NODE_ENV=development webpack && npm run build:types",
-    "build:production": "npm run clean && npm run linter && cross-env NODE_ENV=production webpack --mode=production && npm run build:types",
+    "build": "npm run clean && npm run linter && webpack && npm run build:types",
+    "build:production": "NODE_ENV=production npm run build",
     "build:types": "tsc -p src/tsconfig.types.json",
     "preversion": "npm run test && npm run build:production",
     "version": "git add -A",
@@ -49,7 +49,7 @@
     "clone": "^2.1.2"
   },
   "devDependencies": {
-    "@adobe/eslint-config-editorxp": "^1.0.2",
+    "@adobe/eslint-config-editorxp": "^1.0.3",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/github": "^7.0.7",
