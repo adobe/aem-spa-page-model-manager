@@ -20,13 +20,11 @@ import { PathUtils } from './PathUtils';
 import { AuthoringUtils } from './AuthoringUtils';
 
 /**
- * Does the provided model object contains an entry for the given child path
- *
- * @param {{}} model            - model to be evaluated
- * @param {string} childPath    - path of the child
- * @return {boolean}
- *
+ * Checks whether provided child path exists in the model.
+ * @param model Model to be evaluated.
+ * @param childPath Path of the child.
  * @private
+ * @returns `true` if childPath exists in the model.
  */
 function hasChildOfPath(model: any, childPath: string): boolean {
     const sanited = PathUtils.sanitize(childPath);
@@ -56,8 +54,6 @@ export interface ModelManagerConfiguration {
     path?: string;
 }
 
-export type ListenerFunction = () => void;
-
 interface ModelPaths {
     rootModelURL?: string;
     rootModelPath?: string;
@@ -66,6 +62,36 @@ interface ModelPaths {
     metaPropertyModelUrl?: string;
 }
 
+/**
+ * @private
+ */
+export type ListenerFunction = () => void;
+
+/**
+ * ModelManager is main entry point of this module.
+ *
+ * Example:
+ *
+ * Boostrap: `index.html`
+ * ```
+ * <head>
+ *     <meta property="cq:pagemodel_root_url" content="{PATH}.model.json"/>
+ * </head>
+ * ```
+ *
+ * Bootstrap: `index.js`
+ * ```
+ * import { ModelManager } from '@adobe/aem-spa-page-model-manager';
+ *
+ * ModelManager.initialize().then((model) => {
+ *     // Render the App content using the provided model
+ *     render(model);
+ * });
+ *
+ * // Loading a specific portion of model
+ * ModelManager.getData("/content/site/page/jcr:content/path/to/component").then(...);
+ * ```
+ */
 export class ModelManager {
     private _modelClient: ModelClient | undefined;
     private _modelStore: ModelStore | undefined;
@@ -92,16 +118,24 @@ export class ModelManager {
         return this._modelStore;
     }
 
+    public get clientlibUtil() {
+        if (!this._clientlibUtil) {
+            throw new Error('AuthoringUtils is undefined. Call initialize first!');
+        }
+
+        return this._clientlibUtil;
+    }
+
     /**
      * Initializes the ModelManager using the given path to resolve a data model.
      * If no path is provided, fallbacks are applied in the following order:
+     * - meta property: `cq:pagemodel_root_url`
+     * - current path of the page
      *
-     * - meta property: cq:pagemodel_root_url
-     * - current pathname of the browser
+     * If page model does not contain information about current path it performs additional fetch.
      *
-     * Once the initial model is loaded and if the data model doesn't contain the path of the current pathname, the library attempts to fetch a fragment of model.
-     *
-     * @param {string|InitializationConfig} [config]                - URL to the data model or configuration object
+     * @param [config] URL to the data model or configuration object.
+     * @fires cq-pagemodel-loaded
      * @return {Promise}
      */
     public initialize<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
@@ -262,9 +296,9 @@ export class ModelManager {
     }
 
     /**
-     * Returns the model for the given configuration
-     * @param {string|GetDataConfig} [config]     - Either the path of the data model or a configuration object. If no parameter is provided the complete model is returned
-     * @return {Promise}
+     * Returns the model for the given configuration.
+     * @param [config] Either the path of the data model or a configuration object. If no parameter is provided the complete model is returned.
+     * @returns Model object for specific path.
      */
     public getData<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M>{
         let path: string;
@@ -274,7 +308,7 @@ export class ModelManager {
             path = config;
         } else if (config) {
             path = config.path || '';
-            forceReload = !!config.forceReload || false;
+            forceReload = !!config.forceReload;
         } else {
             path = '';
         }
@@ -291,18 +325,15 @@ export class ModelManager {
                     }
                 }
 
-                // We are not having any items
-                // We want to reload the item
                 return this._fetchData(path).then((data: Model) => this._storeData(path, data));
         });
     }
 
     /**
-     * Fetches a model for the given path
-     *
-     * @param {string} path - Model path
-     * @return {Promise}
+     * Fetches the model for the given path.
+     * @param path Model path.
      * @private
+     * @returns Model object for specific path.
      */
     public _fetchData(path: string): Promise<Model> {
         if (Object.prototype.hasOwnProperty.call(this._fetchPromises, path)) {
@@ -325,9 +356,8 @@ export class ModelManager {
     }
 
     /**
-     * Notifies the listeners for a given path
-     *
-     * @param {string} path - Path of the data model
+     * Notifies the listeners for a given path.
+     * @param path Path of the data model.
      * @private
      */
     public _notifyListeners(path: string): void {
@@ -356,20 +386,19 @@ export class ModelManager {
 
     /**
      * Add the given callback as a listener for changes at the given path.
-     *
-     * @param {String}  [path]  Absolute path of the resource (e.g., "/content/mypage"). If not provided, the root page path is used.
-     * @param {String}  [callback]  Function to be executed listening to changes at given path
+     * @param path Absolute path of the resource (e.g., "/content/mypage"). If not provided, the root page path is used.
+     * @param callback Function to be executed listening to changes at given path.
      */
-    public addListener(path: string | undefined, callback: ListenerFunction): void {
+    public addListener(path: string, callback: ListenerFunction): void {
         if (!this._listenersMap) {
             throw new Error('ListenersMap is undefined.');
         }
 
-        if (!path && (typeof path !== 'string')) {
+        if (!path || (typeof path !== 'string') || (typeof callback !== 'function')) {
             return;
         }
 
-        const adaptedPath = this.adaptPagePath(path);
+        const adaptedPath = PathUtils.adaptPagePath(path, this.modelStore?.rootPath);
 
         this._listenersMap[adaptedPath] = this._listenersMap[path] || [];
         this._listenersMap[adaptedPath].push(callback);
@@ -377,20 +406,19 @@ export class ModelManager {
 
     /**
      * Remove the callback listener from the given path path.
-     *
-     * @param {String}  [path] Absolute path of the resource (e.g., "/content/mypage"). If not provided, the root page path is used.
-     * @param {String}  [callback]  Listener function to be removed.
+     * @param path Absolute path of the resource (e.g., "/content/mypage"). If not provided, the root page path is used.
+     * @param callback Listener function to be removed.
      */
-    public removeListener(path: string | undefined, callback: ListenerFunction): void {
+    public removeListener(path: string, callback: ListenerFunction): void {
         if (!this._listenersMap) {
             throw new Error('ListenersMap is undefined.');
         }
 
-        if (!path) {
+        if (!path || (typeof path !== 'string') || (typeof callback !== 'function')) {
             return;
         }
 
-        const adaptedPath = this.adaptPagePath(path);
+        const adaptedPath = PathUtils.adaptPagePath(path, this.modelStore?.rootPath);
         const listenersForPath = this._listenersMap[adaptedPath];
 
         if (listenersForPath) {
@@ -400,29 +428,6 @@ export class ModelManager {
                 listenersForPath.splice(index, 1);
             }
         }
-    }
-
-    /**
-     * Adapts the provided path to a valid model path.
-     * Returns an empty string if the given path is equal to the root model path.
-     * This function is a utility tool that converts a provided root model path into an internal specific empty path
-     *
-     * @param {string} [path]   - raw model path
-     * @return {string} the valid model path
-     *
-     * @private
-     */
-    public adaptPagePath(path: string): string {
-        // duplicate? spa-page-model-manager/src/PathUtils.ts
-        const localPath = PathUtils.internalize(path);
-
-        if (!this.modelStore || !this.modelStore.rootPath) {
-            return localPath;
-        }
-
-        const localRootModelPath = PathUtils.sanitize(this.modelStore.rootPath);
-
-        return (localPath === localRootModelPath) ? '' : localPath;
     }
 
     /**
@@ -465,11 +470,10 @@ export class ModelManager {
     }
 
     /**
-     * Transforms the given path into a model URL
-     *
+     * Transforms the given path into a model URL.
      * @param path
-     * @return {*}
      * @private
+     * @return {*}
      */
     private _toModelPath(path: string) {
         let url = PathUtils.addSelector(path, 'model');

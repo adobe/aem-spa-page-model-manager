@@ -16,15 +16,6 @@ import ModelManager from './ModelManager';
 import { PathUtils } from './PathUtils';
 
 /**
- * Triggered by the ModelRouter when the route has changed.
- *
- * @event cq-pagemodel-route-changed
- * @type {Object}
- * @property {Object} detail
- * @property {Object} detail.model - The page model object corresponding to the new route
- */
-
-/**
  * <p>The ModelRouter listens for HTML5 History API <i>popstate</i> events and calls {@link PageModelManager#getData()} with the model path it extracted from the URL.</p>
  *
  * <h2>Configuration</h2>
@@ -58,9 +49,8 @@ import { PathUtils } from './PathUtils';
  */
 
 /**
- * Modes in which the Model Router operates
- *
- * @type {{DISABLED: string, CONTENT_PATH: string}}
+ * Modes in which the Model Router operates.
+ * @private
  */
 export class RouterModes {
     /**
@@ -80,10 +70,9 @@ export class RouterModes {
 
 /**
  * Returns the model path. If no URL is provided the current window URL is used
- *
- * @param {string} [url]    - url from which to extract the model path
- *
- * @return {string}
+ * @param [url] url from which to extract the model path
+ * @private
+ * @return
  */
 export function getModelPath(url?: string | null): string {
     const localUrl = url || window.location.pathname;
@@ -137,7 +126,6 @@ export function isRouteExcluded(route: string): boolean {
 /**
  * Is the model router enabled. Enabled by default
  * @returns {boolean}
- *
  * @private
  */
 export function isModelRouterEnabled(): boolean {

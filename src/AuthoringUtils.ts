@@ -17,22 +17,44 @@ import MetaProperty from './MetaProperty';
 export class AuthoringUtils {
     private _apiDomain: string | null;
 
+    /**
+     * @private
+     */
     constructor(domain: string | null) {
         this._apiDomain = domain;
     }
 
+    /**
+     * @private
+     */
     getApiDomain(): string | null {
         return this._apiDomain;
     }
 
     /**
-     * Returns all the tags for requested state.
-     * @returns Serialized tags.
+     * Generates HTML markup.
+     *
+     * Example:
+     * ```
+     * import ModelManager, Constants, { AEM_MODE } from '@adobe/aem-spa-page-model-manager';
+     *
+     * // initialize `ModelManager`
+     * await ModelManager.initialize();
+     *
+     * // check application state and add related tags
+     * if (ModelManager.clientlibUtil.isStateActive(Constants.STATE_AUTHORING)) {
+     *     const markup = ModelManager.clientlibUtil.getTagsForState(AEM_MODE.EDIT);
+     *
+     *     window.document.head.insertAdjacentHTML('beforeend', markup);
+     * }
+     * ```
+     *
+     * @returns HTML markup including state specific libraries.
      */
-    public getTagsForState(state: string): string {
+    public getTagsForState(appState: string): string {
         let tags = '';
 
-        if (state === Constants.STATE_AUTHORING) {
+        if (appState === Constants.STATE_AUTHORING) {
             const clientLibs = this.generateClientLibUrls();
 
             tags = clientLibs.map(resource => {
@@ -65,7 +87,7 @@ export class AuthoringUtils {
 
     /**
      * Checks status of requested state.
-     * @returns `true` if requested state is active.
+     * @returns `true` if application is in authoring state and AEM mode is `EDIT`.
      */
     public static isStateActive(state: string): boolean {
         if (state === Constants.STATE_AUTHORING) {
@@ -80,6 +102,7 @@ export class AuthoringUtils {
 
     /**
      * Checks AEM mode.
+     * @private
      * @returns AEM mode or `null`.
      */
     public static getAemMode(): string | null {
@@ -97,6 +120,7 @@ export class AuthoringUtils {
 
     /**
      * Generates urls to authoring clientlibs.
+     * @private
      * @returns Clientlib URLs.
      */
     public generateClientLibUrls(): string[] {

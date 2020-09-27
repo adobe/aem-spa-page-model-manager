@@ -12,9 +12,9 @@
 
  /**
   * Generic Model interface.
-  * Marks common properties that pages / items have.
+  * Defines common properties that pages / items have.
   */
-export interface Model extends Object {
+export interface Model {
     /**
      * Hierarchy type.
      */

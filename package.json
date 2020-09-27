@@ -30,7 +30,7 @@
   "types": "dist/types.d.ts",
   "scripts": {
     "clean": "rm -rf coverage/ dist/",
-    "docs": "npm i && npx typedoc ./src --out ./docs --mode file --ignoreCompilerErrors",
+    "docs": "npm i && npx typedoc ./src --out ./dist/docs --mode file --ignoreCompilerErrors",
     "linter": "eslint --ext .js,.ts . && tslint --project tsconfig.json",
     "linter:fix": "eslint --ext .js,.jsx . && tslint --project tsconfig.json --fix",
     "test": "jest --clearCache && jest",

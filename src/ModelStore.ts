@@ -16,13 +16,8 @@ import { Model } from './Model';
 import { PathUtils } from './PathUtils';
 
 /**
- * Item wrapper containing information about the item parent
- *
- * @typedef {Object} ItemWrapper
- * @property {string} [key]             - Name of the item
- * @property {{}} [data]                - Item data
- * @property {{}} [parent]                - Parent item
- * @property {string} [parentPath]        - Path of the parent item
+ * Item wrapper containing information about the item parent.
+ * @private
  */
 interface ItemWrapper {
     parent?: Model;
@@ -40,8 +35,9 @@ export class ModelStore {
     private _rootPath: string | null = null;
 
     /**
-     * @param {string} [rootPath]     - Root path of the model
-     * @param {{}} [data]             - Initial model
+     * @param [rootPath] Root path of the model.
+     * @param [data] Initial model.
+     * @private
      */
     constructor(rootPath?: string, data?: Model) {
         this._data = {};
@@ -52,10 +48,10 @@ export class ModelStore {
     }
 
     /**
-     * Initializes the the ModelManager
-     *
-     * @param {string} rootPath     - Root path of the model
-     * @param {{}} data             - Initial model
+     * Initializes the the ModelManager.
+     * @param rootPath Model root path.
+     * @param data Initial model.
+     * @private
      */
     public initialize(rootPath: string, data: Model) {
         if (data) {
@@ -66,23 +62,26 @@ export class ModelStore {
     }
 
     /**
-     * Returns the current root path
-     *
-     * @return {string}
+     * Returns the current root path.
+     * @returns Model root path.
      */
     public get rootPath(): string {
         return this._rootPath || '';
     }
 
+    /**
+     * Returns page model.
+     * @returns Page model.
+     */
     public get dataMap(): any {
         return this._data;
     }
 
     /**
-     * Replaces the data in the given location
-     *
-     * @param {string} path     - Path of the data
-     * @param {{}} newData      - New data to be set
+     * Replaces the data in the given location.
+     * @param path Path of the data.
+     * @param newData New data to be set.
+     * @private
      */
     public setData(path: string, newData: any = {}) {
         const itemKey = PathUtils.getNodeName(path);
@@ -93,6 +92,7 @@ export class ModelStore {
             if (data && data[Constants.ITEMS_PROP]) {
                 const localData = clone(newData);
                 const items = data[Constants.ITEMS_PROP] || {};
+
                 items[itemKey] = localData.value;
                 data[Constants.ITEMS_PROP] = items;
             }
@@ -100,11 +100,10 @@ export class ModelStore {
     }
 
     /**
-     * Returns the data for the given path. If no path is provided, it returns the whole data
-     *
-     * @param {string} [path]                   - Path to the data
-     * @param {boolean} [immutable=true]        - Should the returned data be a clone
-     * @return {*}
+     * Returns the data for the given path. If no path is provided, it returns the whole data.
+     * @param [path] Path to the data.
+     * @param [immutable=true] Indicates whether a data clone should be returned.
+     * @return Data for given path, whole data or `undefined`.
      */
     public getData<M extends Model>(path?: string | null, immutable = true): M | undefined {
         if (!path && (typeof path !== 'string')) {
@@ -138,12 +137,12 @@ export class ModelStore {
     }
 
     /**
-     * Insert the provided data at the location of the given path. If no sibling name is provided the data is added at the end of the list
-     *
-     * @param {string} path                     - Path to the data
-     * @param {{}} data                         - Data to be inserted
-     * @param {string|null} [siblingName]            - Name of the item before or after which to add the data
-     * @param {boolean} [insertBefore=false]    - Should the data be inserted before the sibling
+     * Insert the provided data at the location of the given path. If no sibling name is provided the data is added at the end of the list.
+     * @param path Path to the data.
+     * @param data Data to be inserted.
+     * @param [siblingName] Name of the item before or after which to add the data.
+     * @param [insertBefore=false] Should the data be inserted before the sibling.
+     * @private
      */
     public insertData(path: string, data: Model, siblingName?: string | null, insertBefore = false) {
         data = clone(data);
@@ -157,11 +156,11 @@ export class ModelStore {
         const isItem = PathUtils.isItem(path);
 
         if (!isItem && this._data) {
-
             // Page data
-            if (!this._data[Constants.CHILDREN_PROP]){
+            if (!this._data[Constants.CHILDREN_PROP]) {
                 this._data[Constants.CHILDREN_PROP] = {};
             }
+
             // @ts-ignore
             this._data[Constants.CHILDREN_PROP][path] = data;
 
@@ -199,10 +198,10 @@ export class ModelStore {
     }
 
     /**
-     * Removes the data located at the provided location
-     *
-     * @param {string} path         - Path of the data
-     * @return {string|null}   - Path to the parent item initially containing the removed data
+     * Removes the data located at the provided location.
+     * @param path Path of the data.
+     * @private
+     * @return {string|null} Path to the parent item initially containing the removed data.
      */
     public removeData(path: string): string | null {
         if (!path) {
@@ -213,8 +212,7 @@ export class ModelStore {
 
         if (!isItem && this._data && this._data[Constants.CHILDREN_PROP]) {
             // Page data
-            // @ts-ignore
-            delete this._data[Constants.CHILDREN_PROP][path];
+            delete this._data[Constants.CHILDREN_PROP]?.[path];
 
             return null;
         }
@@ -245,7 +243,6 @@ export class ModelStore {
                         if (itemsOrder && (itemsOrder.length > 0)) {
                             const index = itemsOrder.indexOf(itemName);
                             itemsOrder.splice(index, 1);
-                            // parent[Constants.ITEMS_ORDER_PROP]?.splice(index, 1);
                         }
 
                         return result.parentPath ? result.parentPath : null;
@@ -269,19 +266,18 @@ export class ModelStore {
     }
 
     /**
-     * Retrieves the item and eventually returns the data wrapped with the parent information
-     *
-     * @param {string} path                 - Path of the item
-     * @param {{}} [data=_data]             - Data to be explored (must not be null!)
-     * @param {{}} [parent]                 - Parent data
-     * @param {string} [parentPath='']      - Path of the parent data
-     * @return {ItemWrapper}
+     * Retrieves the item and eventually returns the data wrapped with the parent information.
+     * @param path Path of the item.
+     * @param [data=_data] Data to be explored (must not be null!)
+     * @param [parent] Parent data.
+     * @param  [parentPath=''] Path of the parent data.
      * @private
+     * @return
      */
     private _findItemData(path: string, data= this._data, parent: any = null, parentPath = ''): ItemWrapper {
         const answer: ItemWrapper = {
             parent,
-            parentPath,
+            parentPath
         };
 
         if (!data) {
@@ -333,11 +329,9 @@ export class ModelStore {
     }
 
     /**
-     *
-     * @param {string} pagePath - Path of the page
-     *
-     * @return {{}|undefined} - Data of the page
+     * @param pagePath Path of the page.
      * @private
+     * @return Data of the page.
      */
     private _getPageData(pagePath: string): Model | undefined {
         if (!this._data) {
@@ -350,6 +344,6 @@ export class ModelStore {
 
         const children = this._data[Constants.CHILDREN_PROP];
 
-        return  children && children[pagePath];
+        return children && children[pagePath];
     }
 }
