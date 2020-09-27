@@ -45,7 +45,7 @@ function hasChildOfPath(model: any, childPath: string): boolean {
  * @returns `true` if provided page path is root
  * @private
  */
-function isPageURLRoot(pagePath: string, modelRootPath: string): boolean {
+function isPageURLRoot(pagePath: string, modelRootPath: string | undefined): boolean {
     return !pagePath || !modelRootPath || (PathUtils.sanitize(pagePath) === PathUtils.sanitize(modelRootPath));
 }
 
@@ -58,6 +58,14 @@ export interface ModelManagerConfiguration {
 
 export type ListenerFunction = () => void;
 
+interface ModelPaths {
+    rootModelURL?: string;
+    rootModelPath?: string;
+    currentPathname?: string | null;
+    sanitizedCurrentPathname?: string;
+    metaPropertyModelUrl?: string;
+}
+
 export class ModelManager {
     private _modelClient: ModelClient | undefined;
     private _modelStore: ModelStore | undefined;
@@ -66,6 +74,7 @@ export class ModelManager {
     private _initPromise: any;
     private _editorClient: EditorClient | undefined;
     private _clientlibUtil: AuthoringUtils | undefined;
+    private _modelPaths: ModelPaths = {};
 
     public get modelClient() {
         if (!this._modelClient) {
@@ -97,6 +106,16 @@ export class ModelManager {
      */
     public initialize<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
         this.initializeAsync(config);
+        const { rootModelURL, rootModelPath } = this._modelPaths;
+
+        if (!rootModelURL) {
+            throw new Error("ModelManager.js Cannot initialize without a URL to fetch the root model");
+        }
+
+        if (!rootModelPath) {
+            throw new Error('No root modelpath resolved! This should never happen.');
+        }
+
         return this._initPromise;
     }
 
@@ -117,52 +136,14 @@ export class ModelManager {
         this._initializeFields(modelConfig);
 
         const initialModel = modelConfig && modelConfig.model;
-        const {
-            rootModelPath,
-            rootModelURL,
-            currentPathname,
-            sanitizedCurrentPathname,
-            metaPropertyModelUrl
-        } = this._getPathsForModel(modelConfig);
+
+        this._getPathsForModel(modelConfig);
+        const { rootModelPath } = this._modelPaths;
 
         this._modelStore = new ModelStore(rootModelPath, initialModel);
 
         if (rootModelPath) {
-            this._initPromise = (
-                this._checkDependencies().then(() => {
-                    const data = this.modelStore.getData(rootModelPath);
-
-                    if (data && (Object.keys(data).length > 0)) {
-                        triggerPageModelLoaded(data);
-                        return data;
-                    } else if (rootModelURL) {
-                        return this._fetchData(rootModelURL).then((rootModel: Model) => {
-                            this.modelStore.initialize(rootModelPath, rootModel);
-
-                            // Append the child page if the page model doesn't correspond to the URL of the root model
-                            // and if the model root path doesn't already contain the child model (asynchronous page load)
-                            if (!!currentPathname && !!sanitizedCurrentPathname) {
-                                if (!isPageURLRoot(currentPathname, metaPropertyModelUrl) && !hasChildOfPath(rootModel, currentPathname)) {
-                                    return this._fetchData(currentPathname).then((model: any) => {
-                                        this.modelStore.insertData(sanitizedCurrentPathname, model);
-                                        const data = this.modelStore.getData();
-                                        triggerPageModelLoaded(data);
-                                        return data;
-                                    });
-                                } else {
-                                    const data = this.modelStore.getData();
-                                    triggerPageModelLoaded(data);
-                                    return data;
-                                }
-                            } else if (!(this.modelClient.apiHost && (PathUtils.getCurrentURL() !== this.modelClient.apiHost))){
-                                throw new Error(`Attempting to retrieve model data from a non-browser.
-                                    Please provide the initial data with the property key model`
-                                );
-                            }
-                        });
-                    }
-                })
-            );
+            this._setInitializationPromise(rootModelPath);
         }
     }
 
@@ -217,23 +198,59 @@ export class ModelManager {
         const rootModelURL = path || metaPropertyModelUrl || sanitizedCurrentPathname;
         const rootModelPath = PathUtils.sanitize(rootModelURL) || '';
 
-        if (!isRemoteApp) {
-            if (!rootModelPath) {
-                throw new Error('No root modelpath resolved! This should never happen.');
-            }
-
-            if (!rootModelURL) {
-                throw new Error("ModelManager.js Cannot initialize without an URL to fetch the root model");
-            }
-        }
-
-        return {
+        this._modelPaths = {
+            currentPathname,
+            sanitizedCurrentPathname,
+            metaPropertyModelUrl,
             rootModelURL,
-            rootModelPath,
+            rootModelPath
+        };
+    }
+
+    private _setInitializationPromise(rootModelPath: string) {
+        const {
+            rootModelURL,
             currentPathname,
             sanitizedCurrentPathname,
             metaPropertyModelUrl
-        };
+        } = this._modelPaths;
+
+        this._initPromise = (
+            this._checkDependencies().then(() => {
+                const data = this.modelStore.getData(rootModelPath);
+
+                if (data && (Object.keys(data).length > 0)) {
+                    triggerPageModelLoaded(data);
+                    return data;
+                } else if (rootModelURL) {
+                    return this._fetchData(rootModelURL).then((rootModel: Model) => {
+                        this.modelStore.initialize(rootModelPath, rootModel);
+
+                        // Append the child page if the page model doesn't correspond to the URL of the root model
+                        // and if the model root path doesn't already contain the child model (asynchronous page load)
+                        if (!!currentPathname && !!sanitizedCurrentPathname) {
+                            if (!isPageURLRoot(currentPathname, metaPropertyModelUrl)
+                            && !hasChildOfPath(rootModel, currentPathname)) {
+                                return this._fetchData(currentPathname).then((model: Model) => {
+                                    this.modelStore.insertData(sanitizedCurrentPathname, model);
+                                    const data = this.modelStore.getData();
+                                    triggerPageModelLoaded(data);
+                                    return data;
+                                });
+                            } else {
+                                const data = this.modelStore.getData();
+                                triggerPageModelLoaded(data);
+                                return data;
+                            }
+                        } else if (!(this.modelClient.apiHost && (PathUtils.getCurrentURL() !== this.modelClient.apiHost))){
+                            throw new Error(`Attempting to retrieve model data from a non-browser.
+                                Please provide the initial data with the property key model`
+                            );
+                        }
+                    });
+                }
+            })
+        );
     }
 
     /**
@@ -276,8 +293,8 @@ export class ModelManager {
 
                 // We are not having any items
                 // We want to reload the item
-                return this._fetchData(path).then((data: any) => this._storeData(path, data));
-            });
+                return this._fetchData(path).then((data: Model) => this._storeData(path, data));
+        });
     }
 
     /**
@@ -292,23 +309,19 @@ export class ModelManager {
             return this._fetchPromises[path];
         }
 
-        if (this.modelClient) {
-            const promise = this.modelClient.fetch(this._toModelPath(path));
+        const promise = this.modelClient.fetch(this._toModelPath(path));
 
-            this._fetchPromises[path] = promise;
+        this._fetchPromises[path] = promise;
 
-            promise.then((obj) => {
-                delete this._fetchPromises[path];
-                return obj;
-            }).catch((error) => {
-                delete this._fetchPromises[path];
-                return error;
-            });
+        promise.then((obj) => {
+            delete this._fetchPromises[path];
+            return obj;
+        }).catch((error) => {
+            delete this._fetchPromises[path];
+            return error;
+        });
 
-            return promise;
-        } else {
-            throw new Error('ModelClient not initialized!');
-        }
+        return promise;
     }
 
     /**
@@ -401,10 +414,6 @@ export class ModelManager {
      */
     public adaptPagePath(path: string): string {
         // duplicate? spa-page-model-manager/src/PathUtils.ts
-        if (!path) {
-            return '';
-        }
-
         const localPath = PathUtils.internalize(path);
 
         if (!this.modelStore || !this.modelStore.rootPath) {
