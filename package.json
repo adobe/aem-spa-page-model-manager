@@ -6,7 +6,7 @@
     "url": "https://github.com/adobe/aem-spa-page-model-manager.git"
   },
   "bugs": {
-    "url": "https://www.adobe.com/go/aem6_4_support_en"
+    "url": "https://github.com/adobe/aem-spa-page-model-manager/issues"
   },
   "engines": {
     "npm": ">=5.5.1"
@@ -14,7 +14,7 @@
   "files": [
     "dist/"
   ],
-  "homepage": "https://www.adobe.com/go/aem6_4_docs_spa_en",
+  "homepage": "https://docs.adobe.com/content/help/en/experience-manager-65/developing/headless/spas/spa-reference-materials.html",
   "keywords": [
     "the official",
     "adobe",
@@ -50,12 +50,13 @@
     "clone": "^2.1.2"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/git": "^9.0.0",
-    "@semantic-release/github": "^7.0.7",
+    "@adobe/eslint-config-editorxp": "^1.0.2",
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.0.7",
     "@testing-library/jest-dom": "^5.10.1",
     "@testing-library/user-event": "^12.0.1",
     "@types/clone": "^2.0.0",
@@ -68,9 +69,11 @@
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
     "commitizen": "^4.2.1",
-    "cz-conventional-changelog": "^3.3.0",
     "cross-env": "^7.0.2",
-    "eslint": "^7.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.9.0",
+    "eslint-plugin-header": "^3.1.0",
+    "eslint-plugin-json": "^2.1.2",
     "fetch-mock": "^9.0.0",
     "istanbul": "^0.4.5",
     "istanbul-instrumenter-loader": "^3.0.1",
@@ -79,8 +82,8 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-resolve": "^26.0.1",
     "jest-watch-typeahead": "^0.6.0",
-    "semantic-release": "^17.1.1",
     "node-fetch": "^2.6.0",
+    "semantic-release": "^17.1.1",
     "ts-jest": "^26.1.0",
     "ts-loader": "^8.0.0",
     "ts-mockito": "^2.6.1",
@@ -98,5 +101,11 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@adobe/eslint-config-editorxp/typescript"
+    ]
   }
 }
