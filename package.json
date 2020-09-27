@@ -1,50 +1,38 @@
 {
   "name": "@adobe/aem-spa-page-model-manager",
   "version": "1.1.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/adobe/aem-spa-page-model-manager.git"
-  },
+  "description": "An interpreter between AEM Editor and the AEM SPA Editor.",
+  "keywords": [
+    "spa",
+    "aem",
+    "pagel-model-manager",
+    "adobe"
+  ],
+  "author": "Adobe Systems Inc. <sitexpci@adobe.com>",
+  "license": "Apache-2.0",
+  "repository": "github:adobe/aem-spa-page-model-manager",
+  "homepage": "https://docs.adobe.com/content/help/en/experience-manager-65/developing/headless/spas/spa-reference-materials.html",
   "bugs": {
     "url": "https://github.com/adobe/aem-spa-page-model-manager/issues"
   },
   "engines": {
-    "npm": ">=5.5.1"
+    "npm": ">=6.14.8",
+    "node": ">=13.10.1"
   },
-  "files": [
-    "dist/"
-  ],
-  "homepage": "https://docs.adobe.com/content/help/en/experience-manager-65/developing/headless/spas/spa-reference-materials.html",
-  "keywords": [
-    "the official",
-    "adobe",
-    "aem",
-    "spa editor",
-    "experience manager",
-    "marketing cloud",
-    "cq",
-    "reactjs",
-    "pagemodelmanager"
-  ],
   "main": "dist/aem-spa-page-model-manager.js",
   "types": "dist/types.d.ts",
   "scripts": {
+    "build:production": "NODE_ENV=production npm run build",
+    "build:types": "tsc -p src/tsconfig.types.json",
+    "build": "npm run clean && npm run linter && webpack && npm run build:types",
     "clean": "rm -rf dist/",
     "docs": "npm i && npx typedoc --excludePrivate ./src --out ./dist/docs --mode file",
     "linter": "eslint .",
-    "test": "jest --clearCache && jest",
+    "semantic-release": "semantic-release",
     "test:coverage": "jest --clearCache && jest --coverage",
     "test:debug": "jest --coverage --watchAll",
-    "build": "npm run clean && npm run linter && webpack && npm run build:types",
-    "build:production": "NODE_ENV=production npm run build",
-    "build:types": "tsc -p src/tsconfig.types.json",
-    "preversion": "npm run test && npm run build:production",
-    "version": "git add -A",
-    "postversion": "git push && git push --tags",
-    "semantic-release": "semantic-release"
+    "test": "jest --clearCache && jest"
   },
-  "author": "Adobe Systems Inc.",
-  "license": "Apache-2.0",
   "dependencies": {
     "clone": "^2.1.2"
   },
@@ -52,30 +40,34 @@
     "@adobe/eslint-config-editorxp": "^1.0.3",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
-    "@semantic-release/github": "^7.0.7",
-    "@types/clone": "^2.0.0",
-    "@types/jest": "^26.0.0",
-    "@types/node": "^14.0.13",
-    "@typescript-eslint/eslint-plugin": "^4.0.0",
-    "@typescript-eslint/parser": "^4.0.0",
+    "@semantic-release/github": "^7.1.1",
+    "@types/clone": "^2.1.0",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.2",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.9.0",
+    "eslint": "^7.10.0",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-json": "^2.1.2",
-    "jest": "^26.0.1",
+    "jest": "^26.4.2",
     "jest-fetch-mock": "^3.0.3",
-    "semantic-release": "^17.1.1",
-    "ts-jest": "^26.1.0",
-    "ts-loader": "^8.0.0",
+    "semantic-release": "^17.1.2",
+    "ts-jest": "^26.4.0",
+    "ts-loader": "^8.0.4",
     "ts-mockito": "^2.6.1",
-    "typedoc": "^0.19.1",
-    "typescript": "^4.0.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-node-externals": "^2.0.0"
+    "typedoc": "^0.19.2",
+    "typescript": "^4.0.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.2"
   },
+  "files": [
+    "dist/**/*.{js,ts,map}",
+    "!**/{docs,coverage}/"
+  ],
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
