@@ -1,7 +1,5 @@
 node_modules/
 dist/
 coverage/
-.chrome/
-*.tsbuildinfo
-docs/
 .scannerwork/
+*.log

@@ -12,6 +12,7 @@
 
 /**
  * Meta property names associated with the PageModelProvider and ModelRouter.
+ * @private
  */
 export class MetaProperty {
     /**

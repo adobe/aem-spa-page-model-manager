@@ -35,7 +35,7 @@ describe('ModelRouter ->', () => {
 
     describe('dispatchRouteChanged ->', () => {
         beforeEach(() => {
-            modelManagerSpy.mockResolvedValue(TEST_MODEL);
+            modelManagerSpy.mockResolvedValue(TEST_MODEL as Model);
         });
 
         afterEach(() => {
@@ -50,7 +50,7 @@ describe('ModelRouter ->', () => {
 
     describe('routeModel ->', () => {
         beforeEach(() => {
-            modelManagerSpy.mockResolvedValue(TEST_MODEL);
+            modelManagerSpy.mockResolvedValue(TEST_MODEL as Model);
         });
 
         afterEach(() => {
@@ -101,7 +101,7 @@ describe('ModelRouter ->', () => {
         });
 
         it('should return an enabled route model by default', () => {
-            expect(isModelRouterEnabled()).toEqual(true)
+            expect(isModelRouterEnabled()).toEqual(true);
         });
 
         it('should return a disabled route model', () => {

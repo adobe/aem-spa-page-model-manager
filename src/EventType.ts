@@ -11,9 +11,8 @@
  */
 
 /**
- * Type of events triggered or listened by the PageModelManager and ModelRouter
- *
- * @type {{PAGE_MODEL_INIT: string, PAGE_MODEL_LOADED: string, PAGE_MODEL_UPDATE: string, PAGE_MODEL_ROUTE_CHANGED: string}}
+ * Type of events triggered or listened by the PageModelManager and ModelRouter.
+ * @private
  */
 export class EventType {
     /**

@@ -14,15 +14,14 @@ import { Model } from './Model';
 
 export class ModelClient {
     private _apiHost: string | null;
-    private _fetchPromises: { [key: string]: Promise<Model> } | null;
 
     /**
      * @constructor
+     * @private
      * @param [apiHost] Http host of the API.
      */
     constructor(apiHost?: string) {
         this._apiHost = apiHost || null;
-        this._fetchPromises = {};
     }
 
     /**
@@ -34,9 +33,9 @@ export class ModelClient {
     }
 
     /**
-     * Fetches a model using the given a resource path.
+     * Fetches a model using given resource path.
      * @param modelPath Absolute path to the model.
-     * @return {*}
+     * @return Promise to page model object.
      */
     public fetch<M extends Model>(modelPath: string): Promise<M> {
         if (!modelPath) {
@@ -50,7 +49,7 @@ export class ModelClient {
 
         // Assure that the default credentials value ('same-origin') is set for browsers which do not set it
         // or which are setting the old default value ('omit')
-        return fetch(url, {credentials: 'same-origin'}).then((response) => {
+        return fetch(url, { credentials: 'same-origin' }).then((response) => {
             if ((response.status >= 200) && (response.status < 300)) {
                 return response.json() as Promise<M>;
             }
@@ -63,9 +62,9 @@ export class ModelClient {
 
     /**
      * Destroys the internal references to avoid memory leaks.
+     * @private
      */
     public destroy() {
         this._apiHost = null;
-        this._fetchPromises = null;
     }
 }
