@@ -66,6 +66,28 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>ModelManager is main entry point of this module.</p>
+					</div>
+					<p>Example:</p>
+					<p>Boostrap: <code>index.html</code></p>
+					<pre><code><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;cq:pagemodel_root_url&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-variable">{PATH}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">.model.json&quot;</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span></code></pre>
+					<p>Bootstrap: <code>index.js</code></p>
+					<pre><code><span class="hljs-keyword">import</span> { ModelManager } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@adobe/aem-spa-page-model-manager&#x27;</span>;
+
+ModelManager.initialize().then(<span class="hljs-function">(<span class="hljs-params">model</span>) =&gt;</span> {
+    <span class="hljs-comment">// Render the App content using the provided model</span>
+    render(model);
+});
+
+<span class="hljs-comment">// Loading a specific portion of model</span>
+ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:content/path/to/component&quot;</span>).then(...);</code></pre>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -93,6 +115,7 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#clientlibutil" class="tsd-kind-icon">clientlib<wbr>Util</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#modelstore" class="tsd-kind-icon">model<wbr>Store</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#rootpath" class="tsd-kind-icon">root<wbr>Path</a></li>
@@ -106,7 +129,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="modelmanager.html#_notifylisteners" class="tsd-kind-icon">_notify<wbr>Listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="modelmanager.html#_storedata" class="tsd-kind-icon">_store<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="modelmanager.html#_tomodelpath" class="tsd-kind-icon">_to<wbr>Model<wbr>Path</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="modelmanager.html#adaptpagepath" class="tsd-kind-icon">adapt<wbr>Page<wbr>Path</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="modelmanager.html#destroy" class="tsd-kind-icon">destroy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="modelmanager.html#getdata" class="tsd-kind-icon">get<wbr>Data</a></li>
@@ -125,7 +147,7 @@
 					<div class="tsd-signature tsd-kind-icon">_clientlib<wbr>Util<span class="tsd-signature-symbol">:</span> <a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L68">src/ModelManager.ts:68</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L94">ModelManager.ts:94</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -135,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">_editor<wbr>Client<span class="tsd-signature-symbol">:</span> <a href="editorclient.html" class="tsd-signature-type">EditorClient</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L67">src/ModelManager.ts:67</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L93">ModelManager.ts:93</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -145,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">_fetch<wbr>Promises<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L65">src/ModelManager.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L91">ModelManager.ts:91</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -163,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">_init<wbr>Promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L66">src/ModelManager.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L92">ModelManager.ts:92</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -173,7 +195,7 @@
 					<div class="tsd-signature tsd-kind-icon">_listeners<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L64">src/ModelManager.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L90">ModelManager.ts:90</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -191,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">_model<wbr>Client<span class="tsd-signature-symbol">:</span> <a href="modelclient.html" class="tsd-signature-type">ModelClient</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L62">src/ModelManager.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L88">ModelManager.ts:88</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,13 +223,30 @@
 					<div class="tsd-signature tsd-kind-icon">_model<wbr>Store<span class="tsd-signature-symbol">:</span> <a href="modelstore.html" class="tsd-signature-type">ModelStore</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L63">src/ModelManager.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L89">ModelManager.ts:89</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="clientlibutil" class="tsd-anchor"></a>
+					<h3>clientlib<wbr>Util</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> clientlibUtil<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L112">ModelManager.ts:112</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="modelclient" class="tsd-anchor"></a>
 					<h3>model<wbr>Client</h3>
@@ -218,7 +257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L70">src/ModelManager.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L96">ModelManager.ts:96</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="modelclient.html" class="tsd-signature-type">ModelClient</a></h4>
@@ -235,7 +274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L78">src/ModelManager.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L104">ModelManager.ts:104</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="modelstore.html" class="tsd-signature-type">ModelStore</a></h4>
@@ -252,7 +291,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L186">src/ModelManager.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L219">ModelManager.ts:219</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -278,12 +317,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L421">src/ModelManager.ts:421</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L419">ModelManager.ts:419</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Verifies the integrity of the provided dependencies</p>
+									<p>Verifies the integrity of the provided dependencies.</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -300,12 +339,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L233">src/ModelManager.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L263">ModelManager.ts:263</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Fetches a model for the given path</p>
+									<p>Fetches the model for the given path.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -313,11 +352,12 @@
 								<li>
 									<h5>path: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Model path</p>
+										<p>Model path.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.html" class="tsd-signature-type">Model</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Model object for specific path.</p>
 						</li>
 					</ul>
 				</section>
@@ -331,12 +371,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L263">src/ModelManager.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L292">ModelManager.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Notifies the listeners for a given path</p>
+									<p>Notifies the listeners for a given path.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -344,7 +384,7 @@
 								<li>
 									<h5>path: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Path of the data model</p>
+										<p>Path of the data model.</p>
 									</div>
 								</li>
 							</ul>
@@ -362,7 +402,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L379">src/ModelManager.ts:379</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L379">ModelManager.ts:379</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -388,12 +428,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L407">src/ModelManager.ts:407</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L406">ModelManager.ts:406</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Transforms the given path into a model URL</p>
+									<p>Transforms the given path into a model URL.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -403,37 +443,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="adaptpagepath" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> adapt<wbr>Page<wbr>Path</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">adapt<wbr>Page<wbr>Path<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L345">src/ModelManager.ts:345</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Adapts the provided path to a valid model path.
-										Returns an empty string if the given path is equal to the root model path.
-									This function is a utility tool that converts a provided root model path into an internal specific empty path</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>path: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>the valid model path</p>
 						</li>
 					</ul>
 				</section>
@@ -441,13 +450,13 @@
 					<a name="addlistener" class="tsd-anchor"></a>
 					<h3>add<wbr>Listener</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Listener<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, callback<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenerfunction" class="tsd-signature-type">ListenerFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Listener<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenerfunction" class="tsd-signature-type">ListenerFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L293">src/ModelManager.ts:293</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L321">ModelManager.ts:321</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -458,10 +467,16 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>path: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Absolute path of the resource (e.g., &quot;/content/mypage&quot;). If not provided, the root page path is used.</p>
+									</div>
 								</li>
 								<li>
 									<h5>callback: <a href="../globals.html#listenerfunction" class="tsd-signature-type">ListenerFunction</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Function to be executed listening to changes at given path.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -478,7 +493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L365">src/ModelManager.ts:365</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L365">ModelManager.ts:365</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -497,12 +512,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L195">src/ModelManager.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L228">ModelManager.ts:228</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the model for the given configuration</p>
+									<p>Returns the model for the given configuration.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -518,6 +533,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Model object for specific path.</p>
 						</li>
 					</ul>
 				</section>
@@ -531,19 +547,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L99">src/ModelManager.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L132">ModelManager.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Initializes the ModelManager using the given path to resolve a data model.
 									If no path is provided, fallbacks are applied in the following order:</p>
+									<ul>
+										<li>meta property: <code>cq:pagemodel_root_url</code></li>
+										<li>current path of the page</li>
+									</ul>
 								</div>
-								<ul>
-									<li>meta property: cq:pagemodel_root_url</li>
-									<li>current pathname of the browser</li>
-								</ul>
-								<p>Once the initial model is loaded and if the data model doesn&#39;t contain the path of the current pathname, the library attempts to fetch a fragment of model.</p>
+								<p>If page model does not contain information about current path it performs additional fetch.</p>
 								<dl class="tsd-comment-tags">
 									<dt>fires</dt>
 									<dd><p>cq-pagemodel-loaded</p>
@@ -570,13 +586,13 @@
 					<a name="removelistener" class="tsd-anchor"></a>
 					<h3>remove<wbr>Listener</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Listener<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, callback<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenerfunction" class="tsd-signature-type">ListenerFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Listener<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenerfunction" class="tsd-signature-type">ListenerFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a055804/src/ModelManager.ts#L314">src/ModelManager.ts:314</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/ee8788b/src/ModelManager.ts#L341">ModelManager.ts:341</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -587,10 +603,16 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>path: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Absolute path of the resource (e.g., &quot;/content/mypage&quot;). If not provided, the root page path is used.</p>
+									</div>
 								</li>
 								<li>
 									<h5>callback: <a href="../globals.html#listenerfunction" class="tsd-signature-type">ListenerFunction</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Listener function to be removed.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -612,28 +634,28 @@
 					<li class=" tsd-kind-enum">
 						<a href="../enums/aem_mode.html" class="tsd-kind-icon">AEM_<wbr>MODE</a>
 					</li>
-					<li class=" tsd-kind-enum">
+					<li class=" tsd-kind-enum tsd-is-private">
 						<a href="../enums/tag_attr.html" class="tsd-kind-icon">TAG_<wbr>ATTR</a>
 					</li>
-					<li class=" tsd-kind-enum">
+					<li class=" tsd-kind-enum tsd-is-private">
 						<a href="../enums/tag_type.html" class="tsd-kind-icon">TAG_<wbr>TYPE</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="authoringutils.html" class="tsd-kind-icon">Authoring<wbr>Utils</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-is-private">
 						<a href="constants.html" class="tsd-kind-icon">Constants</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-is-private">
 						<a href="editorclient.html" class="tsd-kind-icon">Editor<wbr>Client</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-is-private">
 						<a href="eventtype.html" class="tsd-kind-icon">Event<wbr>Type</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-is-private">
 						<a href="internalconstants.html" class="tsd-kind-icon">Internal<wbr>Constants</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-is-private">
 						<a href="metaproperty.html" class="tsd-kind-icon">Meta<wbr>Property</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -666,6 +688,9 @@
 								<a href="modelmanager.html#_modelstore" class="tsd-kind-icon">_model<wbr>Store</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="modelmanager.html#clientlibutil" class="tsd-kind-icon">clientlib<wbr>Util</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="modelmanager.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
@@ -689,9 +714,6 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="modelmanager.html#_tomodelpath" class="tsd-kind-icon">_to<wbr>Model<wbr>Path</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="modelmanager.html#adaptpagepath" class="tsd-kind-icon">adapt<wbr>Page<wbr>Path</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="modelmanager.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a>
 							</li>
@@ -714,13 +736,13 @@
 					<li class=" tsd-kind-class">
 						<a href="modelstore.html" class="tsd-kind-icon">Model<wbr>Store</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-is-private">
 						<a href="pathutils.html" class="tsd-kind-icon">Path<wbr>Utils</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-is-private">
 						<a href="routermodes.html" class="tsd-kind-icon">Router<wbr>Modes</a>
 					</li>
-					<li class=" tsd-kind-interface">
+					<li class=" tsd-kind-interface tsd-is-private">
 						<a href="../interfaces/itemwrapper.html" class="tsd-kind-icon">Item<wbr>Wrapper</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -729,22 +751,19 @@
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/modelmanagerconfiguration.html" class="tsd-kind-icon">Model<wbr>Manager<wbr>Configuration</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
+					<li class=" tsd-kind-type-alias tsd-is-private">
 						<a href="../globals.html#listenerfunction" class="tsd-kind-icon">Listener<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-variable">
+					<li class=" tsd-kind-variable tsd-is-private">
 						<a href="../globals.html#context_path_regexp" class="tsd-kind-icon">CONTEXT_<wbr>PATH_<wbr>REGEXP</a>
 					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#default_sling_model_selector" class="tsd-kind-icon">DEFAULT_<wbr>SLING_<wbr>MODEL_<wbr>SELECTOR</a>
-					</li>
-					<li class=" tsd-kind-variable">
+					<li class=" tsd-kind-variable tsd-is-private">
 						<a href="../globals.html#jcr_content_pattern" class="tsd-kind-icon">JCR_<wbr>CONTENT_<wbr>PATTERN</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-private">
 						<a href="../globals.html#dispatchroutechanged" class="tsd-kind-icon">dispatch<wbr>Route<wbr>Changed</a>
 					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-is-private">
 						<a href="../globals.html#getmodelpath" class="tsd-kind-icon">get<wbr>Model<wbr>Path</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-private">
@@ -765,7 +784,7 @@
 					<li class=" tsd-kind-function tsd-is-private">
 						<a href="../globals.html#routemodel" class="tsd-kind-icon">route<wbr>Model</a>
 					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-is-private">
 						<a href="../globals.html#triggerpagemodelloaded" class="tsd-kind-icon">trigger<wbr>Page<wbr>Model<wbr>Loaded</a>
 					</li>
 				</ul>
