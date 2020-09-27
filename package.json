@@ -29,11 +29,11 @@
   "main": "dist/aem-spa-page-model-manager.js",
   "types": "dist/types.d.ts",
   "scripts": {
-    "clean": "rm -rf coverage/ dist/",
+    "clean": "rm -rf dist/",
     "docs": "npm i && npx typedoc ./src --out ./dist/docs --mode file --ignoreCompilerErrors",
     "linter": "eslint .",
     "test": "jest --clearCache && jest",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --clearCache && jest --coverage",
     "test:debug": "jest --coverage --watchAll",
     "build": "npm run clean && npm run linter && cross-env NODE_ENV=development webpack && npm run build:types",
     "build:production": "npm run clean && npm run linter && cross-env NODE_ENV=production webpack --mode=production && npm run build:types",

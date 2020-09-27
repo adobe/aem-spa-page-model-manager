@@ -17,28 +17,22 @@ module.exports = {
     transform: {
         '^.+\\.ts$': 'ts-jest'
     },
-    testMatch: [ '<rootDir>/test/*.test.ts' ],
+    testMatch: [
+      '<rootDir>/test/*.test.ts'
+    ],
     testPathIgnorePatterns: [
-        'node_modules',
-        'lib',
-        'dist',
-        'node'
+        'node_modules/',
+        'dist/'
     ],
     collectCoverageFrom: [
-        'src/**/*.ts',
-        '!<rootDir>/node_modules/'
+        'src/**/*.ts'
     ],
     coveragePathIgnorePatterns: [
-        '/node_modules/',
-        '/lib/',
-        '/dist/',
-        '/node/',
         'src/types.ts'
     ],
+    coverageDirectory: 'dist/coverage',
     moduleFileExtensions: [
         'ts',
-        'js',
-        'json',
-        'node'
+        'js'
     ]
 };
