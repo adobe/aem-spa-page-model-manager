@@ -16,4 +16,4 @@ export { default as ModelManager } from './ModelManager';
 export * from './ModelClient';
 export * from './Model';
 export * from './PathUtils';
-export { default as Constants } from './Constants';
+export { AEM_MODE, default as Constants } from './Constants';
