@@ -450,7 +450,7 @@ export class ModelManager {
         }
 
         if (data && (Object.keys(data).length > 0)) {
-            // this.modelStore.insertData(path, data);
+            this.modelStore.insertData(path, data);
             // If the path correspond to an item notify either the parent item
             // Otherwise notify the app root
             this._notifyListeners(path);

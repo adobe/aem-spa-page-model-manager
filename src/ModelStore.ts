@@ -44,6 +44,7 @@ export class ModelStore {
      * @param {{}} [data]             - Initial model
      */
     constructor(rootPath?: string, data?: Model) {
+        this._data = {};
         if (rootPath) {
             this.initialize(rootPath, data ? data : {});
         }
