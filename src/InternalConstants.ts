@@ -22,7 +22,7 @@ export class InternalConstants {
     /**
      * JSON model extension.
      */
-    public static readonly DEFAULT_MODEL_JSON_EXTENSION =  `.${InternalConstants.DEFAULT_SLING_MODEL_SELECTOR}.json`;
+    public static readonly DEFAULT_MODEL_JSON_EXTENSION = `.${InternalConstants.DEFAULT_SLING_MODEL_SELECTOR}.json`;
 
     private constructor() {
         // hide constructor

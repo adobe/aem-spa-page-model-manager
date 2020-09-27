@@ -41,7 +41,7 @@ export class ModelStore {
      */
     constructor(rootPath: string, data: Model = {}) {
         this.initialize(rootPath, data);
-        this._pageContentDelimiter = [Constants.JCR_CONTENT];
+        this._pageContentDelimiter = [ Constants.JCR_CONTENT ];
     }
 
     /**
@@ -178,6 +178,7 @@ export class ModelStore {
 
                 if (items) {
                     items[itemName] = data;
+
                     const itemsOrder: string[] | undefined = parent[Constants.ITEMS_ORDER_PROP];
 
                     if ((itemsOrder != null) && (itemsOrder.length > 0) && (siblingName != null)) {
@@ -271,7 +272,7 @@ export class ModelStore {
      * @private
      * @return
      */
-    private _findItemData(path: string, data= this._data, parent: any = null, parentPath = ''): ItemWrapper {
+    private _findItemData(path: string, data = this._data, parent: any = null, parentPath = ''): ItemWrapper {
         const answer: ItemWrapper = {
             parent,
             parentPath
@@ -306,7 +307,7 @@ export class ModelStore {
 
                 if (this._pageContentDelimiter) {
                     const pageDelimiter = PathUtils._getStartStrings(subPath, this._pageContentDelimiter);
-                    const childParentPath = PathUtils.join([parentPath, pathKey, pageDelimiter]);
+                    const childParentPath = PathUtils.join([ parentPath, pathKey, pageDelimiter ]);
                     subPath = PathUtils.trimStrings(subPath, this._pageContentDelimiter);
 
                     if (subPath !== path) {

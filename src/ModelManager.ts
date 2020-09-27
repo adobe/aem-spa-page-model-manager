@@ -131,6 +131,7 @@ export class ModelManager {
      */
     public initialize<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
         this.destroy();
+
         let path;
         let initialModel = null;
 
@@ -164,7 +165,7 @@ export class ModelManager {
         }
 
         if (!rootModelURL) {
-            throw new Error("ModelManager.js Cannot initialize without an URL to fetch the root model");
+            throw new Error('ModelManager.js Cannot initialize without an URL to fetch the root model');
         }
 
         if (!this._modelClient) {
@@ -180,6 +181,7 @@ export class ModelManager {
 
             if (data && (Object.keys(data).length > 0)) {
                 triggerPageModelLoaded(data);
+
                 return data;
             } else {
                 return this._fetchData(rootModelURL).then((rootModel: Model) => {
@@ -191,13 +193,16 @@ export class ModelManager {
                         if (!isPageURLRoot(currentPathname, metaPropertyModelUrl) && !hasChildOfPath(rootModel, currentPathname)) {
                             return this._fetchData(currentPathname).then((model: any) => {
                                 this.modelStore.insertData(sanitizedCurrentPathname, model);
+
                                 const data = this.modelStore.getData();
+
                                 triggerPageModelLoaded(data);
 
                                 return data;
                             });
                         } else {
                             const data = this.modelStore.getData();
+
                             triggerPageModelLoaded(data);
 
                             return data;
@@ -272,9 +277,11 @@ export class ModelManager {
 
             promise.then((obj) => {
                 delete this._fetchPromises[path];
+
                 return obj;
             }).catch((error) => {
                 delete this._fetchPromises[path];
+
                 return error;
             });
 
@@ -405,6 +412,7 @@ export class ModelManager {
      */
     private _toModelPath(path: string) {
         let url = PathUtils.addSelector(path, 'model');
+
         url = PathUtils.addExtension(url, 'json');
         url = PathUtils.externalize(url);
 
