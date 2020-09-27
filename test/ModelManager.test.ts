@@ -111,6 +111,24 @@ describe('ModelManager ->', () => {
             });
         });
 
+        it('should throw error when initialized without model url', () => {
+            metaProps = {};
+            pathName = '';
+            try {
+                ModelManager.initialize();
+            } catch (err) {
+                assert.strictEqual(err.name, 'Error');
+            }
+        });
+
+        it('should throw error when initialized with invalid model url', () => {
+            try {
+                ModelManager.initialize({ path: 12345 });
+            } catch (err) {
+                assert.strictEqual(err.name, 'Error');
+            }
+        });
+
         it('should not make concurrent server calls on duplicate request', () => {
             return ModelManager.initialize({path: PAGE_PATH, model: PAGE_MODEL, modelClient: modelClient}).then((data) => {
                 expectPageModelLoadedEventFired();
@@ -202,6 +220,21 @@ describe('ModelManager ->', () => {
                 pathName = PAGE_MODEL_URL;
                 ModelManager.initializeAsync();
                 assertAsyncModelFetched();
+            });
+
+            it('should initialize model store when no root path is provided', () => {
+                metaProps = {};
+                pathName = '';
+                ModelManager.initializeAsync();
+                return ModelManager.getData({path:PAGE_MODEL_URL}).then((data) => {
+                    assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
+                });
+            });
+        });
+
+        it('should throw error when fetching data without initialization', () => {
+            ModelManager.getData({path:PAGE_MODEL_URL}).then((data) => {
+                assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
             });
         });
 

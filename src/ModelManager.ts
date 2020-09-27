@@ -218,8 +218,7 @@ export class ModelManager {
         const metaPropertyModelUrl = PathUtils.internalize(pageModelRoot);
 
         const aemApiHost = this.modelClient.apiHost;
-        const isRemoteApp = aemApiHost && (PathUtils.getCurrentURL() !== aemApiHost);
-
+        const isRemoteApp = PathUtils.isBrowser() && aemApiHost && (PathUtils.getCurrentURL() !== aemApiHost);
         const currentPathname = !isRemoteApp ? PathUtils.getCurrentPathname() : '';
         // For remote apps in edit mode, to fetch path via parent URL
 
@@ -276,7 +275,7 @@ export class ModelManager {
                                 triggerPageModelLoaded(data);
                                 return data;
                             }
-                        } else if (!(this.modelClient.apiHost && (PathUtils.getCurrentURL() !== this.modelClient.apiHost))){
+                        } else {
                             throw new Error(`Attempting to retrieve model data from a non-browser.
                                 Please provide the initial data with the property key model`
                             );
@@ -340,19 +339,22 @@ export class ModelManager {
             return this._fetchPromises[path];
         }
 
-        const promise = this.modelClient.fetch(this._toModelPath(path));
+        if (this.modelClient) {
+            const promise = this.modelClient.fetch(this._toModelPath(path));
 
-        this._fetchPromises[path] = promise;
+            this._fetchPromises[path] = promise;
 
-        promise.then((obj) => {
-            delete this._fetchPromises[path];
-            return obj;
-        }).catch((error) => {
-            delete this._fetchPromises[path];
-            return error;
-        });
-
-        return promise;
+            promise.then((obj) => {
+                delete this._fetchPromises[path];
+                return obj;
+            }).catch((error) => {
+                delete this._fetchPromises[path];
+                return error;
+            });
+            return promise;
+        } else {
+            throw new Error('ModelClient not initialized!');
+        }
     }
 
     /**
@@ -390,10 +392,6 @@ export class ModelManager {
      * @param callback Function to be executed listening to changes at given path.
      */
     public addListener(path: string, callback: ListenerFunction): void {
-        if (!this._listenersMap) {
-            throw new Error('ListenersMap is undefined.');
-        }
-
         if (!path || (typeof path !== 'string') || (typeof callback !== 'function')) {
             return;
         }
@@ -410,10 +408,6 @@ export class ModelManager {
      * @param callback Listener function to be removed.
      */
     public removeListener(path: string, callback: ListenerFunction): void {
-        if (!this._listenersMap) {
-            throw new Error('ListenersMap is undefined.');
-        }
-
         if (!path || (typeof path !== 'string') || (typeof callback !== 'function')) {
             return;
         }
