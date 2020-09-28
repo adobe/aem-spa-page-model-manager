@@ -240,6 +240,11 @@ export class ModelManager {
         };
     }
 
+    /**
+     * Sets initialization promise to fetch model if root path is available
+     * Also, to be returned on synchronous initialization
+     * @param rootModelPath Root model path
+     */
     private _setInitializationPromise(rootModelPath: string) {
         const {
             rootModelURL,
