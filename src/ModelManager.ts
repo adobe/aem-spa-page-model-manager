@@ -257,28 +257,32 @@ export class ModelManager {
                     return data;
                 } else if (rootModelURL) {
                     return this._fetchData(rootModelURL).then((rootModel: Model) => {
-                        this.modelStore.initialize(rootModelPath, rootModel);
+                        try {
+                            this.modelStore.initialize(rootModelPath, rootModel);
 
-                        // Append the child page if the page model doesn't correspond to the URL of the root model
-                        // and if the model root path doesn't already contain the child model (asynchronous page load)
-                        if (!!currentPathname && !!sanitizedCurrentPathname) {
-                            if (!isPageURLRoot(currentPathname, metaPropertyModelUrl)
-                            && !hasChildOfPath(rootModel, currentPathname)) {
-                                return this._fetchData(currentPathname).then((model: Model) => {
-                                    this.modelStore.insertData(sanitizedCurrentPathname, model);
+                            // Append the child page if the page model doesn't correspond to the URL of the root model
+                            // and if the model root path doesn't already contain the child model (asynchronous page load)
+                            if (!!currentPathname && !!sanitizedCurrentPathname) {
+                                if (!isPageURLRoot(currentPathname, metaPropertyModelUrl)
+                                && !hasChildOfPath(rootModel, currentPathname)) {
+                                    return this._fetchData(currentPathname).then((model: Model) => {
+                                        this.modelStore.insertData(sanitizedCurrentPathname, model);
+                                        const data = this.modelStore.getData();
+                                        triggerPageModelLoaded(data);
+                                        return data;
+                                    });
+                                } else {
                                     const data = this.modelStore.getData();
                                     triggerPageModelLoaded(data);
                                     return data;
-                                });
-                            } else {
-                                const data = this.modelStore.getData();
-                                triggerPageModelLoaded(data);
-                                return data;
+                                }
+                            } else if (!PathUtils.isBrowser()){
+                                throw new Error(`Attempting to retrieve model data from a non-browser.
+                                    Please provide the initial data with the property key model`
+                                );
                             }
-                        } else {
-                            throw new Error(`Attempting to retrieve model data from a non-browser.
-                                Please provide the initial data with the property key model`
-                            );
+                        } catch (e) {
+                            console.error(`Error on initialization - ${e}`);
                         }
                     });
                 }

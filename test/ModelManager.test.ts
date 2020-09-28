@@ -111,6 +111,25 @@ describe('ModelManager ->', () => {
             });
         });
 
+
+        it('should fail when initialized on non-browser with invlid config', () => {
+            pathName = '';
+
+            // disable console.error within the test
+            jest.spyOn(console, 'error').mockImplementation(() => {});
+
+            //simulate non browser for the test
+            let windowSpy = jest.spyOn(global, 'window', 'get');
+            windowSpy.mockImplementation(() => undefined);
+
+            try {
+                ModelManager.initialize();
+            } catch (err) {
+                assert.strictEqual(err.name, 'Error');
+            }
+        });
+
+
         it('should throw error when initialized without model url', () => {
             metaProps = {};
             pathName = '';
