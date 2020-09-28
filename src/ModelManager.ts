@@ -163,7 +163,7 @@ export class ModelManager {
      * @param {string|InitializationConfig} [config]                - URL to the data model or configuration object
      * @fires cq-pagemodel-loaded if root model path is available
      */
-    public initializeAsync<M extends Model>(config?: ModelManagerConfiguration | string): void {
+    public initializeAsync(config?: ModelManagerConfiguration | string): void {
         this.destroy();
 
         const modelConfig = this._toModelConfig(config);

@@ -126,11 +126,11 @@ describe('ModelManager ->', () => {
             pathName = '';
 
             // disable console.error within the test
-            jest.spyOn(console, 'error').mockImplementation(() => {});
+            jest.spyOn(console, 'error').mockImplementation();
 
             //simulate non browser for the test
-            let windowSpy = jest.spyOn(global, 'window', 'get');
-            windowSpy.mockImplementation(() => undefined);
+            const windowSpy = jest.spyOn(global, 'window', 'get');
+            windowSpy.mockImplementation();
 
             try {
                 ModelManager.initialize();
@@ -152,7 +152,7 @@ describe('ModelManager ->', () => {
 
         it('should throw error when initialized with invalid model url', () => {
             try {
-                ModelManager.initialize({ path: 12345 });
+                ModelManager.initialize({ path: '?abc' });
             } catch (err) {
                 assert.strictEqual(err.name, 'Error');
             }
