@@ -26,7 +26,7 @@ const CONTEXT_PATH_REGEXP = /(?:\/)(?:content|apps|libs|etc|etc.clientlibs|conf|
 /**
  * @private
  */
-const JCR_CONTENT_PATTERN = "(.+)/" + Constants.JCR_CONTENT + "/(.+)";
+const JCR_CONTENT_PATTERN = `(.+)/${Constants.JCR_CONTENT}/(.+)`;
 
 /**
  * Helper functions related to path manipulation.
@@ -72,7 +72,7 @@ export class PathUtils {
      * @private
      * @return The valid model path.
      */
-    public static adaptPagePath(path: string, rootPath?: string) {
+    public static adaptPagePath(path: string, rootPath?: string): string {
         if (!path) {
             return '';
         }
@@ -146,7 +146,7 @@ export class PathUtils {
      */
     public static getCurrentPageModelUrl(): string | null {
         // extract the model from the pathname
-        const currentPath: string | null  = this.getCurrentPathname();
+        const currentPath: string | null = this.getCurrentPathname();
         let url = null;
 
         if (currentPath) {
@@ -243,7 +243,7 @@ export class PathUtils {
         // 3. the suffix
         // 4. the parameters
         const match = /^((?:[/a-zA-Z0-9:_-]*)+)(?:\.?)([a-zA-Z0-9._-]*)(?:\/?)([a-zA-Z0-9/._-]*)(?:\??)([a-zA-Z0-9=&]*)$/g.exec(
-            path,
+            path
         );
 
         let queue = '';
@@ -366,7 +366,7 @@ export class PathUtils {
             const splashIndex = path.lastIndexOf('/') + 1;
 
             if (splashIndex < path.length) {
-                return path.substring(0 , splashIndex - 1);
+                return path.substring(0, splashIndex - 1);
             }
         }
 
@@ -425,7 +425,7 @@ export class PathUtils {
      * Returns an array of segments of the path, split by the custom set of delimitators passed as an array.
      */
     public static splitByDelimitators(path: string, delimitators: string[]) {
-        let paths = [path];
+        let paths = [ path ];
 
         delimitators.forEach((delimitator) => {
             let newPaths: string[] = [];
@@ -472,7 +472,7 @@ export class PathUtils {
         const splitPaths = path.split(`/${Constants.JCR_CONTENT}/`);
 
         const split = {
-            pagePath: splitPaths[0],
+            pagePath: splitPaths[0]
         };
 
         if (splitPaths.length > 1) {

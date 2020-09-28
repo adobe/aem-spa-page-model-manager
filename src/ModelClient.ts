@@ -40,6 +40,7 @@ export class ModelClient {
     public fetch<M extends Model>(modelPath: string): Promise<M> {
         if (!modelPath) {
             const err = `Fetching model rejected for path: ${modelPath}`;
+
             return Promise.reject(new Error(err));
         }
 

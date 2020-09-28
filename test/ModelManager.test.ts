@@ -1,4 +1,14 @@
-// @ts-nocheck
+/*
+ * Copyright 2020 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import * as assert from 'assert';
 import fetchMock from 'jest-fetch-mock';
@@ -64,7 +74,7 @@ describe('ModelManager ->', () => {
     describe('initialize ->', () => {
         describe('Initialization without config object ->', () => {
             it('should NOT fetch remote data on initialization when the model is provided', () => {
-                return ModelManager.initialize({model: PAGE_MODEL}).then((data) => {
+                return ModelManager.initialize({ model: PAGE_MODEL }).then((data) => {
                     expectPageModelLoadedEventFired();
                     expect(data).toEqual(PAGE_MODEL);
                     assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
@@ -98,14 +108,14 @@ describe('ModelManager ->', () => {
         });
 
         it('should fetch remote data on initialization', () => {
-            return ModelManager.initialize({path: PAGE_PATH, modelClient: modelClient}).then((data) => {
+            return ModelManager.initialize({ path: PAGE_PATH, modelClient: modelClient }).then((data) => {
                 verify(modelClient.fetch(anyString()));
                 assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
             });
         });
 
         it('should not make concurrent server calls on duplicate request', () => {
-            return ModelManager.initialize({path: PAGE_PATH, model: PAGE_MODEL, modelClient: modelClient}).then((data) => {
+            return ModelManager.initialize({ path: PAGE_PATH, model: PAGE_MODEL, modelClient: modelClient }).then(() => {
                 expectPageModelLoadedEventFired();
                 pathName = '/content/test/duplicate/request';
 
@@ -114,12 +124,13 @@ describe('ModelManager ->', () => {
                 }));
 
                 const promises: any[] = [];
+
                 promises.push(ModelManager._fetchData(pathName));
                 promises.push(ModelManager._fetchData(pathName));
                 promises.push(ModelManager._fetchData(pathName));
 
                 return Promise.all(promises).then(() => {
-                    for (let i = 0 ; i < promises.length - 1 ; ++i) {
+                    for (let i = 0; i < promises.length - 1; ++i) {
                         assert.equal(promises[i], promises[i + 1]);
                     }
                 });
