@@ -36,7 +36,7 @@ export function triggerPageModelLoaded(model: any): void {
  */
 export class EditorClient {
     public _modelManager: ModelManager;
-    public _windowListener: EventListenerOrEventListenerObject;
+    public _windowListener: any;
 
     constructor(modelManager: ModelManager) {
         this._modelManager = modelManager;
@@ -44,6 +44,7 @@ export class EditorClient {
         this._windowListener = (event: any) => {
             if (!event || !event.detail || !event.detail.msg) {
                 console.error('EditorService.js', 'No message passed to cq-pagemodel-update', event);
+
                 return;
             }
 
@@ -69,6 +70,7 @@ export class EditorClient {
     public _updateModel(msg: any) {
         if (!msg || !msg.cmd || !msg.path) {
             console.error('PageModelManager.js', 'Not enough data received to update the page model');
+
             return;
         }
 

@@ -350,9 +350,11 @@ export class ModelManager {
 
             promise.then((obj) => {
                 delete this._fetchPromises[path];
+
                 return obj;
             }).catch((error) => {
                 delete this._fetchPromises[path];
+
                 return error;
             });
             return promise;
@@ -475,6 +477,7 @@ export class ModelManager {
      */
     private _toModelPath(path: string) {
         let url = PathUtils.addSelector(path, 'model');
+
         url = PathUtils.addExtension(url, 'json');
         url = PathUtils.externalize(url);
 

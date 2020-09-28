@@ -85,7 +85,8 @@ export class Constants {
  */
 export enum AEM_MODE {
     EDIT = 'edit',
-    PREVIEW = 'preview'
+    PREVIEW = 'preview',
+    DISABLED = 'disabled'
 }
 
 /**

@@ -110,6 +110,7 @@ export class AuthoringUtils {
 
         try {
             url = new URL(PathUtils.getCurrentURL());
+
             return url.searchParams.get(Constants.AEM_MODE_KEY);
         } catch (e) {
             // invalid url

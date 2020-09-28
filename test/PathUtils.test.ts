@@ -1,4 +1,14 @@
-// @ts-nocheck
+/*
+ * Copyright 2020 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import * as assert from 'assert';
 import InternalConstants from '../src/InternalConstants';
@@ -6,7 +16,7 @@ import MetaProperty from '../src/MetaProperty';
 import { PathUtils } from '../src/PathUtils';
 
 describe('PathUtils ->', () => {
-    let currentPathName;
+    let currentPathName: string | null;
     let metaProps: { [key: string]: string } = {};
     let metaPropSpy: jest.SpyInstance;
     let pathNameSpy: jest.SpyInstance;
@@ -48,17 +58,21 @@ describe('PathUtils ->', () => {
         it('should detect the context path from the given location', () => {
             for (const keyPath in EXPECTED_CONTEXT_PATH) {
                 const contextPath = PathUtils.getContextPath(keyPath);
+
+                // @ts-expect-error
                 assert.strictEqual(contextPath, EXPECTED_CONTEXT_PATH[keyPath], 'Incorrect context path detected for ' + keyPath);
             }
         });
 
         it('should detect the context path from the current location', () => {
             const contextPath = PathUtils.getContextPath();
+
             assert.strictEqual(contextPath, '', 'Incorrect context path detected');
         });
 
         it('should determine correctly the current location', () => {
             const url = 'http://www.abc.com';
+
             jest.spyOn(PathUtils, 'isBrowser')
                 .mockReturnValueOnce(true)
                 .mockReturnValueOnce(false);
@@ -74,7 +88,7 @@ describe('PathUtils ->', () => {
     });
 
     describe('externalize ->', () => {
-        let contextPathSpy;
+        let contextPathSpy: jest.SpyInstance;
         const CONTEXT_PATH = '/contextpath';
         const EXPECTED_EXTERNALIZED_PATHS = {
             '/content/test.html': '/contextpath/content/test.html',
@@ -103,13 +117,15 @@ describe('PathUtils ->', () => {
                 }
 
                 const externalizedPath = PathUtils.externalize(keyPath);
+
+                // @ts-expect-error
                 assert.strictEqual(externalizedPath, EXPECTED_EXTERNALIZED_PATHS[keyPath]);
             }
         });
     });
 
     describe('internalize ->', () => {
-        let contextPathSpy;
+        let contextPathSpy: jest.SpyInstance;
         const CONTEXT_PATH = '/contextpath';
         const EXPECTED_INTERNALIZED_PATHS = {
             '': '',
@@ -122,7 +138,7 @@ describe('PathUtils ->', () => {
             '/content/content/test.html': '/content/content/test.html',
             '/content/with/content/test.html': '/content/with/content/test.html',
             '/not/a/context/path/test.html': '/not/a/context/path/test.html',
-            '/content/test.html': '/content/test.html',
+            '/content/test.html': '/content/test.html'
         };
 
         beforeAll(() => {
@@ -140,6 +156,8 @@ describe('PathUtils ->', () => {
                 }
 
                 const internalizedPath = PathUtils.internalize(path);
+
+                // @ts-expect-error
                 assert.strictEqual(internalizedPath, EXPECTED_INTERNALIZED_PATHS[path]);
             }
         });
@@ -166,7 +184,7 @@ describe('PathUtils ->', () => {
     });
 
     describe('sanitize ->', () => {
-        let contextPathSpy;
+        let contextPathSpy: jest.SpyInstance;
         const CONTEXT_PATH = '/contextpath';
         const EXPECTED_PATH = {
             '': null,
@@ -186,7 +204,7 @@ describe('PathUtils ->', () => {
             '/contextpath/content//page': '/content/page',
             '/contextpath/content////////////page': '/content/page',
             'http://localhost:4502//content/page.selector.html': '/content/page',
-            'http://localhost:4502/content//page.selector.html': '/content/page',
+            'http://localhost:4502/content//page.selector.html': '/content/page'
         };
 
         beforeAll(() => {
@@ -200,11 +218,16 @@ describe('PathUtils ->', () => {
         it('should return paths that are ready to be stored', () => {
             for (const path in EXPECTED_PATH) {
                 const sanitizedPath = PathUtils.sanitize(path);
+
+                // @ts-expect-error
                 assert.strictEqual(sanitizedPath, EXPECTED_PATH[path], 'Incorrect sanitized path for ' + path);
             }
 
+            // @ts-expect-error
             assert.equal(PathUtils.sanitize(), null);
             assert.equal(PathUtils.sanitize(null), null);
+
+            // @ts-expect-error
             assert.equal(PathUtils.sanitize(undefined), null);
         });
     });
@@ -244,7 +267,7 @@ describe('PathUtils ->', () => {
         assert.equal(PathUtils.isBrowser(), true);
 
         // returns false when window is not present
-        const windowSpy = jest.spyOn(global, 'window', 'get');
+        const windowSpy: jest.SpyInstance = jest.spyOn(global, 'window', 'get');
 
         windowSpy.mockImplementation(() => undefined);
         assert.equal(PathUtils.isBrowser(), false);
@@ -252,11 +275,11 @@ describe('PathUtils ->', () => {
     });
 
     it('join', () => {
-        assert.strictEqual(PathUtils.join(['path', '/path1', '//path1']), 'path/path1/path1');
-        assert.strictEqual(PathUtils.join(['']), '');
+        assert.strictEqual(PathUtils.join([ 'path', '/path1', '//path1' ]), 'path/path1/path1');
+        assert.strictEqual(PathUtils.join([ '' ]), '');
         assert.strictEqual(PathUtils.join([]), '');
         assert.strictEqual(PathUtils.join(), '');
-        assert.strictEqual(PathUtils.join(['/path', 'path1', 'path2']), '/path/path1/path2');
+        assert.strictEqual(PathUtils.join([ '/path', 'path1', 'path2' ]), '/path/path1/path2');
     });
 
     it('normalize', () => {
@@ -281,19 +304,45 @@ describe('PathUtils ->', () => {
     });
 
     it('getNodeName', () => {
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(), null);
-        assert.strictEqual(PathUtils.getNodeName(undefined), null);
-        assert.strictEqual(PathUtils.getNodeName(null), null);
-        assert.strictEqual(PathUtils.getNodeName(null), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(true), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(0), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(123), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(123.45), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(0x123), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(0o123), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(0b1001010), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName([]), null);
+
+        // @ts-expect-error
         assert.strictEqual(PathUtils.getNodeName(new Date()), null);
+
+        // @ts-expect-error
+        assert.strictEqual(PathUtils.getNodeName(undefined), null);
+
+        // @ts-expect-error
+        assert.strictEqual(PathUtils.getNodeName(null), null);
+
+        // @ts-expect-error
+        assert.strictEqual(PathUtils.getNodeName(null), null);
+
         assert.strictEqual(PathUtils.getNodeName(''), null);
         assert.strictEqual(PathUtils.getNodeName('foo'), 'foo');
         assert.strictEqual(PathUtils.getNodeName('/foo'), 'foo');
@@ -312,23 +361,25 @@ describe('PathUtils ->', () => {
     });
 
     it('splitByDelimitators', () => {
-        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim/path3/path4/delim/path/delim', ['delim']), ['/path1/path2', 'path3/path4', 'path']);
-        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim', []), ['/path1/path2/delim']);
-        assert.deepStrictEqual(PathUtils.splitByDelimitators('delim', ['delim']), []);
-        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim1/path3/path4/delim2/path5/path6/delim3', ['delim1', 'delim2', 'delim3']), ['/path1/path2', 'path3/path4', 'path5/path6']);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim/path3/path4/delim/path/delim', [ 'delim' ]), [ '/path1/path2', 'path3/path4', 'path' ]);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim', []), [ '/path1/path2/delim' ]);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('delim', [ 'delim' ]), []);
+        assert.deepStrictEqual(PathUtils.splitByDelimitators('/path1/path2/delim1/path3/path4/delim2/path5/path6/delim3', [ 'delim1', 'delim2', 'delim3' ]), [ '/path1/path2', 'path3/path4', 'path5/path6' ]);
     });
 
     it('trimStrings', () => {
-        assert.strictEqual(PathUtils.trimStrings('jcr:content/path1/path2', ['jcr:content']), 'path1/path2');
-        assert.strictEqual(PathUtils.trimStrings('path1/path2', ['jcr:content']), 'path1/path2');
-        assert.strictEqual(PathUtils.trimStrings('path1/path2/jcr:content', ['jcr:content']), 'path1/path2');
-        assert.strictEqual(PathUtils.trimStrings('jcr:content/jcr:content/path1/path2/jcr:content/jcr:content/path1/jcr:content/jcr:content', ['jcr:content']), 'path1/path2/jcr:content/jcr:content/path1');
+        assert.strictEqual(PathUtils.trimStrings('jcr:content/path1/path2', [ 'jcr:content' ]), 'path1/path2');
+        assert.strictEqual(PathUtils.trimStrings('path1/path2', [ 'jcr:content' ]), 'path1/path2');
+        assert.strictEqual(PathUtils.trimStrings('path1/path2/jcr:content', [ 'jcr:content' ]), 'path1/path2');
+        assert.strictEqual(PathUtils.trimStrings('jcr:content/jcr:content/path1/path2/jcr:content/jcr:content/path1/jcr:content/jcr:content', [ 'jcr:content' ]), 'path1/path2/jcr:content/jcr:content/path1');
         assert.strictEqual(PathUtils.trimStrings('jcr:content/path1/path2/jcr:content', []), 'jcr:content/path1/path2/jcr:content');
         assert.strictEqual(PathUtils.trimStrings('/path1/path2', []), '/path1/path2');
     });
 
     it('adaptPagePath', () => {
+        // @ts-expect-error
         assert.equal(PathUtils.adaptPagePath(), '');
+
         assert.equal(PathUtils.adaptPagePath(''), '');
         assert.equal(PathUtils.adaptPagePath('/foobar'), '/foobar');
         assert.equal(PathUtils.adaptPagePath('/foobar', '/hello'), '/foobar');
@@ -336,20 +387,36 @@ describe('PathUtils ->', () => {
     });
 
     it('addExtension', () => {
+        // @ts-expect-error
         assert.equal(PathUtils.addExtension(), undefined);
+
+        // @ts-expect-error
         assert.equal(PathUtils.addExtension(null), undefined);
+
+        // @ts-expect-error
         assert.equal(PathUtils.addExtension(''), '');
+
+        // @ts-expect-error
         assert.equal(PathUtils.addExtension('/foobar'), '/foobar');
+
         assert.equal(PathUtils.addExtension('/foobar.xyz', 'html'), '/foobar.xyz.html');
         assert.equal(PathUtils.addExtension('/foobar.json', 'json'), '/foobar.json');
         assert.equal(PathUtils.addExtension('/foobar', 'json'), '/foobar.json');
     });
 
     it('addSelector', () => {
+        // @ts-expect-error
         assert.equal(PathUtils.addSelector(), undefined);
+
+        // @ts-expect-error
         assert.equal(PathUtils.addSelector(null), undefined);
+
+        // @ts-expect-error
         assert.equal(PathUtils.addSelector(''), '');
+
+        // @ts-expect-error
         assert.equal(PathUtils.addSelector('/foobar'), '/foobar');
+
         assert.equal(PathUtils.addSelector('/foobar.html', 'xyz'), '/foobar.xyz.html');
         assert.equal(PathUtils.addSelector('/foobar.html', 'xyz.abc'), '/foobar.xyz.abc.html');
         assert.equal(PathUtils.addSelector('/foobar.json', 'json'), '/foobar.json');
@@ -357,6 +424,7 @@ describe('PathUtils ->', () => {
     });
 
     it('getParentNodePath', () => {
+        // @ts-expect-error
         assert.equal(PathUtils.getParentNodePath(), null);
         assert.equal(PathUtils.getParentNodePath(null), null);
         assert.equal(PathUtils.getParentNodePath(''), null);

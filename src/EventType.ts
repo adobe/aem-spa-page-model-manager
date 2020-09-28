@@ -23,17 +23,17 @@ export class EventType {
     /**
      * Event which indicates that the PageModelManager has loaded new content
      */
-    public static readonly  PAGE_MODEL_LOADED = 'cq-pagemodel-loaded';
+    public static readonly PAGE_MODEL_LOADED = 'cq-pagemodel-loaded';
 
     /**
      * Event that indicates a request to update the page model
      */
-    public static readonly  PAGE_MODEL_UPDATE = 'cq-pagemodel-update';
+    public static readonly PAGE_MODEL_UPDATE = 'cq-pagemodel-update';
 
     /**
      * Event which indicates that ModelRouter has identified that model route has changed
      */
-    public static readonly  PAGE_MODEL_ROUTE_CHANGED = 'cq-pagemodel-route-changed';
+    public static readonly PAGE_MODEL_ROUTE_CHANGED = 'cq-pagemodel-route-changed';
 
     private constructor() {
         // hide constructor
