@@ -91,6 +91,25 @@ export type ListenerFunction = () => void;
  * // Loading a specific portion of model
  * ModelManager.getData("/content/site/page/jcr:content/path/to/component").then(...);
  * ```
+ *
+ *
+ *
+ * For asynchronous loading of root model/standalone item model  -
+ * ```
+ * import { ModelManager } from '@adobe/aem-spa-page-model-manager';
+ *
+ * ModelManager.initializeAsync();
+ * ...
+ * // Render the App independent of the model
+ * render();
+ *
+ * function render () {
+ *   ...
+ *   <App />
+ *   ...
+ * }
+ *
+ * For root model, custom event is fired on window with fetched model - cq-pagemodel-loaded
  */
 export class ModelManager {
     private _modelClient: ModelClient | undefined;
