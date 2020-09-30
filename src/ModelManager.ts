@@ -102,7 +102,7 @@ export class ModelManager {
     private _clientlibUtil: AuthoringUtils | undefined;
     private _modelPaths: ModelPaths = {};
 
-    public get modelClient() {
+    public get modelClient(): ModelClient {
         if (!this._modelClient) {
             throw new Error('ModelClient is undefined. Call initialize first!');
         }
@@ -110,7 +110,7 @@ export class ModelManager {
         return this._modelClient;
     }
 
-    public get modelStore() {
+    public get modelStore(): ModelStore {
         if (!this._modelStore) {
             throw new Error('ModelStore is undefined. Call initialize first!');
         }
@@ -118,7 +118,7 @@ export class ModelManager {
         return this._modelStore;
     }
 
-    public get clientlibUtil() {
+    public get clientlibUtil(): AuthoringUtils {
         if (!this._clientlibUtil) {
             throw new Error('AuthoringUtils is undefined. Call initialize first!');
         }
@@ -134,16 +134,16 @@ export class ModelManager {
      *
      * If page model does not contain information about current path it performs additional fetch.
      *
-     * @param [config] URL to the data model or configuration object.
      * @fires cq-pagemodel-loaded
      * @return {Promise}
      */
     public initialize<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
         this.initializeAsync(config);
+
         const { rootModelURL, rootModelPath } = this._modelPaths;
 
         if (!rootModelURL) {
-            throw new Error("ModelManager.js Cannot initialize without a URL to fetch the root model");
+            throw new Error('ModelManager.js Cannot initialize without a URL to fetch the root model');
         }
 
         if (!rootModelPath) {
@@ -154,24 +154,23 @@ export class ModelManager {
     }
 
     /**
-     * Initializes the ModelManager asynchronously using the rootModelPath to resolve a data model.
-     * For remote apps with no defined root model, an empty store is initialized and data is fetched on demand by components.
+     * Initializes the ModelManager asynchronously using the given path to resolve a data model.
+     * For remote apps with no model path, an empty store is initialized and data is fetched on demand by components.
      *
      * Once the initial model is loaded and if the data model doesn't contain the path of the current pathname,
      * the library attempts to fetch a fragment of model.
      *
-     * @param {string|InitializationConfig} [config]                - URL to the data model or configuration object
      * @fires cq-pagemodel-loaded if root model path is available
      */
     public initializeAsync(config?: ModelManagerConfiguration | string): void {
         this.destroy();
 
         const modelConfig = this._toModelConfig(config);
-        this._initializeFields(modelConfig);
-
         const initialModel = modelConfig && modelConfig.model;
 
+        this._initializeFields(modelConfig);
         this._getPathsForModel(modelConfig);
+
         const { rootModelPath } = this._modelPaths;
 
         this._modelStore = new ModelStore(rootModelPath, initialModel);
@@ -185,7 +184,6 @@ export class ModelManager {
      * Initializes the class fields for ModelManager
      * If no path is provided, fallbacks are applied in the following order:
      *
-     * @param {string|InitializationConfig} [config]                - configuration object
      */
     private _initializeFields(config?: ModelManagerConfiguration) {
         this._listenersMap = {};
@@ -207,7 +205,6 @@ export class ModelManager {
      * To add - For remote SPA opened within editor, path contained in parent i.e. AEM url
      * 4. If none, it defaults to empty string
      *
-     * @param {string|InitializationConfig} [config]                - configuration object
      */
     private _getPathsForModel(config?: ModelManagerConfiguration) {
         // Model path explicitly provided by user in config
@@ -241,9 +238,20 @@ export class ModelManager {
     }
 
     /**
+     * Fetch page model from store and trigger cq-pagemodel-loaded event
+     * @returns Root page model
+     */
+    private _fetchPageModelFromStore() {
+        const data = this.modelStore.getData();
+
+        triggerPageModelLoaded(data);
+
+        return data;
+    }
+
+    /**
      * Sets initialization promise to fetch model if root path is available
      * Also, to be returned on synchronous initialization
-     * @param rootModelPath Root model path
      */
     private _setInitializationPromise(rootModelPath: string) {
         const {
@@ -259,6 +267,7 @@ export class ModelManager {
 
                 if (data && (Object.keys(data).length > 0)) {
                     triggerPageModelLoaded(data);
+
                     return data;
                 } else if (rootModelURL) {
                     return this._fetchData(rootModelURL).then((rootModel: Model) => {
@@ -267,25 +276,21 @@ export class ModelManager {
 
                             // Append the child page if the page model doesn't correspond to the URL of the root model
                             // and if the model root path doesn't already contain the child model (asynchronous page load)
-                            if (!!currentPathname && !!sanitizedCurrentPathname) {
-                                if (!isPageURLRoot(currentPathname, metaPropertyModelUrl)
-                                && !hasChildOfPath(rootModel, currentPathname)) {
-                                    return this._fetchData(currentPathname).then((model: Model) => {
-                                        this.modelStore.insertData(sanitizedCurrentPathname, model);
-                                        const data = this.modelStore.getData();
-                                        triggerPageModelLoaded(data);
-                                        return data;
-                                    });
-                                } else {
-                                    const data = this.modelStore.getData();
-                                    triggerPageModelLoaded(data);
-                                    return data;
-                                }
-                            } else if (!PathUtils.isBrowser()){
+                            if (!!currentPathname && !!sanitizedCurrentPathname &&
+                                !isPageURLRoot(currentPathname, metaPropertyModelUrl) &&
+                                !hasChildOfPath(rootModel, currentPathname)) {
+                                return this._fetchData(currentPathname).then((model: Model) => {
+                                    this.modelStore.insertData(sanitizedCurrentPathname, model);
+
+                                    return this._fetchPageModelFromStore();
+                                });
+                            } else if (!PathUtils.isBrowser()) {
                                 throw new Error(`Attempting to retrieve model data from a non-browser.
                                     Please provide the initial data with the property key model`
                                 );
                             }
+
+                            return this._fetchPageModelFromStore();
                         } catch (e) {
                             console.error(`Error on initialization - ${e}`);
                         }
@@ -308,7 +313,7 @@ export class ModelManager {
      * @param [config] Either the path of the data model or a configuration object. If no parameter is provided the complete model is returned.
      * @returns Model object for specific path.
      */
-    public getData<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M>{
+    public getData<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
         let path: string;
         let forceReload = false;
 
@@ -362,6 +367,7 @@ export class ModelManager {
 
                 return error;
             });
+
             return promise;
         } else {
             throw new Error('ModelClient not initialized!');
@@ -476,7 +482,6 @@ export class ModelManager {
 
     /**
      * Transforms the given path into a model URL.
-     * @param path
      * @private
      * @return {*}
      */
@@ -491,20 +496,19 @@ export class ModelManager {
 
     /**
      * Transforms the given config into a ModelManagerConfiguration object
-     * Removes redundant string or object check
-     * @param path
+     * Removes redundant string or object check for path
      * @return {object}
      * @private
      */
-    private _toModelConfig(config?: ModelManagerConfiguration | string): ModelManagerConfiguration{
+    private _toModelConfig(config?: ModelManagerConfiguration | string): ModelManagerConfiguration {
         if (!config || typeof config !== 'string') {
           return ((config || {}) as ModelManagerConfiguration);
         }
+
         return {
           path: config
         };
     }
-
 
     /**
      * Verifies the integrity of the provided dependencies
