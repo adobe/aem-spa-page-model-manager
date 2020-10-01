@@ -94,7 +94,7 @@ export type ListenerFunction = () => void;
  *
  *
  *
- * For asynchronous loading of root model/standalone item model  -
+ * For asynchronous loading of root model/standalone item model
  * ```
  * import { ModelManager } from '@adobe/aem-spa-page-model-manager';
  *
@@ -102,12 +102,6 @@ export type ListenerFunction = () => void;
  * ...
  * // Render the App independent of the model
  * render();
- *
- * function render () {
- *   ...
- *   <App />
- *   ...
- * }
  *
  * For root model, custom event is fired on window with fetched model - cq-pagemodel-loaded
  */
@@ -201,8 +195,6 @@ export class ModelManager {
 
     /**
      * Initializes the class fields for ModelManager
-     * If no path is provided, fallbacks are applied in the following order:
-     *
      */
     private _initializeFields(config?: ModelManagerConfiguration) {
         this._listenersMap = {};
@@ -274,10 +266,7 @@ export class ModelManager {
      */
     private _setInitializationPromise(rootModelPath: string) {
         const {
-            rootModelURL,
-            currentPathname,
-            sanitizedCurrentPathname,
-            metaPropertyModelUrl
+            rootModelURL
         } = this._modelPaths;
 
         this._initPromise = (
@@ -293,23 +282,12 @@ export class ModelManager {
                         try {
                             this.modelStore.initialize(rootModelPath, rootModel);
 
-                            // Append the child page if the page model doesn't correspond to the URL of the root model
-                            // and if the model root path doesn't already contain the child model (asynchronous page load)
-                            if (!!currentPathname && !!sanitizedCurrentPathname &&
-                                !isPageURLRoot(currentPathname, metaPropertyModelUrl) &&
-                                !hasChildOfPath(rootModel, currentPathname)) {
-                                return this._fetchData(currentPathname).then((model: Model) => {
-                                    this.modelStore.insertData(sanitizedCurrentPathname, model);
+                            // If currently active url model isn't available in the stored model, fetch and return it
+                            // If already available, return the root page model from the store
+                            return (
+                                this._fetchActivePageModel(rootModel) || this._fetchPageModelFromStore()
+                            );
 
-                                    return this._fetchPageModelFromStore();
-                                });
-                            } else if (!PathUtils.isBrowser()) {
-                                throw new Error(`Attempting to retrieve model data from a non-browser.
-                                    Please provide the initial data with the property key model`
-                                );
-                            }
-
-                            return this._fetchPageModelFromStore();
                         } catch (e) {
                             console.error(`Error on initialization - ${e}`);
                         }
@@ -317,6 +295,33 @@ export class ModelManager {
                 }
             })
         );
+    }
+
+    /**
+     * Fetch model for the currently active page
+     */
+    private _fetchActivePageModel(rootModel: Model) {
+        const {
+            currentPathname,
+            sanitizedCurrentPathname,
+            metaPropertyModelUrl
+        } = this._modelPaths;
+
+        // Append the child page if the page model doesn't correspond to the URL of the root model
+        // and if the model root path doesn't already contain the child model (asynchronous page load)
+        if (!!currentPathname && !!sanitizedCurrentPathname &&
+            !isPageURLRoot(currentPathname, metaPropertyModelUrl) &&
+            !hasChildOfPath(rootModel, currentPathname)) {
+            return this._fetchData(currentPathname).then((model: Model) => {
+                this.modelStore.insertData(sanitizedCurrentPathname, model);
+
+                return this._fetchPageModelFromStore();
+            });
+        } else if (!PathUtils.isBrowser()) {
+            throw new Error(`Attempting to retrieve model data from a non-browser.
+                Please provide the initial data with the property key model`
+            );
+        }
     }
 
     /**
