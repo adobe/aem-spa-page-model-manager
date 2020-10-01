@@ -214,7 +214,7 @@ export class ModelStore {
 
         if (!isItem && this._data && this._data[Constants.CHILDREN_PROP]) {
             // Page data
-            delete this._data[Constants.CHILDREN_PROP].[path];
+            delete this._data[Constants.CHILDREN_PROP]?.[path];
 
             return null;
         }

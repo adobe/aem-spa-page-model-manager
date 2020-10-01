@@ -156,7 +156,7 @@ export class ModelManager {
         const { rootModelURL, rootModelPath } = this._modelPaths;
 
         if (!rootModelURL) {
-            throw new Error('ModelManager.js Cannot initialize without a URL to fetch the root model');
+            throw new Error('Provide root model url to initialize ModelManager.');
         }
 
         if (!rootModelPath) {
