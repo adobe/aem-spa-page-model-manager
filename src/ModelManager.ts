@@ -93,7 +93,6 @@ export type ListenerFunction = () => void;
  * ```
  *
  *
- *
  * For asynchronous loading of root model/standalone item model
  * ```
  * import { ModelManager } from '@adobe/aem-spa-page-model-manager';
@@ -103,6 +102,7 @@ export type ListenerFunction = () => void;
  * // Render the App independent of the model
  * render();
  *
+ * ```
  * For root model, custom event is fired on window with fetched model - cq-pagemodel-loaded
  */
 export class ModelManager {
@@ -168,10 +168,17 @@ export class ModelManager {
 
     /**
      * Initializes the ModelManager asynchronously using the given path to resolve a data model.
+     * Ideal use case would be for remote apps which do not need the page model to be passed down from the root.
      * For remote apps with no model path, an empty store is initialized and data is fetched on demand by components.
      *
      * Once the initial model is loaded and if the data model doesn't contain the path of the current pathname,
      * the library attempts to fetch a fragment of model.
+     *
+     * Root model path is resolved in the following order of preference:
+     * - page path provided via config
+     * - meta property: `cq:pagemodel_root_url`
+     * - current path of the page for default SPA
+     * - if none, it defaults to empty string
      *
      * @fires cq-pagemodel-loaded if root model path is available
      */
@@ -209,13 +216,6 @@ export class ModelManager {
 
     /**
      * Returns paths required for fetching root model
-     * Order of preference for determining the root model url -
-     * 1. Page path provided via config
-     * 2. Meta property value for cq:pagemodel_root_url, if set
-     * 3. Model path contained in URL for default SPA.
-     * To add - For remote SPA opened within editor, path contained in parent i.e. AEM url
-     * 4. If none, it defaults to empty string
-     *
      */
     private _getPathsForModel(config?: ModelManagerConfiguration) {
         // Model path explicitly provided by user in config
