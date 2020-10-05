@@ -42,6 +42,7 @@ describe('ModelManager ->', () => {
 
     function assertAsyncModelFetched() {
         expectPageModelLoadedEventFired();
+
         return ModelManager.getData().then((data) => {
             assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
         });
@@ -121,7 +122,6 @@ describe('ModelManager ->', () => {
             });
         });
 
-
         it('should fail when initialized on non-browser with invlid config', () => {
             pathName = '';
 
@@ -130,6 +130,7 @@ describe('ModelManager ->', () => {
 
             //simulate non browser for the test
             const windowSpy = jest.spyOn(global, 'window', 'get');
+
             windowSpy.mockImplementation();
 
             try {
@@ -138,7 +139,6 @@ describe('ModelManager ->', () => {
                 assert.strictEqual(err.name, 'Error');
             }
         });
-
 
         it('should throw error when initialized without model url', () => {
             metaProps = {};
@@ -256,20 +256,21 @@ describe('ModelManager ->', () => {
                 metaProps = {};
                 pathName = '';
                 ModelManager.initializeAsync();
-                return ModelManager.getData({path:PAGE_MODEL_URL}).then((data) => {
+
+                return ModelManager.getData({ path: PAGE_MODEL_URL }).then((data) => {
                     assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
                 });
             });
         });
 
         it('should throw error when fetching data without initialization', () => {
-            ModelManager.getData({path:PAGE_MODEL_URL}).then((data) => {
+            ModelManager.getData({ path: PAGE_MODEL_URL }).then((data) => {
                 assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
             });
         });
 
         it('should NOT fetch remote data on initialization when the model is provided', () => {
-            ModelManager.initializeAsync({model: PAGE_MODEL});
+            ModelManager.initializeAsync({ model: PAGE_MODEL });
             assertAsyncModelFetched();
         });
 
@@ -279,7 +280,7 @@ describe('ModelManager ->', () => {
         });
 
         it('should fetch remote data on initialization', () => {
-            ModelManager.initializeAsync({path: PAGE_PATH, modelClient: modelClient});
+            ModelManager.initializeAsync({ path: PAGE_PATH, modelClient: modelClient });
             verify(modelClient.fetch(anyString()));
             assertAsyncModelFetched();
         });
