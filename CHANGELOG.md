@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.1.0...v1.2.0) (2020-10-07)
+
+
+### Bug Fixes
+
+* fix to insert data on async initialization ([8d3ff59](https://github.com/adobe/aem-spa-page-model-manager/commit/8d3ff5973ddd7fac5b44a9c815c93132d8a39170))
+* sonar quality gate issue fix ([43333fa](https://github.com/adobe/aem-spa-page-model-manager/commit/43333facde9eb5fc171f79155a26475e5e83e257))
+
+
+### Features
+
+* **modelmanager:** initializeAsync - enables asynchronous initialization of modelmanager ([227cbbe](https://github.com/adobe/aem-spa-page-model-manager/commit/227cbbe78e83cef13282151a0259080828ce93bc))
+
 # [1.1.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.0.3...v1.1.0) (2020-09-22)
 
 
