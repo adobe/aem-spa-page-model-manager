@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ModelManagerConfiguration | @adobe/aem-spa-page-model-manager</title>
+	<title>ModelPaths | @adobe/aem-spa-page-model-manager</title>
 	<meta name="description" content="Documentation for @adobe/aem-spa-page-model-manager">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="modelmanagerconfiguration.html">ModelManagerConfiguration</a>
+					<a href="modelpaths.html">ModelPaths</a>
 				</li>
 			</ul>
-			<h1>Interface ModelManagerConfiguration</h1>
+			<h1>Interface ModelPaths</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ModelManagerConfiguration</span>
+						<span class="target">ModelPaths</span>
 					</li>
 				</ul>
 			</section>
@@ -81,10 +81,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelmanagerconfiguration.html#forcereload" class="tsd-kind-icon">force<wbr>Reload</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelmanagerconfiguration.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelmanagerconfiguration.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelmanagerconfiguration.html#path" class="tsd-kind-icon">path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelpaths.html#currentpathname" class="tsd-kind-icon">current<wbr>Pathname</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelpaths.html#metapropertymodelurl" class="tsd-kind-icon">meta<wbr>Property<wbr>ModelURL</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelpaths.html#rootmodelpath" class="tsd-kind-icon">root<wbr>Model<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modelpaths.html#rootmodelurl" class="tsd-kind-icon">root<wbr>ModelURL</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,42 +93,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="forcereload" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> force<wbr>Reload</h3>
-					<div class="tsd-signature tsd-kind-icon">force<wbr>Reload<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<a name="currentpathname" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> current<wbr>Pathname</h3>
+					<div class="tsd-signature tsd-kind-icon">current<wbr>Pathname<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L51">ModelManager.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L60">ModelManager.ts:60</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="model" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model</h3>
-					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="model.html" class="tsd-signature-type">Model</a></div>
+					<a name="metapropertymodelurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> meta<wbr>Property<wbr>ModelURL</h3>
+					<div class="tsd-signature tsd-kind-icon">meta<wbr>Property<wbr>ModelURL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L52">ModelManager.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L61">ModelManager.ts:61</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="modelclient" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> model<wbr>Client</h3>
-					<div class="tsd-signature tsd-kind-icon">model<wbr>Client<span class="tsd-signature-symbol">:</span> <a href="../classes/modelclient.html" class="tsd-signature-type">ModelClient</a></div>
+					<a name="rootmodelpath" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> root<wbr>Model<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">root<wbr>Model<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L53">ModelManager.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L59">ModelManager.ts:59</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="path" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> path</h3>
-					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="rootmodelurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> root<wbr>ModelURL</h3>
+					<div class="tsd-signature tsd-kind-icon">root<wbr>ModelURL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L54">ModelManager.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L58">ModelManager.ts:58</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -162,30 +162,30 @@
 					<li class=" tsd-kind-interface">
 						<a href="model.html" class="tsd-kind-icon">Model</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="modelmanagerconfiguration.html" class="tsd-kind-icon">Model<wbr>Manager<wbr>Configuration</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="modelmanagerconfiguration.html" class="tsd-kind-icon">Model<wbr>Manager<wbr>Configuration</a>
+						<a href="modelpaths.html" class="tsd-kind-icon">Model<wbr>Paths</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="modelmanagerconfiguration.html#forcereload" class="tsd-kind-icon">force<wbr>Reload</a>
+								<a href="modelpaths.html#currentpathname" class="tsd-kind-icon">current<wbr>Pathname</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="modelmanagerconfiguration.html#model" class="tsd-kind-icon">model</a>
+								<a href="modelpaths.html#metapropertymodelurl" class="tsd-kind-icon">meta<wbr>Property<wbr>ModelURL</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="modelmanagerconfiguration.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a>
+								<a href="modelpaths.html#rootmodelpath" class="tsd-kind-icon">root<wbr>Model<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="modelmanagerconfiguration.html#path" class="tsd-kind-icon">path</a>
+								<a href="modelpaths.html#rootmodelurl" class="tsd-kind-icon">root<wbr>ModelURL</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="modelpaths.html" class="tsd-kind-icon">Model<wbr>Paths</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

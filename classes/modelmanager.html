@@ -86,6 +86,15 @@ ModelManager.initialize().then(<span class="hljs-function">(<span class="hljs-pa
 
 <span class="hljs-comment">// Loading a specific portion of model</span>
 ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:content/path/to/component&quot;</span>).then(...);</code></pre>
+					<p>For asynchronous loading of root model/standalone item model</p>
+					<pre><code><span class="hljs-keyword">import</span> { ModelManager } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@adobe/aem-spa-page-model-manager&#x27;</span>;
+
+ModelManager.initializeAsync();
+...
+<span class="hljs-comment">// Render the App independent of the model</span>
+render();
+</code></pre>
+					<p>For root model, custom event is fired on window with fetched model - cq-pagemodel-loaded</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -115,6 +124,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="modelmanager.html#getdata" class="tsd-kind-icon">get<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="modelmanager.html#initialize" class="tsd-kind-icon">initialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#initializeasync" class="tsd-kind-icon">initialize<wbr>Async</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
 							</ul>
 						</section>
@@ -133,7 +143,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L112">ModelManager.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L133">ModelManager.ts:133</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a></h4>
@@ -150,7 +160,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L96">ModelManager.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L117">ModelManager.ts:117</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="modelclient.html" class="tsd-signature-type">ModelClient</a></h4>
@@ -167,7 +177,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L104">ModelManager.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L125">ModelManager.ts:125</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="modelstore.html" class="tsd-signature-type">ModelStore</a></h4>
@@ -184,7 +194,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L224">ModelManager.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L332">ModelManager.ts:332</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -210,7 +220,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L328">ModelManager.ts:328</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L436">ModelManager.ts:436</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -247,7 +257,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L233">ModelManager.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L341">ModelManager.ts:341</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -282,7 +292,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L132">ModelManager.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L152">ModelManager.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -318,6 +328,50 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="initializeasync" class="tsd-anchor"></a>
+					<h3>initialize<wbr>Async</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">initialize<wbr>Async<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L184">ModelManager.ts:184</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Initializes the ModelManager asynchronously using the given path to resolve a data model.
+										Ideal use case would be for remote apps which do not need the page model to be passed down from the root.
+									For remote apps with no model path, an empty store is initialized and data is fetched on demand by components.</p>
+								</div>
+								<p>Once the initial model is loaded and if the data model doesn&#39;t contain the path of the current pathname,
+								the library attempts to fetch a fragment of model.</p>
+								<p>Root model path is resolved in the following order of preference:</p>
+								<ul>
+									<li>page path provided via config</li>
+									<li>meta property: <code>cq:pagemodel_root_url</code></li>
+									<li>current path of the page for default SPA</li>
+									<li>if none, it defaults to empty string</li>
+								</ul>
+								<dl class="tsd-comment-tags">
+									<dt>fires</dt>
+									<dd><p>cq-pagemodel-loaded if root model path is available</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="removelistener" class="tsd-anchor"></a>
 					<h3>remove<wbr>Listener</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -327,7 +381,7 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/09a22f5/src/ModelManager.ts#L348">ModelManager.ts:348</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/a2fbaf6/src/ModelManager.ts#L452">ModelManager.ts:452</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -402,6 +456,9 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 								<a href="modelmanager.html#initialize" class="tsd-kind-icon">initialize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="modelmanager.html#initializeasync" class="tsd-kind-icon">initialize<wbr>Async</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="modelmanager.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a>
 							</li>
 						</ul>
@@ -416,6 +473,9 @@ ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:cont
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/modelmanagerconfiguration.html" class="tsd-kind-icon">Model<wbr>Manager<wbr>Configuration</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/modelpaths.html" class="tsd-kind-icon">Model<wbr>Paths</a>
 					</li>
 				</ul>
 			</nav>
