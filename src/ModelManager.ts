@@ -58,8 +58,7 @@ interface ModelPaths {
     rootModelURL?: string;
     rootModelPath?: string;
     currentPathname?: string | null;
-    sanitizedCurrentPathname?: string;
-    metaPropertyModelUrl?: string;
+    metaPropertyModelURL?: string;
 }
 
 /**
@@ -189,7 +188,6 @@ export class ModelManager {
         const initialModel = modelConfig && modelConfig.model;
 
         this._initializeFields(modelConfig);
-        this._getPathsForModel(modelConfig);
 
         const { rootModelPath } = this._modelPaths;
 
@@ -212,6 +210,7 @@ export class ModelManager {
 
         this._editorClient = new EditorClient(this);
         this._clientlibUtil = new AuthoringUtils(this.modelClient.apiHost);
+        this._modelPaths = this._getPathsForModel(config);
     }
 
     /**
@@ -219,11 +218,11 @@ export class ModelManager {
      */
     private _getPathsForModel(config?: ModelManagerConfiguration) {
         // Model path explicitly provided by user in config
-        const path = config && config.path;
+        const path = config?.path;
 
         // Model path set statically via meta property
         const pageModelRoot = PathUtils.getMetaPropertyValue(MetaProperty.PAGE_MODEL_ROOT_URL);
-        const metaPropertyModelUrl = PathUtils.internalize(pageModelRoot);
+        const metaPropertyModelURL = PathUtils.internalize(pageModelRoot);
 
         const aemApiHost = this.modelClient.apiHost;
         const isRemoteApp = PathUtils.isBrowser() && aemApiHost && (PathUtils.getCurrentURL() !== aemApiHost);
@@ -236,13 +235,12 @@ export class ModelManager {
         // 1. consider the provided page path
         // 2. consider the meta property value
         // 3. fallback to the model path contained in the URL for the default SPA
-        const rootModelURL = path || metaPropertyModelUrl || sanitizedCurrentPathname;
+        const rootModelURL = path || metaPropertyModelURL || sanitizedCurrentPathname;
         const rootModelPath = PathUtils.sanitize(rootModelURL) || '';
 
-        this._modelPaths = {
+        return {
             currentPathname,
-            sanitizedCurrentPathname,
-            metaPropertyModelUrl,
+            metaPropertyModelURL,
             rootModelURL,
             rootModelPath
         };
@@ -303,15 +301,18 @@ export class ModelManager {
     private _fetchActivePageModel(rootModel: Model) {
         const {
             currentPathname,
-            sanitizedCurrentPathname,
-            metaPropertyModelUrl
+            metaPropertyModelURL
         } = this._modelPaths;
 
-        // Append the child page if the page model doesn't correspond to the URL of the root model
-        // and if the model root path doesn't already contain the child model (asynchronous page load)
-        if (!!currentPathname && !!sanitizedCurrentPathname &&
-            !isPageURLRoot(currentPathname, metaPropertyModelUrl) &&
-            !hasChildOfPath(rootModel, currentPathname)) {
+        const sanitizedCurrentPathname = ((currentPathname && PathUtils.sanitize(currentPathname)) || '') as string;
+
+        // Fetch and store model of currently active page
+        if (
+            !!currentPathname &&
+            !!sanitizedCurrentPathname && // active page path is available for fetching model
+            !isPageURLRoot(currentPathname, metaPropertyModelURL) && // verify currently active URL is not same as the URL of the root model
+            !hasChildOfPath(rootModel, currentPathname) // verify fetched root model doesn't already contain the active path model
+        ) {
             return this._fetchData(currentPathname).then((model: Model) => {
                 this.modelStore.insertData(sanitizedCurrentPathname, model);
 
