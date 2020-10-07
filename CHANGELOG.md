@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.0...v1.2.1) (2020-10-07)
+
+
+### Bug Fixes
+
+* fetch page model on back nav ([fb1bcd5](https://github.com/adobe/aem-spa-page-model-manager/commit/fb1bcd54fbf05115d1cb35da304a013f6e53d23b)), closes [#28](https://github.com/adobe/aem-spa-page-model-manager/issues/28)
+
 # [1.2.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.1.0...v1.2.0) (2020-10-07)
 
 
