@@ -203,4 +203,11 @@ if (isModelRouterEnabled()) {
 
         return replaceState.apply(history, [ state, title, url ]);
     };
+
+    window.onpopstate = (history: any) => {
+        const currentPath = history?.target?.location?.pathname;
+
+        routeModel(currentPath || null);
+    };
+
 }
