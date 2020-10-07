@@ -39,8 +39,11 @@ export class ModelStore {
      * @param [data] Initial model.
      * @private
      */
-    constructor(rootPath: string, data: Model = {}) {
-        this.initialize(rootPath, data);
+    constructor(rootPath?: string, data?: Model) {
+        this._data = {};
+        if (rootPath) {
+            this.initialize(rootPath, data ? data : {});
+        }
         this._pageContentDelimiter = [ Constants.JCR_CONTENT ];
     }
 
@@ -50,7 +53,7 @@ export class ModelStore {
      * @param data Initial model.
      * @private
      */
-    public initialize(rootPath: string, data: Model) {
+    public initialize(rootPath: string, data: Model): void {
         if (data) {
             this._data = data;
         }
@@ -80,7 +83,7 @@ export class ModelStore {
      * @param newData New data to be set.
      * @private
      */
-    public setData(path: string, newData: any = {}) {
+    public setData(path: string, newData: any = {}): void {
         const itemKey = PathUtils.getNodeName(path);
 
         if (itemKey) {
@@ -147,6 +150,7 @@ export class ModelStore {
         // We need to find the parent
         if (!path) {
             console.warn(`No path provided for data: ${data}`);
+
             return;
         }
 
@@ -210,7 +214,8 @@ export class ModelStore {
 
         if (!isItem && this._data && this._data[Constants.CHILDREN_PROP]) {
             // Page data
-            delete this._data[Constants.CHILDREN_PROP]?.[path];
+            // @ts-ignore
+            delete this._data[Constants.CHILDREN_PROP][path];
 
             return null;
         }
@@ -240,6 +245,7 @@ export class ModelStore {
 
                         if (itemsOrder && (itemsOrder.length > 0)) {
                             const index = itemsOrder.indexOf(itemName);
+
                             itemsOrder.splice(index, 1);
                         }
 
@@ -308,6 +314,7 @@ export class ModelStore {
                 if (this._pageContentDelimiter) {
                     const pageDelimiter = PathUtils._getStartStrings(subPath, this._pageContentDelimiter);
                     const childParentPath = PathUtils.join([ parentPath, pathKey, pageDelimiter ]);
+
                     subPath = PathUtils.trimStrings(subPath, this._pageContentDelimiter);
 
                     if (subPath !== path) {

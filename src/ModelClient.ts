@@ -65,7 +65,7 @@ export class ModelClient {
      * Destroys the internal references to avoid memory leaks.
      * @private
      */
-    public destroy() {
+    public destroy(): void {
         this._apiHost = null;
     }
 }
