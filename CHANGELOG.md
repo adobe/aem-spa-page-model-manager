@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.1...v1.2.2) (2020-10-08)
+
+
+### Bug Fixes
+
+* **package.json:** update engine targets ([#31](https://github.com/adobe/aem-spa-page-model-manager/issues/31)) ([a6bbf45](https://github.com/adobe/aem-spa-page-model-manager/commit/a6bbf455a32f97b72120bd999d027a45f4d57006))
+
 ## [1.2.1](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.0...v1.2.1) (2020-10-07)
 
 
