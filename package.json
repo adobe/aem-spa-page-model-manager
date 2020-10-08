@@ -16,8 +16,8 @@
     "url": "https://github.com/adobe/aem-spa-page-model-manager/issues"
   },
   "engines": {
-    "npm": ">=6.14.8",
-    "node": ">=13.10.1"
+    "npm": ">=6.14.4",
+    "node": ">=12.16.2"
   },
   "main": "dist/aem-spa-page-model-manager.js",
   "types": "dist/types.d.ts",
