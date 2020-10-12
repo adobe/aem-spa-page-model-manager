@@ -34,7 +34,9 @@
     "test": "jest --clearCache && jest"
   },
   "dependencies": {
-    "clone": "^2.1.2"
+    "clone": "^2.1.2",
+    "path-browserify": "^1.0.1",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@adobe/eslint-config-editorxp": "^1.0.3",
