@@ -185,6 +185,49 @@ describe('ModelStore ->', () => {
         });
     });
 
+    describe('setData', () => {
+        it('should set data', () => {
+            let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+
+            expect(item).toBeDefined();
+            item['testField'] = 'testData';
+
+            const val = {
+                key: 'child1000',
+                value: item
+            };
+
+            modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+            item = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+            expect(item['testField']).toEqual('testData');
+        });
+
+        it('should set empty string on removed data', () => {
+            let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+
+            expect(item).toBeDefined();
+            item['testField'] = 'testData';
+
+            let val = {
+                key: 'child1000',
+                value: item
+            };
+
+            modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+
+            const newitem = clone(item);
+
+            delete newitem['testField'];
+            val = {
+                key: 'child1000',
+                value: newitem
+            };
+            modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+            item = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+            expect(item['testField']).toEqual('');
+        });
+    });
+
     describe('removeData', () => {
         it('should remove a page', () => {
             expect(modelStore.getData()![Constants.CHILDREN_PROP] && modelStore.getData()![Constants.CHILDREN_PROP]).toHaveProperty('/content/test/subpage2');
