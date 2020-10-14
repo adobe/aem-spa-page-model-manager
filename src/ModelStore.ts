@@ -93,6 +93,8 @@ export class ModelStore {
                 const localData = clone(newData);
                 const items = data[Constants.ITEMS_PROP] || {};
 
+                Object.keys(items[itemKey]).forEach(x => localData.value[x] = localData.value[x] || '');
+
                 items[itemKey] = localData.value;
                 data[Constants.ITEMS_PROP] = items;
             }

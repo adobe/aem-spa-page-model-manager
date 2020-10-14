@@ -36,6 +36,8 @@ interface MutableModel extends Model{
 
 describe('ModelStore ->', () => {
     const modelStore: ModelStore = new ModelStore('/');
+    const TEST_FIELD = 'testField';
+    const TEST_FIELD_DATA = 'testData';
 
     beforeEach(() => {
         const cloned: Model = clone(PAGE_MODEL);
@@ -182,6 +184,39 @@ describe('ModelStore ->', () => {
 
             item = modelStore.getData('/content/test/child_page_1/jcr:content/root/sibling/child2001');
             assert.deepEqual(item, content_test_page2_root_child2001);
+        });
+    });
+
+    describe('setData', () => {
+        it('should set data', () => {
+            let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+            item[TEST_FIELD] = TEST_FIELD_DATA;
+            const val = {
+                key: 'child1000',
+                value: item
+            };
+
+            modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+
+            item = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+            expect(item[TEST_FIELD]).toEqual(TEST_FIELD_DATA);
+        });
+
+        it('should set empty string on removed data', () => {
+            let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+            item[TEST_FIELD] = TEST_FIELD_DATA;
+            const val = {
+                key: 'child1000',
+                value: item
+            };
+            modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+
+            delete item[TEST_FIELD];
+            val.value = item;
+            modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+
+            item = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+            expect(item[TEST_FIELD]).toEqual('');
         });
     });
 
