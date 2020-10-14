@@ -36,6 +36,8 @@ interface MutableModel extends Model{
 
 describe('ModelStore ->', () => {
     const modelStore: ModelStore = new ModelStore('/');
+    const TEST_FIELD = 'testField';
+    const TEST_FIELD_DATA = 'testData';
 
     beforeEach(() => {
         const cloned: Model = clone(PAGE_MODEL);
@@ -188,43 +190,33 @@ describe('ModelStore ->', () => {
     describe('setData', () => {
         it('should set data', () => {
             let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
-
-            expect(item).toBeDefined();
-            item['testField'] = 'testData';
-
+            item[TEST_FIELD] = TEST_FIELD_DATA;
             const val = {
                 key: 'child1000',
                 value: item
             };
 
             modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+
             item = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
-            expect(item['testField']).toEqual('testData');
+            expect(item[TEST_FIELD]).toEqual(TEST_FIELD_DATA);
         });
 
         it('should set empty string on removed data', () => {
             let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
-
-            expect(item).toBeDefined();
-            item['testField'] = 'testData';
-
-            let val = {
+            item[TEST_FIELD] = TEST_FIELD_DATA;
+            const val = {
                 key: 'child1000',
                 value: item
             };
-
             modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
 
-            const newitem = clone(item);
-
-            delete newitem['testField'];
-            val = {
-                key: 'child1000',
-                value: newitem
-            };
+            delete item[TEST_FIELD];
+            val.value = item;
             modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
+
             item = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
-            expect(item['testField']).toEqual('');
+            expect(item[TEST_FIELD]).toEqual('');
         });
     });
 
