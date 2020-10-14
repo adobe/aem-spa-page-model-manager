@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.2...v1.2.3) (2020-10-14)
+
+
+### Bug Fixes
+
+* add check to handle removed properties ([#32](https://github.com/adobe/aem-spa-page-model-manager/issues/32)) ([eac9733](https://github.com/adobe/aem-spa-page-model-manager/commit/eac9733072e9fb2d2ce39bcccff28578e6ca408e))
+
 ## [1.2.2](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.1...v1.2.2) (2020-10-08)
 
 
