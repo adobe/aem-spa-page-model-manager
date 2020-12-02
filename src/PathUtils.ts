@@ -516,4 +516,30 @@ export class PathUtils {
 
         return PathUtils.makeRelative(returnStr);
     }
+
+    /**
+     * Helper for handling remote react app routing in edit mode
+     * @param path Path to route to
+     * @param aemHost Origin information of the AEM instance in which to edit
+     * @param rootPath AEM path which forms the root path of the remote app
+     * @private
+     * @returns Updated url
+     */
+    public static toAEMPath(path: string, aemHost: string, rootPath: string): string {
+        const isLoadedInAEM = window.location.origin === aemHost;
+
+        if (isLoadedInAEM) {
+            const wcmMode = document.head.querySelector('meta[property="cq:wcmmode"]')?.getAttribute('content');
+            const isEditorMode = wcmMode === 'edit';
+            const editorPrefix = isEditorMode ? '(/editor.html)?' : '';
+
+            const aemPathPrefix = `/content/${rootPath}`;
+
+            const newPath = normalizePath(`${editorPrefix}${aemPathPrefix}${path}(.html)?`);
+
+            return newPath;
+        }
+
+        return path;
+    }
 }

@@ -224,9 +224,7 @@ export class ModelManager {
         const pageModelRoot = PathUtils.getMetaPropertyValue(MetaProperty.PAGE_MODEL_ROOT_URL);
         const metaPropertyModelURL = PathUtils.internalize(pageModelRoot);
 
-        const aemApiHost = this.modelClient.apiHost;
-        const isRemoteApp = PathUtils.isBrowser() && aemApiHost && (PathUtils.getCurrentURL() !== aemApiHost);
-        const currentPathname = !isRemoteApp ? PathUtils.getCurrentPathname() : '';
+        const currentPathname = !this._isRemoteApp() ? PathUtils.getCurrentPathname() : '';
         // For remote apps in edit mode, to fetch path via parent URL
 
         const sanitizedCurrentPathname = ((currentPathname && PathUtils.sanitize(currentPathname)) || '') as string;
@@ -339,7 +337,7 @@ export class ModelManager {
      * @returns Model object for specific path.
      */
     public getData<M extends Model>(config?: ModelManagerConfiguration | string): Promise<M> {
-        let path: string;
+        let path = '';
         let forceReload = false;
 
         if (typeof config === 'string') {
@@ -347,8 +345,6 @@ export class ModelManager {
         } else if (config) {
             path = config.path || '';
             forceReload = !!config.forceReload;
-        } else {
-            path = '';
         }
 
         const initPromise = this._initPromise || Promise.resolve();
@@ -363,7 +359,25 @@ export class ModelManager {
                     }
                 }
 
-                return this._fetchData(path).then((data: Model) => this._storeData(path, data));
+                const fetchDataPromise = (path: string, itemPath?: string) => this._fetchData(path).then((data: Model) => {
+                    this._storeData(path, data);
+                    if (itemPath) {
+                        this.modelStore.getData(path);
+                    }
+                });
+
+                // If data to be fetched for a component in a page not yet retrieved
+                // 1.Fetch the page data and store it
+                // 2.Return the required item data from the fetched page data
+                if (PathUtils.isItem(path)) {
+                    const { pageData, pagePath } = this._fetchParentPage(path);
+
+                    if (!pageData) {
+                        return fetchDataPromise(pagePath, path);
+                    }
+                }
+
+                return fetchDataPromise(path);
         });
     }
 
@@ -385,6 +399,9 @@ export class ModelManager {
 
             promise.then((obj) => {
                 delete this._fetchPromises[path];
+                if (this._isRemoteApp()) {
+                    triggerPageModelLoaded(obj);
+                }
 
                 return obj;
             }).catch((error) => {
@@ -551,6 +568,36 @@ export class ModelManager {
         }
 
         return Promise.resolve();
+    }
+
+    /**
+     * Fetches parent page information of the given component path
+     * Returns object containing
+     * 1. Parent page path
+     * 2. Parent page data if already available in the store
+     * @return {object}
+     * @private
+     */
+    private _fetchParentPage(path: string) {
+        const dataPaths = PathUtils.splitPageContentPaths(path);
+        const pagePath = dataPaths?.pagePath || '';
+        const pageData = this.modelStore.getData(pagePath);
+
+        return {
+            pageData,
+            pagePath
+        };
+    }
+
+    /**
+     * Checks if the currently open app in aem editor is a remote app
+     * @private
+     * @returns true if remote app
+     */
+    private _isRemoteApp() {
+        const aemApiHost = this.modelClient.apiHost;
+
+        return PathUtils.isBrowser() && aemApiHost && (PathUtils.getCurrentURL() !== aemApiHost);
     }
 }
 
