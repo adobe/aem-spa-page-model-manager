@@ -439,9 +439,21 @@ describe('PathUtils ->', () => {
             const AEM_ROOT_PATH = 'testproj/lang';
             const AEM_PAGE_PATH = `/content/${AEM_ROOT_PATH}/page.html`;
 
-            const newPathPattern =  new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
+            // Transform to match AEM path when running on AEM instance
+            let newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
 
             expect(AEM_PAGE_PATH).toMatch(newPathPattern);
+
+            const REMOTE_ORIGIN = 'http://mydomain';
+            const windowSpy: jest.SpyInstance = jest.spyOn(global, 'window', 'get');
+
+            windowSpy.mockImplementation(() => ({ location: { origin: REMOTE_ORIGIN } }));
+
+            // return actual path when app is running on a remote domain
+            newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
+            windowSpy.mockRestore();
+
+            expect(REMOTE_APP_PAGE).toMatch(newPathPattern);
         });
     });
 });
