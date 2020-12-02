@@ -359,13 +359,6 @@ export class ModelManager {
                     }
                 }
 
-                const fetchDataPromise = (path: string, itemPath?: string) => this._fetchData(path).then((data: Model) => {
-                    this._storeData(path, data);
-                    if (itemPath) {
-                        this.modelStore.getData(path);
-                    }
-                });
-
                 // If data to be fetched for a component in a page not yet retrieved
                 // 1.Fetch the page data and store it
                 // 2.Return the required item data from the fetched page data
@@ -373,11 +366,15 @@ export class ModelManager {
                     const { pageData, pagePath } = this._fetchParentPage(path);
 
                     if (!pageData) {
-                        return fetchDataPromise(pagePath, path);
+                        return this._fetchData(pagePath).then((data: Model) => {
+                            this._storeData(pagePath, data);
+
+                            return this.modelStore.getData(path);
+                        });
                     }
                 }
 
-                return fetchDataPromise(path);
+                return this._fetchData(path).then((data: Model) => this._storeData(path, data));
         });
     }
 
