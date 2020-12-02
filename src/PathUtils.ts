@@ -529,7 +529,7 @@ export class PathUtils {
         const isLoadedInAEM = window.location.origin === aemHost;
 
         if (isLoadedInAEM) {
-            const wcmMode = document.head.querySelector('meta[property="cq:wcmmode"]')?.getAttribute('content');
+            const wcmMode = PathUtils.getMetaPropertyValue("cq:wcmmode");
             const isEditorMode = wcmMode === 'edit';
             const editorPrefix = isEditorMode ? '(/editor.html)?' : '';
 

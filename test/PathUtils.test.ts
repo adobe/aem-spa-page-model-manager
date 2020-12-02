@@ -431,4 +431,17 @@ describe('PathUtils ->', () => {
         assert.equal(PathUtils.getParentNodePath('/foobar'), '');
         assert.equal(PathUtils.getParentNodePath('/foobar/a/xyz'), '/foobar/a');
     });
+
+    describe('toAemPath', () => {
+        it('transform remote react app path to AEM path', () => {
+            const AEM_ORIGIN = window.location.origin;
+            const REMOTE_APP_PAGE = '/page';
+            const AEM_ROOT_PATH = 'testproj/lang';
+            const AEM_PAGE_PATH = `/content/${AEM_ROOT_PATH}/page.html`;
+
+            const newPathPattern =  new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
+
+            expect(AEM_PAGE_PATH).toMatch(newPathPattern);
+        });
+    });
 });
