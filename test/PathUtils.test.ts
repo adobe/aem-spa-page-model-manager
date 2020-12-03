@@ -444,11 +444,13 @@ describe('PathUtils ->', () => {
 
         it('transform remote react app path to AEM path', () => {
             // Transform to match AEM path when running on AEM instance
-            const newPathPattern =  new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, aemOrigin, AEM_ROOT_PATH));
+            const newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, aemOrigin, AEM_ROOT_PATH));
+
             expect(AEM_PAGE_PATH).toMatch(newPathPattern);
         });
         it('transform remote react app path to AEM path on edit mode', () => {
             const AEM_EDIT_PATH = `/editor.html${AEM_PAGE_PATH}`;
+
             metaProps[MetaProperty.WCM_MODE] = 'edit';
 
             // Transform to match AEM path when running on AEM instance
@@ -464,6 +466,7 @@ describe('PathUtils ->', () => {
 
             // return actual path when app is running on a remote domain
             const newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, aemOrigin, AEM_ROOT_PATH));
+
             windowSpy.mockRestore();
 
             expect(REMOTE_APP_PAGE).toMatch(newPathPattern);
