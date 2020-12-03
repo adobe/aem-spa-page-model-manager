@@ -15,6 +15,7 @@ import url from 'url';
 import Constants from './Constants';
 import InternalConstants from './InternalConstants';
 import MetaProperty from './MetaProperty';
+import { AuthoringUtils } from './AuthoringUtils';
 
 /**
  * Regexp used to extract the context path of a location.
@@ -528,9 +529,8 @@ export class PathUtils {
         const isLoadedInAEM = window.location.origin === aemHost;
 
         if (isLoadedInAEM) {
-            const wcmMode = PathUtils.getMetaPropertyValue('cq:wcmmode');
-            const isEditorMode = wcmMode === 'edit';
-            const editorPrefix = isEditorMode ? '(/editor.html)?' : '';
+            const isAuthoring = AuthoringUtils.isStateActive(Constants.STATE_AUTHORING);
+            const editorPrefix = isAuthoring ? '(/editor.html)?' : '';
 
             const aemPathPrefix = `${editorPrefix}/content/${rootPath}`;
 

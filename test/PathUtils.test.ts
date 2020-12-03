@@ -432,25 +432,35 @@ describe('PathUtils ->', () => {
         assert.equal(PathUtils.getParentNodePath('/foobar/a/xyz'), '/foobar/a');
     });
 
-    describe('toAemPath', () => {
-        it('transform remote react app path to AEM path', () => {
-            const AEM_ORIGIN = window.location.origin;
-            const REMOTE_APP_PAGE = '/page';
-            const AEM_ROOT_PATH = 'testproj/lang';
-            const AEM_PAGE_PATH = `/content/${AEM_ROOT_PATH}/page.html`;
+    describe('toAEMPath', () => {
+        const AEM_ORIGIN = window.location.origin;
+        const REMOTE_APP_PAGE = '/page';
+        const AEM_ROOT_PATH = 'testproj/lang';
+        let AEM_PAGE_PATH = `/content/${AEM_ROOT_PATH}/page.html`;
 
+        it('transform remote react app path to AEM path', () => {
             // Transform to match AEM path when running on AEM instance
-            let newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
+            const newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
 
             expect(AEM_PAGE_PATH).toMatch(newPathPattern);
+        });
+        it('transform remote react app path to AEM path on edit mode', () => {
+            AEM_PAGE_PATH = `/editor.html/content/${AEM_ROOT_PATH}/page.html`;
+            metaProps[MetaProperty.WCM_MODE] = 'edit';
 
+            // Transform to match AEM path when running on AEM instance
+            const newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
+
+            expect(AEM_PAGE_PATH).toMatch(newPathPattern);
+        });
+        it('returns original path on remote domain', () => {
             const REMOTE_ORIGIN = 'http://mydomain';
             const windowSpy: jest.SpyInstance = jest.spyOn(global, 'window', 'get');
 
             windowSpy.mockImplementation(() => ({ location: { origin: REMOTE_ORIGIN } }));
 
             // return actual path when app is running on a remote domain
-            newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
+            const newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, AEM_ORIGIN, AEM_ROOT_PATH));
             windowSpy.mockRestore();
 
             expect(REMOTE_APP_PAGE).toMatch(newPathPattern);
