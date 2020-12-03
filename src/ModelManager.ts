@@ -61,6 +61,11 @@ interface ModelPaths {
     metaPropertyModelURL?: string;
 }
 
+interface ParentPage {
+    pagePath: string;
+    pageData?: Model;
+}
+
 /**
  * @private
  */
@@ -224,7 +229,7 @@ export class ModelManager {
         const pageModelRoot = PathUtils.getMetaPropertyValue(MetaProperty.PAGE_MODEL_ROOT_URL);
         const metaPropertyModelURL = PathUtils.internalize(pageModelRoot);
 
-        const currentPathname = !this._isRemoteApp() ? PathUtils.getCurrentPathname() : '';
+        const currentPathname = this._isRemoteApp() ? '' : PathUtils.getCurrentPathname();
         // For remote apps in edit mode, to fetch path via parent URL
 
         const sanitizedCurrentPathname = ((currentPathname && PathUtils.sanitize(currentPathname)) || '') as string;
@@ -573,9 +578,8 @@ export class ModelManager {
      * 1. Parent page path
      * 2. Parent page data if already available in the store
      * @return {object}
-     * @private
      */
-    private _fetchParentPage(path: string) {
+    private _fetchParentPage(path: string): ParentPage {
         const dataPaths = PathUtils.splitPageContentPaths(path);
         const pagePath = dataPaths?.pagePath || '';
         const pageData = this.modelStore.getData(pagePath);
@@ -588,13 +592,12 @@ export class ModelManager {
 
     /**
      * Checks if the currently open app in aem editor is a remote app
-     * @private
      * @returns true if remote app
      */
-    private _isRemoteApp() {
-        const aemApiHost = this.modelClient.apiHost;
+    public _isRemoteApp(): boolean {
+        const aemApiHost = this.modelClient.apiHost || '';
 
-        return PathUtils.isBrowser() && aemApiHost && (PathUtils.getCurrentURL() !== aemApiHost);
+        return (PathUtils.isBrowser() && aemApiHost.length > 0 && (PathUtils.getCurrentURL() !== aemApiHost));
     }
 }
 
