@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.3...v1.2.4) (2020-12-04)
+
+
+### Bug Fixes
+
+* enable edit of remote app components in AEM ([264e8a3](https://github.com/adobe/aem-spa-page-model-manager/commit/264e8a3cc55b9ba00e7560766edd3c5ced67ea3b))
+
 ## [1.2.3](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.2...v1.2.3) (2020-10-14)
 
 
