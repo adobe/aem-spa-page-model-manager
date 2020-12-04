@@ -263,6 +263,15 @@ describe('ModelManager ->', () => {
             });
         });
 
+        it('should fetch standalone item data', () => {
+            metaProps = {};
+            pathName = '';
+            ModelManager.initializeAsync();
+
+            return ModelManager.getData({ path: CHILD_PATH }).then((data) => {
+                assert.deepEqual(data, content_test_page_root_child0000_child0010, 'data should be correct');
+            });
+        });
         it('should throw error when fetching data without initialization', () => {
             ModelManager.getData({ path: PAGE_MODEL_URL }).then((data) => {
                 assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
