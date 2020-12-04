@@ -61,7 +61,7 @@ interface ModelPaths {
     metaPropertyModelURL?: string;
 }
 
-interface ParentPage {
+interface Page {
     pagePath: string;
     pageData?: Model;
 }
@@ -368,7 +368,7 @@ export class ModelManager {
                 // 1.Fetch the page data and store it
                 // 2.Return the required item data from the fetched page data
                 if (PathUtils.isItem(path)) {
-                    const { pageData, pagePath } = this._fetchParentPage(path);
+                    const { pageData, pagePath } = this._getParentPage(path);
 
                     if (!pageData) {
                         return this._fetchData(pagePath).then((data: Model) => {
@@ -579,7 +579,7 @@ export class ModelManager {
      * 2. Parent page data if already available in the store
      * @return {object}
      */
-    private _fetchParentPage(path: string): ParentPage {
+    private _getParentPage(path: string): Page {
         const dataPaths = PathUtils.splitPageContentPaths(path);
         const pagePath = dataPaths?.pagePath || '';
         const pageData = this.modelStore.getData(pagePath);
