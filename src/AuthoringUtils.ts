@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import Constants, { AEM_MODE, TAG_ATTR, TAG_TYPE } from './Constants';
+import Constants, { AEM_MODE, TAG_TYPE } from './Constants';
 import { PathUtils } from './PathUtils';
 import MetaProperty from './MetaProperty';
 
@@ -28,7 +28,7 @@ export class AuthoringUtils {
      * @private
      */
     getApiDomain(): string | null {
-        return this._apiDomain;
+        return 'http://localhost:4502';
     }
 
     /**
@@ -51,20 +51,40 @@ export class AuthoringUtils {
      *
      * @returns HTML markup including state specific libraries.
      */
-    public getTagsForState(appState: string): string {
-        let tags = '';
+    public getTagsForState(appState: string): string[] {
+        let tags: string[] = [];
 
-        if (appState === Constants.STATE_AUTHORING) {
-            const clientLibs = this.generateClientLibUrls();
+        // if (appState === Constants.STATE_AUTHORING) {
+        const clientLibs = this.generateClientLibUrls();
+        console.log(appState);
+        tags = clientLibs//.map(resource => {
+            // if (resource.endsWith('.js')) {
+            //     return this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, resource);
+            // }
+       //  })
+        .filter(resource => {
+            return resource.endsWith('.js');
+        }) as string[];
+        // }
 
-            tags = clientLibs.map(resource => {
-                if (resource.endsWith('.js')) {
-                    return this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, resource);
-                } else if (resource.endsWith('.css')) {
-                    return this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, resource);
-                }
-            }).join('');
-        }
+        return tags;
+    }
+
+    public getCssTagsForState(appState: string): string[] {
+        let tags: string[] = [];
+
+        // if (appState === Constants.STATE_AUTHORING) {
+        const clientLibs = this.generateClientLibUrls();
+        console.log(appState);
+        tags = clientLibs//.map(resource => {
+        //     if (resource.endsWith('.css')) {
+        //         return this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, resource);
+        //     }
+        // })
+        .filter(resource => {
+            return resource.endsWith('.css');
+        }) as string[];
+        // // }
 
         return tags;
     }
@@ -128,11 +148,11 @@ export class AuthoringUtils {
         const result: string[] = [];
         const domain = this.getApiDomain();
 
-        if (domain) {
-            Constants.AUTHORING_LIBRARIES.forEach((library) => {
-                result.push(`${domain}${Constants.EDITOR_CLIENTLIB_PATH}${library}`);
-            });
-        }
+        // if (domain) {
+        Constants.AUTHORING_LIBRARIES.forEach((library) => {
+            result.push(`${domain}${Constants.EDITOR_CLIENTLIB_PATH}${library}`);
+        });
+        // }
 
         return result;
     }

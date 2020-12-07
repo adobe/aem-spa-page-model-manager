@@ -63,16 +63,17 @@ export class Constants {
     /**
      * Base path for editor clientlibs.
      */
-    public static readonly EDITOR_CLIENTLIB_PATH = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/internal/';
+    public static readonly EDITOR_CLIENTLIB_PATH = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/';
 
     /**
      * Authoring libraries.
      */
     public static readonly AUTHORING_LIBRARIES = [
-        'page.js',
-        'page.css',
-        'pagemodel/messaging.js',
-        'messaging.js'
+        'internal/messaging.js',
+        'utils.js',
+        'internal/page.js',
+        'internal/page.css',
+        'internal/pagemodel/messaging.js'
     ];
 
     private constructor() {
