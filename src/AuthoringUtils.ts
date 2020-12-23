@@ -55,14 +55,14 @@ export class AuthoringUtils {
     }
 
     /**
-     * Generates <script> and <link> tags.
+     * Generates <script>, <link> and <meta> tags.
      * The document fragment needs to be added to the page to enable AEM Editing capabilities.
      *
      * Example:
      * ```
      * import ModelManager, Constants, { AEM_MODE } from '@adobe/aem-spa-page-model-manager';
      *
-     * await ModelManager.initialize({modelClient: new ModelClient(REMOTE_AEM_HOST)});
+     * await ModelManager.initialize({modelClient: new ModelClient(<<REMOTE_AEM_HOST>>)});
      * const docFragment = ModelManager.clientlibUtil.getAemLibraries();
      * window.document.head.appendChild(docFragment);
      * ```
@@ -123,9 +123,9 @@ export class AuthoringUtils {
     }
 
     /**
-     * Checks AEM mode.
+     * Checks AEM mode from URL.
      * @private
-     * @returns AEM mode or `null`.
+     * @returns AEM mode.
      */
     private static getAemMode(): string {
         let url: URL;
