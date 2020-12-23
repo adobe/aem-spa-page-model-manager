@@ -12,9 +12,8 @@
 
 import * as assert from 'assert';
 import { AuthoringUtils } from '../src/AuthoringUtils';
-import {PathUtils} from "../src/PathUtils";
-import {AEM_MODE} from "../src/Constants";
-
+import { PathUtils } from '../src/PathUtils';
+import { AEM_MODE } from '../src/Constants';
 
 describe('AuthoringUtils ->', () => {
     let authoringUtils: AuthoringUtils;
