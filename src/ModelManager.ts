@@ -193,6 +193,7 @@ export class ModelManager {
         const initialModel = modelConfig && modelConfig.model;
 
         this._initializeFields(modelConfig);
+        this._attachAEMLibraries();
 
         const { rootModelPath } = this._modelPaths;
 
@@ -200,6 +201,20 @@ export class ModelManager {
 
         if (rootModelPath) {
             this._setInitializationPromise(rootModelPath);
+        }
+
+    }
+
+    /**
+     * Attaches detected in runtime required libraries to enable special AEM authoring capabilities.
+     *
+     * @private
+     */
+    private _attachAEMLibraries() {
+        const docFragment = this.clientlibUtil.getAemLibraries();
+
+        if (window && docFragment.hasChildNodes()) {
+            window.document.head.appendChild(docFragment);
         }
     }
 

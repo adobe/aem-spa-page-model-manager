@@ -10,12 +10,35 @@
  * governing permissions and limitations under the License.
  */
 
-import Constants, { AEM_MODE, TAG_ATTR, TAG_TYPE } from './Constants';
+import { AEM_MODE } from './Constants';
 import { PathUtils } from './PathUtils';
 import MetaProperty from './MetaProperty';
 
 export class AuthoringUtils {
-    private _apiDomain: string | null;
+    private readonly _apiDomain: string | null;
+
+    /**
+     * Base path for editor clientlibs.
+     */
+    public static readonly EDITOR_CLIENTLIB_PATH = '/etc.clientlibs/cq/gui/components/authoring/editors/clientlibs/';
+
+    /**
+     * Authoring libraries.
+     */
+    public static readonly AUTHORING_LIBRARIES = {
+        JS: [
+            AuthoringUtils.EDITOR_CLIENTLIB_PATH + 'internal/messaging.js',
+            AuthoringUtils.EDITOR_CLIENTLIB_PATH + 'utils.js',
+            AuthoringUtils.EDITOR_CLIENTLIB_PATH + 'internal/page.js',
+            AuthoringUtils.EDITOR_CLIENTLIB_PATH + 'internal/pagemodel/messaging.js'
+        ],
+        CSS: [
+            AuthoringUtils.EDITOR_CLIENTLIB_PATH + 'internal/page.css'
+        ],
+        META: {
+            'cq:datatype': 'JSON'
+        }
+    };
 
     /**
      * @private
@@ -32,91 +55,125 @@ export class AuthoringUtils {
     }
 
     /**
-     * Generates HTML markup.
+     * Generates <script>, <link> and <meta> tags.
+     * The document fragment needs to be added to the page to enable AEM Editing capabilities.
      *
      * Example:
      * ```
      * import ModelManager, Constants, { AEM_MODE } from '@adobe/aem-spa-page-model-manager';
      *
-     * // initialize `ModelManager`
-     * await ModelManager.initialize();
-     *
-     * // check application state and add related tags
-     * if (ModelManager.clientlibUtil.isStateActive(Constants.STATE_AUTHORING)) {
-     *     const markup = ModelManager.clientlibUtil.getTagsForState(AEM_MODE.EDIT);
-     *
-     *     window.document.head.insertAdjacentHTML('beforeend', markup);
-     * }
+     * await ModelManager.initialize({modelClient: new ModelClient(<<REMOTE_AEM_HOST>>)});
      * ```
      *
      * @returns HTML markup including state specific libraries.
      */
-    public getTagsForState(appState: string): string {
-        let tags = '';
+    public getAemLibraries(): DocumentFragment {
+        const docFragment: DocumentFragment = document.createDocumentFragment();
 
-        if (appState === Constants.STATE_AUTHORING) {
-            const clientLibs = this.generateClientLibUrls();
-
-            tags = clientLibs.map(resource => {
-                if (resource.endsWith('.js')) {
-                    return this.generateElementString(TAG_TYPE.JS, TAG_ATTR.SRC, resource);
-                } else if (resource.endsWith('.css')) {
-                    return this.generateElementString(TAG_TYPE.STYLESHEET, TAG_ATTR.HREF, resource);
-                }
-            }).join('');
+        if (!AuthoringUtils.isRemoteApp() || !AuthoringUtils.isEditMode()) {
+            return docFragment;
         }
 
-        return tags;
+        const jsUrls = this.prependDomain(AuthoringUtils.AUTHORING_LIBRARIES.JS);
+        const cssUrls = this.prependDomain(AuthoringUtils.AUTHORING_LIBRARIES.CSS);
+        const metaInfo = AuthoringUtils.AUTHORING_LIBRARIES.META;
+
+        docFragment.append(this.generateScriptElements(jsUrls));
+        docFragment.append(this.generateLinkElements(cssUrls));
+        docFragment.append(this.generateMetaElements(metaInfo));
+
+        return docFragment;
+    }
+
+    private generateMetaElements(metaInfo: {[key :string]:string}) :DocumentFragment {
+        const docFragment: DocumentFragment = document.createDocumentFragment();
+
+        Object.entries(metaInfo).forEach((entry) => {
+            const [ key, val ] = entry;
+            const metaElement = document.createElement('meta');
+
+            metaElement.setAttribute('property', key);
+            metaElement.content = val;
+            docFragment.appendChild(metaElement);
+        });
+
+        return docFragment;
+    }
+
+    private generateLinkElements(cssUrls: string[]): DocumentFragment {
+        const docFragment: DocumentFragment = document.createDocumentFragment();
+
+        cssUrls.forEach((url: string) => {
+            const linkElement = document.createElement('link');
+
+            linkElement.type = 'text/css';
+            linkElement.rel = 'stylesheet';
+            linkElement.href = url;
+            docFragment.appendChild(linkElement);
+        });
+
+        return docFragment;
+    }
+
+    private generateScriptElements(jsUrls: string[]): DocumentFragment {
+        const docFragment: DocumentFragment = document.createDocumentFragment();
+
+        jsUrls.forEach((url: string) => {
+            const htmlScriptElement = document.createElement('script');
+
+            htmlScriptElement.type = 'text/javascript';
+            htmlScriptElement.src = url;
+            docFragment.appendChild(htmlScriptElement);
+        });
+
+        return docFragment;
     }
 
     /**
-     * Returns string value of all the concatenated tags.
-     * @returns Concatenated tags.
+     * Checks if edit mode is on.
+     * @returns `true` if application is in AEM `EDIT` mode.
      */
-    private generateElementString(tagType: string, attr: string, attrValue: string): string {
-        let tag = '';
+    public static isEditMode(): boolean {
+        const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.EDIT;
+        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === AEM_MODE.EDIT);
 
-        if (tagType === TAG_TYPE.JS) {
-            tag = `<script ${attr}="${attrValue}"></script>`;
-        } else if (tagType === TAG_TYPE.STYLESHEET) {
-            tag = `<link ${attr}="${attrValue}"/>`;
-        }
-
-        return tag;
+        return viaMetaProperty || viaQueryParam;
     }
 
     /**
-     * Checks status of requested state.
-     * @returns `true` if application is in authoring state and AEM mode is `EDIT`.
+     * Checks if app is a remote application.
+     * If the cq:wcmmode is provided as get parameter it is implied that the app is remote.
+     * @returns `true` if the application is a remote app.
      */
-    public static isStateActive(state: string): boolean {
-        if (state === Constants.STATE_AUTHORING) {
-            const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.EDIT;
-            const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getAemMode() === AEM_MODE.EDIT);
+    public static isRemoteApp(): boolean {
+        try {
+            const url = new URL(PathUtils.getCurrentURL());
 
-            return viaMetaProperty || viaQueryParam;
+            return !!url.searchParams.get(MetaProperty.WCM_MODE);
+        } catch (e) {
+            // invalid url
         }
 
         return false;
     }
 
     /**
-     * Checks AEM mode.
+     * Checks AEM mode from URL.
      * @private
-     * @returns AEM mode or `null`.
+     * @returns AEM mode.
      */
-    public static getAemMode(): string | null {
+    private static getWCMModeFromURL(): string {
         let url: URL;
 
         try {
             url = new URL(PathUtils.getCurrentURL());
 
-            return url.searchParams.get(Constants.AEM_MODE_KEY);
+            return url.searchParams.get(MetaProperty.WCM_MODE) || '';
         } catch (e) {
             // invalid url
         }
 
-        return null;
+        return '';
     }
 
     /**
@@ -124,15 +181,13 @@ export class AuthoringUtils {
      * @private
      * @returns Clientlib URLs.
      */
-    public generateClientLibUrls(): string[] {
+    private prependDomain(libraries: string[]): string[] {
         const result: string[] = [];
         const domain = this.getApiDomain();
 
-        if (domain) {
-            Constants.AUTHORING_LIBRARIES.forEach((library) => {
-                result.push(`${domain}${Constants.EDITOR_CLIENTLIB_PATH}${library}`);
-            });
-        }
+        libraries.forEach((library) => {
+            result.push(`${domain || ''}${library}`);
+        });
 
         return result;
     }
