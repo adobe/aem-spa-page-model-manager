@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for @adobe/aem-spa-page-model-manager">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -40,8 +41,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -53,10 +52,13 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">@adobe/aem-spa-page-model-manager</a>
 				</li>
 				<li>
-					<a href="modelmanager.html">ModelManager</a>
+					<a href="../modules/modelmanager.html">ModelManager</a>
+				</li>
+				<li>
+					<a href="modelmanager.modelmanager-1.html">ModelManager</a>
 				</li>
 			</ul>
 			<h1>Class ModelManager</h1>
@@ -73,26 +75,29 @@
 					</div>
 					<p>Example:</p>
 					<p>Boostrap: <code>index.html</code></p>
-					<pre><code><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;cq:pagemodel_root_url&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;</span></span></span><span class="hljs-template-variable">{PATH}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">.model.json&quot;</span>/&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span></code></pre>
+					<pre><code><span style="color: #000000">&lt;</span><span style="color: #267F99">head</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">    &lt;</span><span style="color: #001080">meta</span><span style="color: #000000"> </span><span style="color: #001080">property</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;cq:pagemodel_root_url&quot;</span><span style="color: #000000"> </span><span style="color: #001080">content</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;{PATH}.model.json&quot;</span><span style="color: #000000">/&gt;</span>
+<span style="color: #000000">&lt;/</span><span style="color: #001080">head</span><span style="color: #000000">&gt;</span>
+</code></pre>
 					<p>Bootstrap: <code>index.js</code></p>
-					<pre><code><span class="hljs-keyword">import</span> { ModelManager } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@adobe/aem-spa-page-model-manager&#x27;</span>;
+					<pre><code><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ModelManager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@adobe/aem-spa-page-model-manager&#039;</span><span style="color: #000000">;</span>
 
-ModelManager.initialize().then(<span class="hljs-function">(<span class="hljs-params">model</span>) =&gt;</span> {
-    <span class="hljs-comment">// Render the App content using the provided model</span>
-    render(model);
-});
+<span style="color: #001080">ModelManager</span><span style="color: #000000">.</span><span style="color: #795E26">initialize</span><span style="color: #000000">().</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">model</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// Render the App content using the provided model</span>
+<span style="color: #000000">    </span><span style="color: #795E26">render</span><span style="color: #000000">(</span><span style="color: #001080">model</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// Loading a specific portion of model</span>
-ModelManager.getData(<span class="hljs-string">&quot;/content/site/page/jcr:content/path/to/component&quot;</span>).then(...);</code></pre>
+<span style="color: #008000">// Loading a specific portion of model</span>
+<span style="color: #001080">ModelManager</span><span style="color: #000000">.</span><span style="color: #795E26">getData</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;/content/site/page/jcr:content/path/to/component&quot;</span><span style="color: #000000">).</span><span style="color: #795E26">then</span><span style="color: #000000">(...);</span>
+</code></pre>
 					<p>For asynchronous loading of root model/standalone item model</p>
-					<pre><code><span class="hljs-keyword">import</span> { ModelManager } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@adobe/aem-spa-page-model-manager&#x27;</span>;
+					<pre><code><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ModelManager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@adobe/aem-spa-page-model-manager&#039;</span><span style="color: #000000">;</span>
 
-ModelManager.initializeAsync();
-...
-<span class="hljs-comment">// Render the App independent of the model</span>
-render();
+<span style="color: #001080">ModelManager</span><span style="color: #000000">.</span><span style="color: #795E26">initializeAsync</span><span style="color: #000000">();</span>
+<span style="color: #000000">...</span>
+<span style="color: #008000">// Render the App independent of the model</span>
+<span style="color: #795E26">render</span><span style="color: #000000">();</span>
+
 </code></pre>
 					<p>For root model, custom event is fired on window with fetched model - cq-pagemodel-loaded</p>
 				</div>
@@ -110,26 +115,49 @@ render();
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#clientlibutil" class="tsd-kind-icon">clientlib<wbr>Util</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#modelstore" class="tsd-kind-icon">model<wbr>Store</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.html#rootpath" class="tsd-kind-icon">root<wbr>Path</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#clientlibutil" class="tsd-kind-icon">clientlib<wbr>Util</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#modelstore" class="tsd-kind-icon">model<wbr>Store</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#rootpath" class="tsd-kind-icon">root<wbr>Path</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#_isremoteapp" class="tsd-kind-icon">_is<wbr>Remote<wbr>App</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="modelmanager.html#getdata" class="tsd-kind-icon">get<wbr>Data</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="modelmanager.html#initialize" class="tsd-kind-icon">initialize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#initializeasync" class="tsd-kind-icon">initialize<wbr>Async</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#_isremoteapp" class="tsd-kind-icon">_is<wbr>Remote<wbr>App</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="modelmanager.modelmanager-1.html#getdata" class="tsd-kind-icon">get<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="modelmanager.modelmanager-1.html#initialize" class="tsd-kind-icon">initialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#initializeasync" class="tsd-kind-icon">initialize<wbr>Async</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="modelmanager.modelmanager-1.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Model<wbr>Manager<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modelmanager.modelmanager-1.html" class="tsd-signature-type" data-tsd-kind="Class">ModelManager</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="modelmanager.modelmanager-1.html" class="tsd-signature-type" data-tsd-kind="Class">ModelManager</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -138,16 +166,16 @@ render();
 					<a name="clientlibutil" class="tsd-anchor"></a>
 					<h3>clientlib<wbr>Util</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> clientlibUtil<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> clientlibUtil<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="authoringutils.authoringutils-1.html" class="tsd-signature-type" data-tsd-kind="Class">AuthoringUtils</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L138">ModelManager.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L138">ModelManager.ts:138</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="authoringutils.html" class="tsd-signature-type">AuthoringUtils</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="authoringutils.authoringutils-1.html" class="tsd-signature-type" data-tsd-kind="Class">AuthoringUtils</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -155,16 +183,16 @@ render();
 					<a name="modelclient" class="tsd-anchor"></a>
 					<h3>model<wbr>Client</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> modelClient<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modelclient.html" class="tsd-signature-type">ModelClient</a></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> modelClient<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modelclient.modelclient-1.html" class="tsd-signature-type" data-tsd-kind="Class">ModelClient</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L122">ModelManager.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L122">ModelManager.ts:122</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="modelclient.html" class="tsd-signature-type">ModelClient</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="modelclient.modelclient-1.html" class="tsd-signature-type" data-tsd-kind="Class">ModelClient</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -172,16 +200,16 @@ render();
 					<a name="modelstore" class="tsd-anchor"></a>
 					<h3>model<wbr>Store</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> modelStore<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modelstore.html" class="tsd-signature-type">ModelStore</a></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> modelStore<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modelstore.modelstore-1.html" class="tsd-signature-type" data-tsd-kind="Class">ModelStore</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L130">ModelManager.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L130">ModelManager.ts:130</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="modelstore.html" class="tsd-signature-type">ModelStore</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="modelstore.modelstore-1.html" class="tsd-signature-type" data-tsd-kind="Class">ModelStore</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -195,7 +223,7 @@ render();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L335">ModelManager.ts:335</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L350">ModelManager.ts:350</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -221,7 +249,7 @@ render();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L597">ModelManager.ts:597</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L612">ModelManager.ts:612</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -244,7 +272,7 @@ render();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L455">ModelManager.ts:455</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L470">ModelManager.ts:470</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -275,13 +303,13 @@ render();
 					<a name="getdata" class="tsd-anchor"></a>
 					<h3>get<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Data&lt;M&gt;<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Data&lt;M&gt;<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/modelmanager.modelmanagerconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelManagerConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L344">ModelManager.ts:344</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L359">ModelManager.ts:359</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -292,13 +320,13 @@ render();
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>M<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.html" class="tsd-signature-type">Model</a></h4>
+									<h4>M<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.model-1.html" class="tsd-signature-type" data-tsd-kind="Interface">Model</a></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/modelmanager.modelmanagerconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelManagerConfiguration</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -310,13 +338,13 @@ render();
 					<a name="initialize" class="tsd-anchor"></a>
 					<h3>initialize</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">initialize&lt;M&gt;<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">initialize&lt;M&gt;<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/modelmanager.modelmanagerconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelManagerConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L157">ModelManager.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L157">ModelManager.ts:157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -338,13 +366,13 @@ render();
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>M<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.html" class="tsd-signature-type">Model</a></h4>
+									<h4>M<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.model-1.html" class="tsd-signature-type" data-tsd-kind="Interface">Model</a></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/modelmanager.modelmanagerconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelManagerConfiguration</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -355,13 +383,13 @@ render();
 					<a name="initializeasync" class="tsd-anchor"></a>
 					<h3>initialize<wbr>Async</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">initialize<wbr>Async<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">initialize<wbr>Async<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/modelmanager.modelmanagerconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelManagerConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L189">ModelManager.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L189">ModelManager.ts:189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -388,7 +416,7 @@ render();
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <a href="../interfaces/modelmanagerconfiguration.html" class="tsd-signature-type">ModelManagerConfiguration</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/modelmanager.modelmanagerconfiguration.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelManagerConfiguration</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -405,7 +433,7 @@ render();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b61d8e6/src/ModelManager.ts#L471">ModelManager.ts:471</a></li>
+									<li>Defined in <a href="https://github.com/adobe/aem-spa-page-model-manager/blob/b21fe85/src/ModelManager.ts#L486">ModelManager.ts:486</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -437,75 +465,81 @@ render();
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/authoringutils.html">Authoring<wbr>Utils</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/constants.html">Constants</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/model.html">Model</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/modelclient.html">Model<wbr>Client</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/modelmanager.html">Model<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/modelstore.html">Model<wbr>Store</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/types.html">types</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="../enums/aem_mode.html" class="tsd-kind-icon">AEM_<wbr>MODE</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="authoringutils.html" class="tsd-kind-icon">Authoring<wbr>Utils</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="modelclient.html" class="tsd-kind-icon">Model<wbr>Client</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="modelmanager.html" class="tsd-kind-icon">Model<wbr>Manager</a>
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="modelmanager.modelmanager-1.html" class="tsd-kind-icon">Model<wbr>Manager</a>
 						<ul>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="modelmanager.html#clientlibutil" class="tsd-kind-icon">clientlib<wbr>Util</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="modelmanager.modelmanager-1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="modelmanager.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a>
+								<a href="modelmanager.modelmanager-1.html#clientlibutil" class="tsd-kind-icon">clientlib<wbr>Util</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="modelmanager.html#modelstore" class="tsd-kind-icon">model<wbr>Store</a>
+								<a href="modelmanager.modelmanager-1.html#modelclient" class="tsd-kind-icon">model<wbr>Client</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="modelmanager.html#rootpath" class="tsd-kind-icon">root<wbr>Path</a>
+								<a href="modelmanager.modelmanager-1.html#modelstore" class="tsd-kind-icon">model<wbr>Store</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="modelmanager.modelmanager-1.html#rootpath" class="tsd-kind-icon">root<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="modelmanager.html#_isremoteapp" class="tsd-kind-icon">_is<wbr>Remote<wbr>App</a>
+								<a href="modelmanager.modelmanager-1.html#_isremoteapp" class="tsd-kind-icon">_is<wbr>Remote<wbr>App</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="modelmanager.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a>
+								<a href="modelmanager.modelmanager-1.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="modelmanager.html#getdata" class="tsd-kind-icon">get<wbr>Data</a>
+								<a href="modelmanager.modelmanager-1.html#getdata" class="tsd-kind-icon">get<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="modelmanager.html#initialize" class="tsd-kind-icon">initialize</a>
+								<a href="modelmanager.modelmanager-1.html#initialize" class="tsd-kind-icon">initialize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="modelmanager.html#initializeasync" class="tsd-kind-icon">initialize<wbr>Async</a>
+								<a href="modelmanager.modelmanager-1.html#initializeasync" class="tsd-kind-icon">initialize<wbr>Async</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="modelmanager.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a>
+								<a href="modelmanager.modelmanager-1.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="modelstore.html" class="tsd-kind-icon">Model<wbr>Store</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/modelmanager.modelmanagerconfiguration.html" class="tsd-kind-icon">Model<wbr>Manager<wbr>Configuration</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/model.html" class="tsd-kind-icon">Model</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/modelmanagerconfiguration.html" class="tsd-kind-icon">Model<wbr>Manager<wbr>Configuration</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/modelpaths.html" class="tsd-kind-icon">Model<wbr>Paths</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/page.html" class="tsd-kind-icon">Page</a>
+					<li class=" tsd-kind-property tsd-parent-kind-module">
+						<a href="../modules/modelmanager.html#default" class="tsd-kind-icon">default</a>
 					</li>
 				</ul>
 			</nav>
@@ -517,13 +551,15 @@ render();
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 		</div>
 	</div>
