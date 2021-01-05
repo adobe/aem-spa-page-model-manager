@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.4...v1.3.0) (2021-01-05)
+
+
+### Features
+
+* **authoringutils:** generate Document fragment to be added to enable AEM Editing capabilities ([3b1786e](https://github.com/adobe/aem-spa-page-model-manager/commit/3b1786e0004514c5ead21ddf85e4a62d456bf22b))
+
 ## [1.2.4](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.3...v1.2.4) (2020-12-04)
 
 
