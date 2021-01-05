@@ -14,6 +14,7 @@ import * as assert from 'assert';
 import { AuthoringUtils } from '../src/AuthoringUtils';
 import { PathUtils } from '../src/PathUtils';
 import { AEM_MODE } from '../src/Constants';
+import MetaProperty from "../src/MetaProperty";
 
 describe('AuthoringUtils ->', () => {
     let authoringUtils: AuthoringUtils;
@@ -105,23 +106,30 @@ describe('AuthoringUtils ->', () => {
     describe('isEditMode', () => {
         it('should be false if both indicators are falsy', () => {
             jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
-            jest.spyOn<any, string>(AuthoringUtils, 'getWCMModeFromURL').mockReturnValue(null);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('');
 
             assert.ok(AuthoringUtils.isEditMode() === false);
         });
 
         it('should be true based on meta property', () => {
             jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.EDIT);
-            jest.spyOn<any, string>(AuthoringUtils, 'getWCMModeFromURL').mockReturnValue(null);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('');
 
             assert.ok(AuthoringUtils.isEditMode());
         });
 
         it('should be true based on meta property', () => {
             jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
-            jest.spyOn<any, string>(AuthoringUtils, 'getWCMModeFromURL').mockReturnValue(AEM_MODE.EDIT);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('http://localhost/?' + MetaProperty.WCM_MODE + '=' + AEM_MODE.EDIT);
 
             assert.ok(AuthoringUtils.isEditMode());
+        });
+
+        it('should be false when url is malformed and metaproperty not edit', () => {
+            jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('a/b');
+
+            assert.ok(!AuthoringUtils.isEditMode());
         });
     });
 

@@ -186,7 +186,7 @@ export class AuthoringUtils {
         const domain = this.getApiDomain();
 
         libraries.forEach((library) => {
-            result.push(`${domain ? domain : ''}${library}`);
+            result.push(`${domain || ''}${library}`);
         });
 
         return result;
