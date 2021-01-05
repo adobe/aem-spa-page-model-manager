@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.0...v1.3.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **docs:** remove --mode from docs build after a typedoc breaking change ([5cee6bd](https://github.com/adobe/aem-spa-page-model-manager/commit/5cee6bd7abecf7f83a808231752554b705a83d82))
+
 # [1.3.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.2.4...v1.3.0) (2021-01-05)
 
 
