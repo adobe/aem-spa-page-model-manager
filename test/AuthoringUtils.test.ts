@@ -41,8 +41,8 @@ describe('AuthoringUtils ->', () => {
 
         it('should return DocumentFragment based on AuthoringUtils.AUTHORING_LIBRARIES', () => {
             // given
+            jest.spyOn(AuthoringUtils, 'isRemoteApp').mockReturnValue(true);
             jest.spyOn(AuthoringUtils, 'isEditMode').mockReturnValue(true);
-
             // when
 
             const libs: DocumentFragment = authoringUtils.getAemLibraries();
@@ -57,6 +57,7 @@ describe('AuthoringUtils ->', () => {
         describe('scripts', () => {
             it('should contain proper script tags', () => {
                 // given
+                jest.spyOn(AuthoringUtils, 'isRemoteApp').mockReturnValue(true);
                 jest.spyOn(AuthoringUtils, 'isEditMode').mockReturnValue(true);
                 // when
 
@@ -104,21 +105,21 @@ describe('AuthoringUtils ->', () => {
     describe('isEditMode', () => {
         it('should be false if both indicators are falsy', () => {
             jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
-            jest.spyOn<any, string>(AuthoringUtils, 'getAemMode').mockReturnValue(null);
+            jest.spyOn<any, string>(AuthoringUtils, 'getWCMModeFromURL').mockReturnValue(null);
 
             assert.ok(AuthoringUtils.isEditMode() === false);
         });
 
         it('should be true based on meta property', () => {
             jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.EDIT);
-            jest.spyOn<any, string>(AuthoringUtils, 'getAemMode').mockReturnValue(null);
+            jest.spyOn<any, string>(AuthoringUtils, 'getWCMModeFromURL').mockReturnValue(null);
 
             assert.ok(AuthoringUtils.isEditMode());
         });
 
         it('should be true based on meta property', () => {
             jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
-            jest.spyOn<any, string>(AuthoringUtils, 'getAemMode').mockReturnValue(AEM_MODE.EDIT);
+            jest.spyOn<any, string>(AuthoringUtils, 'getWCMModeFromURL').mockReturnValue(AEM_MODE.EDIT);
 
             assert.ok(AuthoringUtils.isEditMode());
         });

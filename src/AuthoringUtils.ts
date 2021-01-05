@@ -63,18 +63,14 @@ export class AuthoringUtils {
      * import ModelManager, Constants, { AEM_MODE } from '@adobe/aem-spa-page-model-manager';
      *
      * await ModelManager.initialize({modelClient: new ModelClient(<<REMOTE_AEM_HOST>>)});
-     * const docFragment = ModelManager.clientlibUtil.getAemLibraries();
-     * window.document.head.appendChild(docFragment);
      * ```
-     *
-     * If you don't want to inject arbitrary html tags, please refer to AuthoringUtils.AUTHORING_LIBRARIES and create the tags manually.
      *
      * @returns HTML markup including state specific libraries.
      */
     public getAemLibraries(): DocumentFragment {
         const docFragment: DocumentFragment = document.createDocumentFragment();
 
-        if (!AuthoringUtils.isEditMode()) {
+        if (!AuthoringUtils.isRemoteApp() || !AuthoringUtils.isEditMode()) {
             return docFragment;
         }
 
@@ -82,22 +78,15 @@ export class AuthoringUtils {
         const cssUrls = this.prependDomain(AuthoringUtils.AUTHORING_LIBRARIES.CSS);
         const metaInfo = AuthoringUtils.AUTHORING_LIBRARIES.META;
 
-        jsUrls.forEach((url: string) => {
-            const htmlScriptElement = document.createElement('script');
+        docFragment.append(this.generateScriptElements(jsUrls));
+        docFragment.append(this.generateLinkElements(cssUrls));
+        docFragment.append(this.generateMetaElements(metaInfo));
 
-            htmlScriptElement.type = 'text/javascript';
-            htmlScriptElement.src = url;
-            docFragment.appendChild(htmlScriptElement);
-        });
+        return docFragment;
+    }
 
-        cssUrls.forEach((url: string) => {
-            const linkElement = document.createElement('link');
-
-            linkElement.type = 'text/css';
-            linkElement.rel = 'stylesheet';
-            linkElement.href = url;
-            docFragment.appendChild(linkElement);
-        });
+    private generateMetaElements(metaInfo: {[key :string]:string}) :DocumentFragment {
+        const docFragment: DocumentFragment = document.createDocumentFragment();
 
         Object.entries(metaInfo).forEach((entry) => {
             const [ key, val ] = entry;
@@ -111,15 +100,61 @@ export class AuthoringUtils {
         return docFragment;
     }
 
+    private generateLinkElements(cssUrls: string[]): DocumentFragment {
+        const docFragment: DocumentFragment = document.createDocumentFragment();
+
+        cssUrls.forEach((url: string) => {
+            const linkElement = document.createElement('link');
+
+            linkElement.type = 'text/css';
+            linkElement.rel = 'stylesheet';
+            linkElement.href = url;
+            docFragment.appendChild(linkElement);
+        });
+
+        return docFragment;
+    }
+
+    private generateScriptElements(jsUrls: string[]): DocumentFragment {
+        const docFragment: DocumentFragment = document.createDocumentFragment();
+
+        jsUrls.forEach((url: string) => {
+            const htmlScriptElement = document.createElement('script');
+
+            htmlScriptElement.type = 'text/javascript';
+            htmlScriptElement.src = url;
+            docFragment.appendChild(htmlScriptElement);
+        });
+
+        return docFragment;
+    }
+
     /**
      * Checks if edit mode is on.
      * @returns `true` if application is in AEM `EDIT` mode.
      */
     public static isEditMode(): boolean {
         const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.EDIT;
-        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getAemMode() === AEM_MODE.EDIT);
+        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === AEM_MODE.EDIT);
 
         return viaMetaProperty || viaQueryParam;
+    }
+
+    /**
+     * Checks if app is a remote application.
+     * If the cq:wcmmode is provided as get parameter it is implied that the app is remote.
+     * @returns `true` if the application is a remote app.
+     */
+    public static isRemoteApp(): boolean {
+        try {
+            const url = new URL(PathUtils.getCurrentURL());
+
+            return !!url.searchParams.get(MetaProperty.WCM_MODE);
+        } catch (e) {
+            // invalid url
+        }
+
+        return false;
     }
 
     /**
@@ -127,7 +162,7 @@ export class AuthoringUtils {
      * @private
      * @returns AEM mode.
      */
-    private static getAemMode(): string {
+    private static getWCMModeFromURL(): string {
         let url: URL;
 
         try {
