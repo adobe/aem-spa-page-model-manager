@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue)](https://github.com/adobe/aem-spa-page-model-manager/blob/master/LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/@adobe/aem-spa-page-model-manager.svg)](https://www.npmjs.com/package/@adobe/aem-spa-page-model-manager)
-[![Documentation](https://img.shields.io/badge/docs-api-blue)](https://opensource.adobe.com/aem-spa-page-model-manager/globals.html)
+[![Documentation](https://img.shields.io/badge/docs-api-blue)](https://opensource.adobe.com/aem-spa-page-model-manager/)
 
 
 [![codecov](https://codecov.io/gh/adobe/aem-spa-page-model-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/adobe/aem-spa-page-model-manager)
