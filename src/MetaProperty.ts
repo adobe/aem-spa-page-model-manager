@@ -35,6 +35,11 @@ export class MetaProperty {
      */
     public static readonly WCM_MODE = 'cq:wcmmode';
 
+    /**
+     * Meta property with a editor data type hint
+     */
+    public static readonly WCM_DATA_TYPE = 'cq:datatype';
+
     private constructor() {
         // hide constructor
     }

@@ -36,7 +36,7 @@ export class AuthoringUtils {
             AuthoringUtils.EDITOR_CLIENTLIB_PATH + 'internal/page.css'
         ],
         META: {
-            'cq:datatype': 'JSON'
+            [MetaProperty.WCM_DATA_TYPE]: 'JSON'
         }
     };
 
