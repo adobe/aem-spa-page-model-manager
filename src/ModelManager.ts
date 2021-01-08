@@ -211,10 +211,11 @@ export class ModelManager {
      * @private
      */
     private _attachAEMLibraries() {
-        const docFragment = this.clientlibUtil.getAemLibraries();
-
-        if (window && docFragment.hasChildNodes()) {
-            window.document.head.appendChild(docFragment);
+        if(window) {
+            const docFragment = this.clientlibUtil.getAemLibraries();
+            if (docFragment.hasChildNodes()) {
+                window.document.head.appendChild(docFragment);
+            }
         }
     }
 
