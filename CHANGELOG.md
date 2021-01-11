@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.1...v1.3.2) (2021-01-11)
+
+
+### Bug Fixes
+
+* remove runtime script attach in ssr ([2dfd1ef](https://github.com/adobe/aem-spa-page-model-manager/commit/2dfd1ef5ea5c8e581d8b9a535e20fc6e7d778443))
+
 ## [1.3.1](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.0...v1.3.1) (2021-01-05)
 
 
