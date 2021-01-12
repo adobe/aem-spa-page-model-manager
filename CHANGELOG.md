@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.2...v1.3.3) (2021-01-12)
+
+
+### Bug Fixes
+
+* **bugfix:** make ssr work ([cbda406](https://github.com/adobe/aem-spa-page-model-manager/commit/cbda4062608e5c81120e3ab5a7d599a2db5b3da5))
+
 ## [1.3.2](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.1...v1.3.2) (2021-01-11)
 
 
