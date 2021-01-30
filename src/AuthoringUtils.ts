@@ -123,6 +123,7 @@ export class AuthoringUtils {
 
             htmlScriptElement.type = 'text/javascript';
             htmlScriptElement.src = url;
+            htmlScriptElement.async = false;
             docFragment.appendChild(htmlScriptElement);
         });
 
