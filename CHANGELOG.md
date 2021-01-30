@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.3...v1.3.4) (2021-01-30)
+
+
+### Bug Fixes
+
+* load scripts in desired order ([#45](https://github.com/adobe/aem-spa-page-model-manager/issues/45)) ([9a74655](https://github.com/adobe/aem-spa-page-model-manager/commit/9a7465503a3cc5b38b4bee7c838b67e8a7a5990f))
+
 ## [1.3.3](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.2...v1.3.3) (2021-01-12)
 
 
