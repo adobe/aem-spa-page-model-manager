@@ -528,11 +528,12 @@ export class PathUtils {
         const isLoadedInAEM = window.location.origin === aemHost;
 
         if (isLoadedInAEM) {
-            const aemPathPrefix = `(/editor.html)?/content/${rootPath}`;
+            // Remove trailing slash, if any
+            rootPath = rootPath.replace(/\/$/, '');
+            const aemPathPrefix = `(/editor.html)?(/content/${rootPath})?`;
 
             if (path.indexOf(aemPathPrefix) < 0) {
-                const newPath = normalizePath(`${aemPathPrefix}/${path}(.html)?`);
-
+                const newPath = (`${aemPathPrefix}${path}(.html)?`);
                 return newPath;
             }
         }
