@@ -519,17 +519,25 @@ export class PathUtils {
 
     /**
      * Helper for handling remote react app routing in edit mode
+     *
+     * When an external SPA is opened in the editor, the router needs updated path parameter
+     * to account for the AEM specific prefix in the URL
+     * eg: /home will become /content/{aem_project_name}/home
+     *
      * @param path Path to route to
      * @param aemHost Origin information of the AEM instance in which to edit
      * @param rootPath AEM path which forms the root path of the remote app
-     * @returns Updated url
+     * @returns Updated path to match against
      */
     public static toAEMPath(path: string, aemHost: string, rootPath: string): string {
         const isLoadedInAEM = window.location.origin === aemHost;
 
         if (isLoadedInAEM) {
-            // Remove trailing slash, if any
-            rootPath = rootPath.replace(/\/$/, '');
+            // Remove trailing slashes, if any
+            rootPath = rootPath.replace(/\/*$/, '');
+
+            // editor.html - Not present in publish view
+            // aem project path - Optional in publish view. Could be removed if navigating within the app via links
             const aemPathPrefix = `(/editor.html)?(/content/${rootPath})?`;
 
             if (path.indexOf(aemPathPrefix) < 0) {
