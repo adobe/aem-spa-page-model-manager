@@ -471,5 +471,21 @@ describe('PathUtils ->', () => {
 
             expect(REMOTE_APP_PAGE).toMatch(newPathPattern);
         });
+        it('matches react app path when root path is provided in a different pattern', () => {
+            const AEM_PROJECT_PATH = '/testproj/lang/';
+
+            // Transform to match AEM path when running on AEM instance
+            const newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, aemOrigin, AEM_PROJECT_PATH));
+
+            expect(AEM_PAGE_PATH).toMatch(newPathPattern);
+        });
+        it('matches react app path when app path is navigated to in publish view', () => {
+            const AEM_PROJECT_PATH = '/testproj/lang/';
+
+            // Transform to match AEM path if navigated within app on AEM instance
+            const newPathPattern = new RegExp(PathUtils.toAEMPath(REMOTE_APP_PAGE, aemOrigin, AEM_PROJECT_PATH));
+
+            expect(REMOTE_APP_PAGE).toMatch(newPathPattern);
+        });
     });
 });

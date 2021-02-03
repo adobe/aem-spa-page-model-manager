@@ -533,8 +533,8 @@ export class PathUtils {
         const isLoadedInAEM = window.location.origin === aemHost;
 
         if (isLoadedInAEM) {
-            // Remove trailing slashes, if any
-            rootPath = rootPath.replace(/\/*$/, '');
+            // Remove leading and trailing slashes, if any
+            rootPath = rootPath.replace(/^\/|\/$/g, '');
 
             // editor.html - Not present in publish view
             // aem project path - Optional in publish view. Could be removed if navigating within the app via links
@@ -542,6 +542,7 @@ export class PathUtils {
 
             if (path.indexOf(aemPathPrefix) < 0) {
                 const newPath = (`${aemPathPrefix}${path}(.html)?`);
+
                 return newPath;
             }
         }
