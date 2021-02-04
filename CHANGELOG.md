@@ -1,3 +1,11 @@
+## [1.3.5](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.4...v1.3.5) (2021-02-04)
+
+
+### Bug Fixes
+
+* update regex for remote app routing transform ([fb26df1](https://github.com/adobe/aem-spa-page-model-manager/commit/fb26df1fe346278304a499ce9f35608766f2e537))
+* updated regex for sanitizing url ([195dd31](https://github.com/adobe/aem-spa-page-model-manager/commit/195dd31e046367825444f137bb3e3a1cd7208581))
+
 ## [1.3.4](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.3...v1.3.4) (2021-01-30)
 
 
