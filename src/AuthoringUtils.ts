@@ -142,6 +142,17 @@ export class AuthoringUtils {
     }
 
     /**
+     * Checks if preview mode is on.
+     * @returns `true` if application is in AEM `PREVIEW` mode.
+     */
+    public static isPreviewMode(): boolean {
+        const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.PREVIEW;
+        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === AEM_MODE.PREVIEW);
+
+        return viaMetaProperty || viaQueryParam;
+    }
+
+    /**
      * Checks if app is a remote application.
      * If the cq:wcmmode is provided as get parameter it is implied that the app is remote.
      * @returns `true` if the application is a remote app.
@@ -191,5 +202,13 @@ export class AuthoringUtils {
         });
 
         return result;
+    }
+
+    /**
+     * Is the app used in the context of the AEM Page editor or it is a remote application.
+     * @returns 'true' if app is in Editor 
+     */
+    public static isInEditor(): boolean {
+        return AuthoringUtils.isEditMode() || AuthoringUtils.isPreviewMode() || AuthoringUtils.isRemoteApp();
     }
 }
