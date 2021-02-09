@@ -130,15 +130,19 @@ export class AuthoringUtils {
         return docFragment;
     }
 
+    private static isMode(mode: string): boolean {
+        const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === mode;
+        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === mode);
+
+        return viaMetaProperty || viaQueryParam;
+    }
+
     /**
      * Checks if edit mode is on.
      * @returns `true` if application is in AEM `EDIT` mode.
      */
     public static isEditMode(): boolean {
-        const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.EDIT;
-        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === AEM_MODE.EDIT);
-
-        return viaMetaProperty || viaQueryParam;
+        return AuthoringUtils.isMode(AEM_MODE.EDIT);
     }
 
     /**
@@ -146,10 +150,7 @@ export class AuthoringUtils {
      * @returns `true` if application is in AEM `PREVIEW` mode.
      */
     public static isPreviewMode(): boolean {
-        const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.PREVIEW;
-        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === AEM_MODE.PREVIEW);
-
-        return viaMetaProperty || viaQueryParam;
+        return AuthoringUtils.isMode(AEM_MODE.PREVIEW);
     }
 
     /**
