@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.5...v1.3.6) (2021-02-10)
+
+
+### Bug Fixes
+
+* Exporting AuthoringUtils required for remote app ([#47](https://github.com/adobe/aem-spa-page-model-manager/issues/47)) ([05c7483](https://github.com/adobe/aem-spa-page-model-manager/commit/05c74839796f390b7e52571c9c141352169fa7f2))
+
 ## [1.3.5](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.4...v1.3.5) (2021-02-04)
 
 
