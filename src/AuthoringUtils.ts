@@ -130,15 +130,27 @@ export class AuthoringUtils {
         return docFragment;
     }
 
+    private static isMode(mode: string): boolean {
+        const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === mode;
+        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === mode);
+
+        return viaMetaProperty || viaQueryParam;
+    }
+
     /**
      * Checks if edit mode is on.
      * @returns `true` if application is in AEM `EDIT` mode.
      */
     public static isEditMode(): boolean {
-        const viaMetaProperty = PathUtils.getMetaPropertyValue(MetaProperty.WCM_MODE) === AEM_MODE.EDIT;
-        const viaQueryParam = PathUtils.isBrowser() && (AuthoringUtils.getWCMModeFromURL() === AEM_MODE.EDIT);
+        return AuthoringUtils.isMode(AEM_MODE.EDIT);
+    }
 
-        return viaMetaProperty || viaQueryParam;
+    /**
+     * Checks if preview mode is on.
+     * @returns `true` if application is in AEM `PREVIEW` mode.
+     */
+    public static isPreviewMode(): boolean {
+        return AuthoringUtils.isMode(AEM_MODE.PREVIEW);
     }
 
     /**
@@ -191,5 +203,13 @@ export class AuthoringUtils {
         });
 
         return result;
+    }
+
+    /**
+     * Is the app used in the context of the AEM Page editor or it is a remote application.
+     * @returns 'true' if app is in Editor 
+     */
+    public static isInEditor(): boolean {
+        return AuthoringUtils.isEditMode() || AuthoringUtils.isPreviewMode() || AuthoringUtils.isRemoteApp();
     }
 }

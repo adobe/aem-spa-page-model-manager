@@ -133,4 +133,35 @@ describe('AuthoringUtils ->', () => {
         });
     });
 
+
+    describe('isPreviewMode', () => {
+        it('should be false if both indicators are falsy', () => {
+            jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.EDIT);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('');
+
+            assert.ok(AuthoringUtils.isPreviewMode() === false);
+        });
+
+        it('should be true based on meta property', () => {
+            jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.PREVIEW);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('');
+
+            assert.ok(AuthoringUtils.isPreviewMode());
+        });
+
+        it('should be true based on meta property', () => {
+            jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.EDIT);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('http://localhost/?' + MetaProperty.WCM_MODE + '=' + AEM_MODE.PREVIEW);
+
+            assert.ok(AuthoringUtils.isPreviewMode());
+        });
+
+        it('should be false when url is malformed and metaproperty not edit', () => {
+            jest.spyOn(PathUtils, 'getMetaPropertyValue').mockReturnValue(AEM_MODE.EDIT);
+            jest.spyOn<any, string>(PathUtils, 'getCurrentURL').mockReturnValue('a/b');
+
+            assert.ok(!AuthoringUtils.isPreviewMode());
+        });
+    });
+
 });
