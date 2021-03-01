@@ -11,9 +11,9 @@
  */
 
 import * as assert from 'assert';
-import { AuthoringUtils } from '../src/AuthoringUtils';
-import { PathUtils } from '../src/PathUtils';
-import { AEM_MODE } from '../src/Constants';
+import {AuthoringUtils} from '../src/AuthoringUtils';
+import {PathUtils} from '../src/PathUtils';
+import {AEM_MODE} from '../src/Constants';
 import MetaProperty from "../src/MetaProperty";
 
 describe('AuthoringUtils ->', () => {
@@ -94,13 +94,111 @@ describe('AuthoringUtils ->', () => {
 
                 // then
                 Object.entries(AuthoringUtils.AUTHORING_LIBRARIES.META).forEach((entry) => {
-                    const [ key, val ] = entry;
+                    const [key, val] = entry;
 
                     assert.ok(libs.querySelectorAll('meta[property="' + key + '"][content="' + val + '"]'));
                 });
             });
         });
 
+    });
+
+    describe('setOnLoadCallback', () => {
+        it('should resolve immediately when no scripts', () => {
+            // given
+            const docFragment = new DocumentFragment();
+            let called = false;
+            const callback = () => {
+                called = true;
+            };
+
+            docFragment.appendChild(document.createElement('div'));
+            docFragment.appendChild(document.createElement('meta'));
+            docFragment.appendChild(document.createElement('link'));
+            // when
+            authoringUtils.setOnLoadCallback(docFragment, callback);
+
+            // then
+            expect(called).toBeTruthy();
+        });
+
+        it('should resolve immediately when empty', () => {
+            // given
+            const docFragment = new DocumentFragment();
+            let called = false;
+            const callback = () => {
+                called = true;
+            };
+
+            // when
+            authoringUtils.setOnLoadCallback(docFragment, callback);
+
+            // then
+            expect(called).toBeTruthy();
+        });
+
+        it('should resolve when script\'s onload is triggered', async () => {
+            // given
+            const docFragment = new DocumentFragment();
+            let called = false;
+            let outResolve: () => void;
+            const promise = new Promise(resolve => {
+                outResolve = resolve;
+            });
+            const callback = () => {
+                called = true;
+                outResolve();
+            };
+
+            const htmlScriptElement = document.createElement('script');
+
+            htmlScriptElement.type = 'text/javascript';
+            docFragment.appendChild(htmlScriptElement);
+            document.head.appendChild(docFragment);
+            // when
+            authoringUtils.setOnLoadCallback(docFragment, callback);
+
+            // then
+            await promise;
+            expect(called).toBeTruthy();
+            docFragment.parentElement?.removeChild(docFragment);
+        });
+
+        it('should resolve when last script onload is triggered', async () => {
+            // given
+            const docFragment = new DocumentFragment();
+            let called = false;
+            let outResolve: () => void;
+            const promise = new Promise(resolve => {
+                outResolve = resolve;
+            });
+            const callback = () => {
+                called = true;
+                outResolve();
+            };
+
+            const htmlScriptElement = document.createElement('script');
+            const secondScriptElement = document.createElement('script');
+
+            htmlScriptElement.type = 'text/javascript';
+            htmlScriptElement.async = false;
+            htmlScriptElement.onload = () => {
+                // called will only be true when the last element has loaded.
+                expect(called).toBeFalsy();
+            };
+            secondScriptElement.type = 'text/javascript';
+            secondScriptElement.async = false;
+            docFragment.appendChild(htmlScriptElement);
+            docFragment.appendChild(secondScriptElement);
+            document.head.appendChild(docFragment);
+            // when
+            authoringUtils.setOnLoadCallback(docFragment, callback);
+
+            // then
+            await promise;
+            expect(called).toBeTruthy();
+            docFragment.parentElement?.removeChild(docFragment);
+        });
     });
 
     describe('isEditMode', () => {

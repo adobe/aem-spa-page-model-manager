@@ -193,7 +193,7 @@ export class ModelManager {
         const initialModel = modelConfig && modelConfig.model;
 
         this._initializeFields(modelConfig);
-        this._attachAEMLibraries();
+        this._initPromise = this._attachAEMLibraries();
 
         const { rootModelPath } = this._modelPaths;
 
@@ -202,7 +202,6 @@ export class ModelManager {
         if (rootModelPath) {
             this._setInitializationPromise(rootModelPath);
         }
-
     }
 
     /**
@@ -211,12 +210,26 @@ export class ModelManager {
      * @private
      */
     private _attachAEMLibraries() {
-        if (PathUtils.isBrowser()) {
-            const docFragment = this.clientlibUtil.getAemLibraries();
-            if (docFragment.hasChildNodes()) {
-                window.document.head.appendChild(docFragment);
-            }
+        if (!PathUtils.isBrowser()) {
+            return Promise.resolve();
         }
+
+        const docFragment = this.clientlibUtil.getAemLibraries();
+
+        if (!docFragment.hasChildNodes()) {
+            return Promise.resolve();
+        }
+
+        let outResolve: () => void;
+        const promise = new Promise(resolve => {
+            outResolve = resolve;
+        });
+
+        // @ts-ignore
+        this.clientlibUtil.setOnLoadCallback(docFragment, outResolve);
+        window.document.head.appendChild(docFragment);
+
+        return promise;
     }
 
     /**
@@ -287,7 +300,7 @@ export class ModelManager {
         } = this._modelPaths;
 
         this._initPromise = (
-            this._checkDependencies().then(() => {
+            this._initPromise.then(() => this._checkDependencies()).then(() => {
                 const data = this.modelStore.getData(rootModelPath);
 
                 if (data && (Object.keys(data).length > 0)) {

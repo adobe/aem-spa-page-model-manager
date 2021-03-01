@@ -85,6 +85,26 @@ export class AuthoringUtils {
         return docFragment;
     }
 
+    /**
+     * Triggers callback when synchronous src tags in the document fragment have been loaded.
+     * Resolves automatically when there are no scripts.
+     *
+     * @param docFragment HTMLElements aggregate
+     * @param callback
+     */
+    public setOnLoadCallback(docFragment: DocumentFragment, callback: () => void) {
+        const scriptTags = docFragment.querySelectorAll('script');
+
+        if (!scriptTags.length) {
+            callback();
+        } else {
+            scriptTags[scriptTags.length - 1].onload = () => {
+                callback();
+            };
+        }
+
+    }
+
     private generateMetaElements(metaInfo: {[key :string]:string}) :DocumentFragment {
         const docFragment: DocumentFragment = document.createDocumentFragment();
 
@@ -207,7 +227,7 @@ export class AuthoringUtils {
 
     /**
      * Is the app used in the context of the AEM Page editor or it is a remote application.
-     * @returns 'true' if app is in Editor 
+     * @returns 'true' if app is in Editor
      */
     public static isInEditor(): boolean {
         return AuthoringUtils.isEditMode() || AuthoringUtils.isPreviewMode() || AuthoringUtils.isRemoteApp();
