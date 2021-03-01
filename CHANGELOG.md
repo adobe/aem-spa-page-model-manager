@@ -1,3 +1,10 @@
+## [1.3.7](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.6...v1.3.7) (2021-03-01)
+
+
+### Bug Fixes
+
+* wait for dynamic editor libs to load in editor mode ([#51](https://github.com/adobe/aem-spa-page-model-manager/issues/51)) ([0d39dbd](https://github.com/adobe/aem-spa-page-model-manager/commit/0d39dbd737bbc8917dc02724e73cd90e592793d8))
+
 ## [1.3.6](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.5...v1.3.6) (2021-02-10)
 
 
