@@ -1,3 +1,10 @@
+## [1.3.8](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.7...v1.3.8) (2021-03-02)
+
+
+### Bug Fixes
+
+* allow fragment part in the url ([#52](https://github.com/adobe/aem-spa-page-model-manager/issues/52)) ([28811af](https://github.com/adobe/aem-spa-page-model-manager/commit/28811af4c66c885f94482e575a7df69c65b9ff2f))
+
 ## [1.3.7](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.6...v1.3.7) (2021-03-01)
 
 
