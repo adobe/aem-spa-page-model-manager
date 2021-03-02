@@ -241,8 +241,9 @@ export class PathUtils {
         // 1. the resource
         // 2. the selectors and the extension
         // 3. the suffix
-        // 4. the parameters
-        const match = /^((?:[/a-zA-Z0-9:_-]*)+)(?:\.?)([a-zA-Z0-9._-]*)(?:\/?)([a-zA-Z0-9/._-]*)(?:\??)([a-zA-Z0-9=&]*)$/g.exec(
+        // 4. the query
+        // 5. the fragment
+        const match = /^((?:[/a-zA-Z0-9:%_-]*)+)(?:\.?)([a-zA-Z0-9.%_-]*)(?:\/?)([a-zA-Z0-9/.%:_-]*)(?:\??)(([a-zA-Z0-9._~\-!$&'()*+,;=:@?/]|(%[0-9A-Fa-f]{2}))*)(?:#?)(([a-zA-Z0-9._~\-!$&'()*+,;=:@?/]|(%[0-9A-Fa-f]{2}))*)$/g.exec(
             path
         );
 
