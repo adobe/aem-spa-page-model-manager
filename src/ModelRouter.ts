@@ -74,20 +74,10 @@ export class RouterModes {
  * @private
  * @return
  */
-export function getModelPath(url?: string | null): string {
+export function getModelPath(url?: string | null): string | null {
     const localUrl = url || window.location.pathname;
 
-    // The default value model path comes as the the content path
-    let endPosition = localUrl.indexOf('.');
-
-    if (endPosition < 0) {
-        // If the path is missing extension and has query params instead eg. http://zyx/abc?test=test
-        const queryPosition = localUrl.indexOf('?');
-
-        endPosition = (queryPosition < 0) ? localUrl.length : queryPosition;
-    }
-
-    return localUrl.substr(0, endPosition);
+    return PathUtils.sanitize(localUrl);
 }
 
 /**
