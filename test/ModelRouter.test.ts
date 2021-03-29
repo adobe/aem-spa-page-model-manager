@@ -43,6 +43,10 @@ describe('ModelRouter ->', () => {
         it('should get the current window URL', () => {
             expect(getModelPath('/zyx/abc?test=test')).toEqual('/zyx/abc');
         });
+
+        it('should get the current window URL', () => {
+            expect(getModelPath('/zyx/abc?date=03.10.2021')).toEqual('/zyx/abc');
+        });
     });
 
     describe('dispatchRouteChanged ->', () => {
