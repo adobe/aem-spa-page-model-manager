@@ -1,3 +1,10 @@
+## [1.3.9](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.8...v1.3.9) (2021-03-29)
+
+
+### Bug Fixes
+
+* Return correct model path for a URL with query parameters that include dot character on route change ([#54](https://github.com/adobe/aem-spa-page-model-manager/issues/54)) ([f5cba58](https://github.com/adobe/aem-spa-page-model-manager/commit/f5cba58b3e59d77db7c58e52d8efc84f0081317c))
+
 ## [1.3.8](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.7...v1.3.8) (2021-03-02)
 
 
