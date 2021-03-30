@@ -245,6 +245,7 @@ export class PathUtils {
         const url = new URL(extensionPath, DUMMY_ORIGIN);
         let resourcePath = this.sanitize(url.pathname);
 
+        // checking if path contains hostnamd and adding it resourcepath
         resourcePath = url.origin === DUMMY_ORIGIN ? resourcePath : url.origin + resourcePath;
 
         let pathWithoutResource = this._extractPathWithoutResource(url.pathname);
@@ -255,6 +256,12 @@ export class PathUtils {
         return extensionPath;
     }
 
+    /**
+     * Returns path after removing resource path
+     * /content/dummy.html/abc/def -> html/abc/def
+     * /content/dummy.selector1.selector2.test.html/abc/def -> selector1.selector2.test.html/abc/def
+     * @param path - Url pathName
+     */
     private static _extractPathWithoutResource(path: string) {
         const slingElements = path.split('.');
 
@@ -262,6 +269,12 @@ export class PathUtils {
 
         return slingElements.join('.');
     }
+
+    /**
+     * Returns given path with added extension or replaces html with extension
+     * @param pathWithoutResource - url path without reosurce path
+     * @param extension - extension to be added
+     */
 
     private static _replaceExtension(pathWithoutResource: string, extension: string) {
         if (pathWithoutResource.length < 1)
