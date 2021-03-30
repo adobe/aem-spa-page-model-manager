@@ -29,6 +29,11 @@ const CONTEXT_PATH_REGEXP = /(?:\/)(?:content|apps|libs|etc|etc.clientlibs|conf|
 const JCR_CONTENT_PATTERN = `(.+)/${Constants.JCR_CONTENT}/(.+)`;
 
 /**
+ * @private
+ */
+ const DUMMY_ORIGIN = 'http://dummy';
+
+/**
  * Helper functions related to path manipulation.
  * @private
  */
@@ -235,39 +240,62 @@ export class PathUtils {
             return path;
         }
 
-        let extensionPath = path;
+        let extensionPath = this.normalize(path);
 
-        // Groups
-        // 1. the resource
-        // 2. the selectors and the extension
-        // 3. the suffix
-        // 4. the query
-        // 5. the fragment
-        const match = /^((?:[/a-zA-Z0-9:%_-]*)+)(?:\.?)([a-zA-Z0-9.%_-]*)(?:\/?)([a-zA-Z0-9/.%:_-]*)(?:\??)(([a-zA-Z0-9._~\-!$&'()*+,;=:@?/]|(%[0-9A-Fa-f]{2}))*)(?:#?)(([a-zA-Z0-9._~\-!$&'()*+,;=:@?/]|(%[0-9A-Fa-f]{2}))*)$/g.exec(
-            path
-        );
+        const url = new URL(extensionPath, DUMMY_ORIGIN);
+        let resourcePath = this.sanitize(url.pathname);
 
-        let queue = '';
+        // checking if path contains hostnamd and adding it resourcepath
+        resourcePath = url.origin === DUMMY_ORIGIN ? resourcePath : url.origin + resourcePath;
 
-        if (match && (match.length > 2)) {
-            // suffix
-            queue = match[3] ? `/${match[3]}` : '';
+        let pathWithoutResource = this._extractPathWithoutResource(url.pathname);
 
-            // parameters
-            queue += match[4] ? `?${match[4]}` : '';
+        pathWithoutResource = this._replaceExtension(pathWithoutResource, extension);
+        extensionPath = (resourcePath + '.' + pathWithoutResource + url.search).replace(/\.\./g, '.');
 
-            extensionPath =
-                match[1] +
-                '.' +
-                match[2].replace(/\.htm(l)?/, extension) +
-                queue;
-        }
-
-        return (extensionPath.indexOf(extension) > -1)
-            ? extensionPath
-            : (extensionPath + extension + queue).replace(/\.\./g, '.');
+        return extensionPath;
     }
 
+    /**
+     * Returns path after removing resource path
+     * /content/dummy.html/abc/def -> html/abc/def
+     * /content/dummy.selector1.selector2.test.html/abc/def -> selector1.selector2.test.html/abc/def
+     * @param path - Url pathName
+     */
+    private static _extractPathWithoutResource(path: string) {
+        const slingElements = path.split('.');
+
+        slingElements.shift();
+
+        return slingElements.join('.');
+    }
+
+    /**
+     * Returns given path with added extension or replaces html with extension
+     * @param pathWithoutResource - url path without reosurce path
+     * @param extension - extension to be added
+     */
+
+    private static _replaceExtension(pathWithoutResource: string, extension: string) {
+        if (pathWithoutResource.length < 1)
+            return extension;
+
+        const slingElementsWithoutResource = pathWithoutResource.split('/');
+        const selectors = slingElementsWithoutResource[0].split('.');
+        let currentExtension = selectors.pop();
+
+        currentExtension = currentExtension ? currentExtension.replace(/\.htm(l)?/, '') : '';
+
+        let path = selectors.join('.') + '.' + currentExtension + extension;
+
+        slingElementsWithoutResource.shift();
+
+        if (slingElementsWithoutResource.length > 0) {
+            path += slingElementsWithoutResource.join('/');
+        }
+
+        return path;
+    }
     /**
      * Returns the given path extended with the given selector.
      * @param path - Path to be extended.
