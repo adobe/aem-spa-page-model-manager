@@ -1,3 +1,10 @@
+## [1.3.10](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.9...v1.3.10) (2021-03-30)
+
+
+### Bug Fixes
+
+* Hardening PathUtils.addExtension ([#55](https://github.com/adobe/aem-spa-page-model-manager/issues/55)) ([643f882](https://github.com/adobe/aem-spa-page-model-manager/commit/643f8823d65273aaaf16d519d2b38731f666ae7d))
+
 ## [1.3.9](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.8...v1.3.9) (2021-03-29)
 
 
