@@ -18,6 +18,7 @@ import InternalConstants from '../src/InternalConstants';
 import MetaProperty from '../src/MetaProperty';
 import { ModelClient } from '../src/ModelClient';
 import ModelManager from '../src/ModelManager';
+import { isRouteExcluded } from '../src/ModelRouter';
 import { PathUtils } from '../src/PathUtils';
 import { content_test_page_root_child0000_child0010, PAGE_MODEL } from './data/MainPageData';
 
@@ -27,6 +28,8 @@ const CHILD_PATH = PAGE_PATH + '/jcr:content/root/child0000/child0010';
 const CHILD_MODEL_URL = CHILD_PATH + InternalConstants.DEFAULT_MODEL_JSON_EXTENSION;
 const ModelClientMock = mock(ModelClient);
 let modelClient: ModelClient;
+
+jest.mock('../src/ModelRouter');
 
 describe('ModelManager ->', () => {
     const PAGE_MODEL_LOAD_EVENT_OPTIONS = {
@@ -50,14 +53,15 @@ describe('ModelManager ->', () => {
 
     function mockTheFetch(path: any, data: any) {
         fetchMock.mockIf(path, () => {
-           return Promise.resolve({
-               body: JSON.stringify(data)
-           });
+            return Promise.resolve({
+                body: JSON.stringify(data)
+            });
         });
     }
 
     let pathName = '';
     let metaProps: { [key: string]: string } = {};
+    const isRouteExcludedSpy = isRouteExcluded as jest.MockedFunction<(route: string) => boolean>;
 
     beforeEach(() => {
         metaProps = {};
@@ -71,6 +75,7 @@ describe('ModelManager ->', () => {
         jest.spyOn(PathUtils, 'getMetaPropertyValue').mockImplementation((val) => metaProps[val]);
         jest.spyOn(PathUtils, 'dispatchGlobalCustomEvent');
         jest.spyOn(PathUtils, 'getCurrentPathname').mockImplementation(() => pathName);
+        isRouteExcludedSpy.mockImplementation(() => false);
         mockTheFetch(PAGE_MODEL_URL, PAGE_MODEL);
     });
 
@@ -191,6 +196,15 @@ describe('ModelManager ->', () => {
                 return ModelManager.initialize({ path: PAGE_PATH, modelClient: modelClient }).then((data) => {
                     expectPageModelLoadedEventFired();
                     verify(ModelClientMock.fetch(anyString())).times(2);
+                    assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
+                });
+            });
+
+            it('should fetch data once on initialization when sub page route path is excluded', () => {
+                isRouteExcludedSpy.mockReturnValue(true);
+                return ModelManager.initialize({ path: PAGE_PATH, modelClient: modelClient }).then((data) => {
+                    expectPageModelLoadedEventFired();
+                    verify(ModelClientMock.fetch(anyString())).times(1);
                     assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
                 });
             });

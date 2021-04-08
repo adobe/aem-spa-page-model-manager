@@ -18,6 +18,7 @@ import { ModelClient } from './ModelClient';
 import { ModelStore } from './ModelStore';
 import { PathUtils } from './PathUtils';
 import { AuthoringUtils } from './AuthoringUtils';
+import { isRouteExcluded } from './ModelRouter';
 
 /**
  * Checks whether provided child path exists in the model.
@@ -342,6 +343,7 @@ export class ModelManager {
         if (
             !!currentPathname &&
             !!sanitizedCurrentPathname && // active page path is available for fetching model
+            !isRouteExcluded(currentPathname) &&
             !isPageURLRoot(currentPathname, metaPropertyModelURL) && // verify currently active URL is not same as the URL of the root model
             !hasChildOfPath(rootModel, currentPathname) // verify fetched root model doesn't already contain the active path model
         ) {
@@ -350,6 +352,8 @@ export class ModelManager {
 
                 return this._fetchPageModelFromStore();
             });
+        } else if (!!currentPathname && isRouteExcluded(currentPathname)) {
+            return this._fetchPageModelFromStore();
         } else if (!PathUtils.isBrowser()) {
             throw new Error(`Attempting to retrieve model data from a non-browser.
                 Please provide the initial data with the property key model`
