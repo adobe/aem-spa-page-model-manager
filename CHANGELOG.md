@@ -1,3 +1,10 @@
+## [1.3.11](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.10...v1.3.11) (2021-04-15)
+
+
+### Bug Fixes
+
+* handle excluded route path on ModelManager initialize ([#57](https://github.com/adobe/aem-spa-page-model-manager/issues/57)) ([6568032](https://github.com/adobe/aem-spa-page-model-manager/commit/65680321b09833e9e12ff5975129e09bd8ac4ea7))
+
 ## [1.3.10](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.9...v1.3.10) (2021-03-30)
 
 
