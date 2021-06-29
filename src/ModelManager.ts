@@ -53,6 +53,7 @@ export interface ModelManagerConfiguration {
     model?: Model;
     modelClient?: ModelClient;
     path?: string;
+    errorPageRoot?: string;
 }
 
 interface ModelPaths {
@@ -119,6 +120,7 @@ export class ModelManager {
     private _editorClient: EditorClient | undefined;
     private _clientlibUtil: AuthoringUtils | undefined;
     private _modelPaths: ModelPaths = {};
+    private _errorPageRoot: string | undefined;
 
     public get modelClient(): ModelClient {
         if (!this._modelClient) {
@@ -243,6 +245,7 @@ export class ModelManager {
 
         this._modelClient = ((config && config.modelClient) || new ModelClient());
 
+        this._errorPageRoot = config && config.errorPageRoot || undefined;
         this._editorClient = new EditorClient(this);
         this._clientlibUtil = new AuthoringUtils(this.modelClient.apiHost);
         this._modelPaths = this._getPathsForModel(config);
@@ -351,6 +354,8 @@ export class ModelManager {
                 this.modelStore.insertData(sanitizedCurrentPathname, model);
 
                 return this._fetchPageModelFromStore();
+            }).catch(e => {
+                console.warn('caught', e);
             });
         } else if (!!currentPathname && isRouteExcluded(currentPathname)) {
             return this._fetchPageModelFromStore();
@@ -428,24 +433,40 @@ export class ModelManager {
         }
 
         if (this.modelClient) {
-            const promise = this.modelClient.fetch(this._toModelPath(path));
 
-            this._fetchPromises[path] = promise;
+            const wrapperPromise = new Promise<Model>((resolve,reject) => {
 
-            promise.then((obj) => {
-                delete this._fetchPromises[path];
-                if (this._isRemoteApp()) {
-                    triggerPageModelLoaded(obj);
-                }
+                const promise = this.modelClient.fetch(this._toModelPath(path));
 
-                return obj;
-            }).catch((error) => {
-                delete this._fetchPromises[path];
+                this._fetchPromises[path] = promise;
 
-                return error;
+                promise.then((obj) => {
+                    delete this._fetchPromises[path];
+                    if (this._isRemoteApp()) {
+                        triggerPageModelLoaded(obj);
+                    }
+
+                    resolve(obj);
+                }).catch((error) => {
+
+                    delete this._fetchPromises[path];
+
+                    if (this._errorPageRoot !== undefined) {
+                        const errorPagePath = this._errorPageRoot + error.response.status + '.model.json';
+
+                        if (path.indexOf('jcr:content') === -1 && path !== errorPagePath) {
+                            this._fetchData(errorPagePath).then(resolve).catch(reject);
+                        } else {
+                            reject(error);
+                        }
+                    } else {
+                        reject(error);
+                    }
+                });
+
             });
 
-            return promise;
+            return wrapperPromise;
         } else {
             throw new Error('ModelClient not initialized!');
         }
