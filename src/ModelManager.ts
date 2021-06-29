@@ -452,10 +452,15 @@ export class ModelManager {
                     delete this._fetchPromises[path];
 
                     if (this._errorPageRoot !== undefined) {
-                        const errorPagePath = this._errorPageRoot + error.response.status + '.model.json';
+
+                        const code = typeof error !== 'string' && error.response ? error.response.status : '500';
+                        const errorPagePath = this._errorPageRoot + code + '.model.json';
 
                         if (path.indexOf('jcr:content') === -1 && path !== errorPagePath) {
-                            this._fetchData(errorPagePath).then(resolve).catch(reject);
+                            this._fetchData(errorPagePath).then(( response => {
+                                response[Constants.PATH_PROP] = PathUtils.sanitize(path) || path;
+                                resolve(response);
+                            })).catch(reject);
                         } else {
                             reject(error);
                         }
