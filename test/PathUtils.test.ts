@@ -403,6 +403,7 @@ describe('PathUtils ->', () => {
         assert.equal(PathUtils.addExtension('/foobar.json', 'json'), '/foobar.json');
         assert.equal(PathUtils.addExtension('/foobar', 'json'), '/foobar.json');
         assert.equal(PathUtils.addExtension('/foobar#test123fragment', 'model.json'), '/foobar.model.json');
+        assert.equal(PathUtils.addExtension('/foobar.model.html', 'json'), '/foobar.model.json');
     });
 
     it('addSelector', () => {

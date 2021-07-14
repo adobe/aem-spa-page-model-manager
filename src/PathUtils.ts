@@ -284,7 +284,7 @@ export class PathUtils {
         const selectors = slingElementsWithoutResource[0].split('.');
         let currentExtension = selectors.pop();
 
-        currentExtension = currentExtension ? currentExtension.replace(/\.htm(l)?/, '') : '';
+        currentExtension = currentExtension ? currentExtension.replace(/htm(l)?/, '') : '';
 
         let path = selectors.join('.') + '.' + currentExtension + extension;
 
