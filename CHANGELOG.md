@@ -1,3 +1,10 @@
+## [1.3.12](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.11...v1.3.12) (2021-07-14)
+
+
+### Bug Fixes
+
+* fix html extension regex ([ee2f71a](https://github.com/adobe/aem-spa-page-model-manager/commit/ee2f71aefc5328685e85e607712cf2a5491370da)), closes [#64](https://github.com/adobe/aem-spa-page-model-manager/issues/64)
+
 ## [1.3.11](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.10...v1.3.11) (2021-04-15)
 
 
