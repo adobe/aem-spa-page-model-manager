@@ -228,8 +228,6 @@ export class PathUtils {
      * @param extension - Extension to be added.
      */
     public static addExtension(path: string, extension: string): string {
-        console.log(path);
-        console.log(extension);
         if (!extension || extension.length < 1) {
             return path;
         }
@@ -284,7 +282,7 @@ export class PathUtils {
 
         const slingElementsWithoutResource = pathWithoutResource.split('/');
         const selectors = slingElementsWithoutResource[0].split('.');
-        let currentExtension = selectors.pop() || '';
+        let currentExtension = selectors.pop();
 
         currentExtension = currentExtension ? currentExtension.replace(/htm(l)?/, '') : '';
 
