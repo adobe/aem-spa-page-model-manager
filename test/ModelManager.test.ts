@@ -92,7 +92,8 @@ describe('ModelManager ->', () => {
         when(ModelClientMock.fetch(anyString())).thenReturn(Promise.resolve(PAGE_MODEL));
         when(ModelClientMock.fetch(PAGE_MODEL_URL)).thenReturn(Promise.resolve(PAGE_MODEL));
         when(ModelClientMock.fetch(CHILD_MODEL_URL)).thenReturn(Promise.resolve(content_test_page_root_child0000_child0010));
-        when(ModelClientMock.fetch(NON_EXISTING_MODEL_URL)).thenReturn(Promise.reject({ response: { status: 404, statusText: 'Could not find page' } }));
+        when(ModelClientMock.fetch(NON_EXISTING_MODEL_URL))
+            .thenReturn(Promise.reject({ response: { status: 404, statusText: 'Could not find page' } }));
         when(ModelClientMock.fetch(ERROR_MODEL_URL)).thenReturn(Promise.reject('Some Error without json'));
 
         when(ModelClientMock.fetch(ERROR_MODEL_URL_404)).thenReturn(Promise.resolve(ERROR_PAGE_MODEL_404));
