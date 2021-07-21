@@ -208,7 +208,7 @@ describe('ModelManager ->', () => {
 
                 return Promise.all(promises).then(() => {
                     for (let i = 0; i < promises.length - 1; ++i) {
-                        assert.equal(promises[i], promises[i + 1]);
+                        expect(promises[i]).toEqual(promises[i + 1]);
                     }
                 });
             });
