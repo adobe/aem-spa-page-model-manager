@@ -17,11 +17,22 @@ import EventType from '../src/EventType';
 import InternalConstants from '../src/InternalConstants';
 import MetaProperty from '../src/MetaProperty';
 import { ModelClient } from '../src/ModelClient';
-import ModelManager from '../src/ModelManager';
+import ModelManager, {ModelManagerConfiguration} from '../src/ModelManager';
 import { isRouteExcluded } from '../src/ModelRouter';
 import { PathUtils } from '../src/PathUtils';
-import { content_test_page_root_child0000_child0010, PAGE_MODEL } from './data/MainPageData';
+import { content_test_page_root_child0000_child0010, PAGE_MODEL, ERROR_PAGE_MODEL_404, ERROR_PAGE_MODEL_500 } from './data/MainPageData';
+import { Model } from '../src/Model';
 
+const NON_EXISTING_PATH = '/content/test/non/existing/path';
+const PAGE_WITH_ERROR_PATH = '/content/test/page/with/error';
+const NON_EXISTING_MODEL_URL = NON_EXISTING_PATH + InternalConstants.DEFAULT_MODEL_JSON_EXTENSION;
+const ERROR_MODEL_URL = PAGE_WITH_ERROR_PATH + InternalConstants.DEFAULT_MODEL_JSON_EXTENSION;
+
+const ERROR_PAGE_ROOT = '/content/test/error-pages/';
+const ERROR_PAGE_404 = ERROR_PAGE_ROOT + '404';
+const ERROR_PAGE_500 = ERROR_PAGE_ROOT + '500';
+const ERROR_MODEL_URL_404 = ERROR_PAGE_404 + InternalConstants.DEFAULT_MODEL_JSON_EXTENSION;
+const ERROR_MODEL_URL_500 = ERROR_PAGE_500 + InternalConstants.DEFAULT_MODEL_JSON_EXTENSION;
 const PAGE_PATH = '/content/test/page';
 const PAGE_MODEL_URL = PAGE_PATH + InternalConstants.DEFAULT_MODEL_JSON_EXTENSION;
 const CHILD_PATH = PAGE_PATH + '/jcr:content/root/child0000/child0010';
@@ -30,6 +41,20 @@ const ModelClientMock = mock(ModelClient);
 let modelClient: ModelClient;
 
 jest.mock('../src/ModelRouter');
+
+const REQUEST_MAP:{[key:string]:any} = {};
+
+fetchMock.mockResponse( (req) => {
+    if (REQUEST_MAP[req.url]) {
+        return Promise.resolve({
+            body: JSON.stringify(REQUEST_MAP[req.url])
+        });
+    } else {
+        return Promise.resolve({
+            status: 404
+        });
+    }
+});
 
 describe('ModelManager ->', () => {
     const PAGE_MODEL_LOAD_EVENT_OPTIONS = {
@@ -52,11 +77,7 @@ describe('ModelManager ->', () => {
     }
 
     function mockTheFetch(path: any, data: any) {
-        fetchMock.mockIf(path, () => {
-            return Promise.resolve({
-                body: JSON.stringify(data)
-            });
-        });
+        REQUEST_MAP[path] = data;
     }
 
     let pathName = '';
@@ -71,6 +92,12 @@ describe('ModelManager ->', () => {
         when(ModelClientMock.fetch(anyString())).thenReturn(Promise.resolve(PAGE_MODEL));
         when(ModelClientMock.fetch(PAGE_MODEL_URL)).thenReturn(Promise.resolve(PAGE_MODEL));
         when(ModelClientMock.fetch(CHILD_MODEL_URL)).thenReturn(Promise.resolve(content_test_page_root_child0000_child0010));
+        when(ModelClientMock.fetch(NON_EXISTING_MODEL_URL)).thenReturn(Promise.reject({ response: { status: 404, statusText: 'Could not find page' } }));
+        when(ModelClientMock.fetch(ERROR_MODEL_URL)).thenReturn(Promise.reject('Some Error without json'));
+
+        when(ModelClientMock.fetch(ERROR_MODEL_URL_404)).thenReturn(Promise.resolve(ERROR_PAGE_MODEL_404));
+        when(ModelClientMock.fetch(ERROR_MODEL_URL_500)).thenReturn(Promise.resolve(ERROR_PAGE_MODEL_500));
+
         modelClient = instance(ModelClientMock);
         jest.spyOn(PathUtils, 'getMetaPropertyValue').mockImplementation((val) => metaProps[val]);
         jest.spyOn(PathUtils, 'dispatchGlobalCustomEvent');
@@ -143,6 +170,7 @@ describe('ModelManager ->', () => {
             } catch (err) {
                 assert.strictEqual(err.name, 'Error');
             }
+            windowSpy.mockRestore();
         });
 
         it('should throw error when initialized without model url', () => {
@@ -208,7 +236,7 @@ describe('ModelManager ->', () => {
                     assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
                 });
             });
-        });
+         });
 
         it('should not fetch data on initialization', () => {
             return ModelManager.initialize({ path: PAGE_PATH, model: PAGE_MODEL, modelClient: modelClient }).then((data) => {
@@ -306,6 +334,38 @@ describe('ModelManager ->', () => {
             ModelManager.initializeAsync({ path: PAGE_PATH, modelClient: modelClient });
             verify(modelClient.fetch(anyString()));
             assertAsyncModelFetched();
+        });
+
+        it('should load a 404 error page.', async () => {
+
+            const configuration:ModelManagerConfiguration = {
+                path: PAGE_PATH,
+                modelClient: modelClient,
+                errorPageRoot: ERROR_PAGE_ROOT
+            };
+            const data:Model = await ModelManager.initialize(configuration);
+            verify(modelClient.fetch(anyString()));
+            assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
+
+            const nonExistingData = await ModelManager._fetchData(NON_EXISTING_PATH);
+            assert.deepEqual(nonExistingData, ERROR_PAGE_MODEL_404, 'data should be correct');
+
+        });
+
+        it('should load a 500 error page.', async () => {
+
+            const configuration:ModelManagerConfiguration = {
+                path: PAGE_PATH,
+                modelClient: modelClient,
+                errorPageRoot: ERROR_PAGE_ROOT
+            };
+            const data:Model = await ModelManager.initialize(configuration);
+            verify(modelClient.fetch(anyString()));
+            assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
+
+            const nonExistingData = await ModelManager._fetchData(PAGE_WITH_ERROR_PATH);
+            assert.deepEqual(nonExistingData, ERROR_PAGE_MODEL_500, 'data should be correct');
+
         });
     });
 });
