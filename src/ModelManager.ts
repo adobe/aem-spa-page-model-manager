@@ -434,7 +434,7 @@ export class ModelManager {
 
         if (this.modelClient) {
 
-            const wrapperPromise = new Promise<Model>((resolve,reject) => {
+            return new Promise<Model>((resolve, reject) => {
 
                 const promise = this.modelClient.fetch(this._toModelPath(path));
 
@@ -445,19 +445,17 @@ export class ModelManager {
                     if (this._isRemoteApp()) {
                         triggerPageModelLoaded(obj);
                     }
-
                     resolve(obj);
                 }).catch((error) => {
 
                     delete this._fetchPromises[path];
-
                     if (this._errorPageRoot !== undefined) {
 
                         const code = typeof error !== 'string' && error.response ? error.response.status : '500';
                         const errorPagePath = this._errorPageRoot + code + '.model.json';
 
-                        if (path.indexOf('jcr:content') === -1 && path !== errorPagePath) {
-                            this._fetchData(errorPagePath).then(( response => {
+                        if (path.indexOf(Constants.JCR_CONTENT) === -1 && path !== errorPagePath) {
+                            this._fetchData(errorPagePath).then((response => {
                                 response[Constants.PATH_PROP] = PathUtils.sanitize(path) || path;
                                 resolve(response);
                             })).catch(reject);
@@ -470,8 +468,6 @@ export class ModelManager {
                 });
 
             });
-
-            return wrapperPromise;
         } else {
             throw new Error('ModelClient not initialized!');
         }
