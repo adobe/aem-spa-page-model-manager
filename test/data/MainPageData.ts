@@ -132,3 +132,42 @@ export const PAGE_MODEL: PageModel = {
     ':path': '/content/test/page',
     ':type': 'we-retail-react/components/structure/page'
 };
+
+export const ERROR_PAGE_MODEL_404: PageModel = {
+    'designPath': '/libs/settings/wcm/designs/default',
+    'title': 'Example Error Page 404',
+    'lastModifiedDate': 1512116041058,
+    'templateName': 'sample-template',
+    'cssClassNames': 'page',
+    'language': 'en-US',
+    ':itemsOrder': [
+        'root'
+    ],
+    ':items': {
+        'root': content_test_page_root
+    },
+    ':hierarchyType': 'page',
+    ':children': {},
+    ':path': '/content/test/page',
+    ':type': 'we-retail-react/components/structure/page'
+};
+
+
+export const ERROR_PAGE_MODEL_500: PageModel = {
+    'designPath': '/libs/settings/wcm/designs/default',
+    'title': 'Example Error Page 500',
+    'lastModifiedDate': 1512116041058,
+    'templateName': 'sample-template',
+    'cssClassNames': 'page',
+    'language': 'en-US',
+    ':itemsOrder': [
+        'root'
+    ],
+    ':items': {
+        'root': content_test_page_root
+    },
+    ':hierarchyType': 'page',
+    ':children': {},
+    ':path': '/content/test/page',
+    ':type': 'we-retail-react/components/structure/page'
+};
