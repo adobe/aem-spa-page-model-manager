@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.12...v1.4.0) (2021-08-20)
+
+
+### Features
+
+* **errorpages:** Make it possible to load in a fallback error page for every statusCode (404, 500, etc) ([cdf31ee](https://github.com/adobe/aem-spa-page-model-manager/commit/cdf31eea1b94475e4b62d4ab0435567bfe25f43f))
+
 ## [1.3.12](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.11...v1.3.12) (2021-07-14)
 
 
