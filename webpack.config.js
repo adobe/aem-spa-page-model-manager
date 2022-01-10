@@ -44,11 +44,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [ '.ts' ],
-    fallback: {
-        path: require.resolve('path-browserify'),
-        url: require.resolve('url')
-    }
+    extensions: [ '.ts' ]
   },
   externals: [ nodeExternals() ],
   plugins: [ new CleanWebpackPlugin() ]

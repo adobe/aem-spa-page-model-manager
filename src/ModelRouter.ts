@@ -159,12 +159,12 @@ export function dispatchRouteChanged(path: string): void {
  *
  * @private
  */
-export function routeModel(url?: string | null): void {
+export function routeModel(url?: string | URL | null): void {
     if (!isModelRouterEnabled()) {
         return;
     }
 
-    const path = getModelPath(url);
+    const path = getModelPath(url as string);
 
     // don't fetch the model
     // for the root path

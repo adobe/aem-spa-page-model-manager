@@ -223,7 +223,7 @@ export class ModelManager {
             return Promise.resolve();
         }
 
-        let outResolve: () => void;
+        let outResolve: (value: unknown) => void;
         const promise = new Promise(resolve => {
             outResolve = resolve;
         });
