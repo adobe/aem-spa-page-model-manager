@@ -191,7 +191,7 @@ export class PathUtils {
      * to make sure only properly formatted paths (e.g., "/content/mypage") are stored.
      * @param path - Path of the page to be sanitized.
      */
-    public static sanitize(path: string | null) {
+    public static sanitize(path: string | null | URL): string | null {
         if (!path || (typeof path !== 'string')) {
             return null;
         }
@@ -231,17 +231,14 @@ export class PathUtils {
         if (!extension || extension.length < 1) {
             return path;
         }
-
         if (!extension.startsWith('.')) {
             extension = `.${extension}`;
         }
-
         if (!path || (path.length < 1) || (path.indexOf(extension) > -1)) {
             return path;
         }
 
         let extensionPath = this.normalize(path);
-
         const url = new URL(extensionPath, DUMMY_ORIGIN);
         let resourcePath = this.sanitize(url.pathname);
 
@@ -301,7 +298,7 @@ export class PathUtils {
      * @param path - Path to be extended.
      * @param selector - Selector to be added.
      */
-    public static addSelector(path: string, selector: string) {
+    public static addSelector(path: string, selector: string): string {
         if (!selector || (selector.length < 1)) {
             return path;
         }
@@ -390,7 +387,7 @@ export class PathUtils {
     /**
      * Returns path to the direct parent.
      */
-    public static getParentNodePath(path: string | null) {
+    public static getParentNodePath(path: string | null): string | null {
         if (path && (path.length > 0)) {
             const splashIndex = path.lastIndexOf('/') + 1;
 
@@ -423,7 +420,7 @@ export class PathUtils {
      * Returns the subpath of the targetPath relative to the rootPath,
      * or the targetPath if the rootPath is not a root of the targetPath.
      */
-    public static subpath(targetPath?: string, rootPath?: string) {
+    public static subpath(targetPath?: string, rootPath?: string): string {
         if (!targetPath) {
             return '';
         }
@@ -445,9 +442,9 @@ export class PathUtils {
 
         if (index === rootPathChildren.length) {
             return targetPathChildren.slice(index).join('/');
-        } else {
-            return targetPath;
         }
+
+        return targetPath;
     }
 
     /**

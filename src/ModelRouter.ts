@@ -16,7 +16,8 @@ import ModelManager from './ModelManager';
 import { PathUtils } from './PathUtils';
 
 /**
- * <p>The ModelRouter listens for HTML5 History API <i>popstate</i> events and calls {@link PageModelManager#getData()} with the model path it extracted from the URL.</p>
+ * <p>The ModelRouter listens for HTML5 History API <i>popstate</i> events
+ * and calls {@link PageModelManager#getData()} with the model path it extracted from the URL.</p>
  *
  * <h2>Configuration</h2>
  *
@@ -74,7 +75,7 @@ export class RouterModes {
  * @private
  * @return
  */
-export function getModelPath(url?: string | null): string | null {
+export function getModelPath(url?: string | null | URL): string | null {
     const localUrl = url || window.location.pathname;
 
     return PathUtils.sanitize(localUrl);
@@ -142,6 +143,7 @@ export function dispatchRouteChanged(path: string): void {
     // Triggering the page model manager to load a new child page model
     // No need to use a cache as the PageModelManager already does it
     ModelManager.getData({ path }).then((model) => {
+        console.log(model);
         PathUtils.dispatchGlobalCustomEvent(EventType.PAGE_MODEL_ROUTE_CHANGED, {
             detail: {
                 model
@@ -159,7 +161,7 @@ export function dispatchRouteChanged(path: string): void {
  *
  * @private
  */
-export function routeModel(url?: string | null): void {
+export function routeModel(url?: string | undefined | null | URL): void {
     if (!isModelRouterEnabled()) {
         return;
     }
@@ -176,28 +178,29 @@ export function routeModel(url?: string | null): void {
     dispatchRouteChanged(path);
 }
 
-// Activate the model router
-if (isModelRouterEnabled()) {
-    // Encapsulate the history.pushState and history.replaceState functions to prefetch the page model for the current route
-    const pushState = window.history.pushState;
-    const replaceState = window.history.replaceState;
+export function initModelRouter(): void {
+    // Activate the model router
+    if (isModelRouterEnabled() && typeof window !== 'undefined') {
+        // Encapsulate the history.pushState and history.replaceState functions to prefetch the page model for the current route
+        const pushState = window.history.pushState;
+        const replaceState = window.history.replaceState;
 
-    window.history.pushState = (state, title, url) => {
-        routeModel(url || null);
+        window.addEventListener('popstate', e => {
+            const target = e?.target as Window;
 
-        return pushState.apply(history, [ state, title, url ]);
-    };
+            routeModel(target?.location?.pathname || null);
+        });
 
-    window.history.replaceState = (state, title, url) => {
-        routeModel(url || null);
+        window.history.pushState = (state, title, url) => {
+            routeModel(url);
 
-        return replaceState.apply(history, [ state, title, url ]);
-    };
+            return pushState.apply(history, [ state, title, url ]);
+        };
 
-    window.onpopstate = (history: any) => {
-        const currentPath = history?.target?.location?.pathname;
+        window.history.replaceState = (state, title, url) => {
+            routeModel(url || null);
 
-        routeModel(currentPath || null);
-    };
-
+            return replaceState.apply(history, [ state, title, url ]);
+        };
+    }
 }

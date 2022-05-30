@@ -18,7 +18,7 @@ import { ModelClient } from './ModelClient';
 import { ModelStore } from './ModelStore';
 import { PathUtils } from './PathUtils';
 import { AuthoringUtils } from './AuthoringUtils';
-import { isRouteExcluded } from './ModelRouter';
+import { initModelRouter, isRouteExcluded } from './ModelRouter';
 
 /**
  * Checks whether provided child path exists in the model.
@@ -205,6 +205,8 @@ export class ModelManager {
         if (rootModelPath) {
             this._setInitializationPromise(rootModelPath);
         }
+
+        initModelRouter();
     }
 
     /**
