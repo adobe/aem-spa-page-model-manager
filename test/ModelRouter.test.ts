@@ -154,10 +154,12 @@ describe('ModelRouter ->', () => {
 
         beforeEach(() => {
             initModelRouter();
+            modelManagerSpy.mockResolvedValue(TEST_MODEL as Model);
         });
 
         afterAll(() => {
             Object.defineProperty(window, 'location', { configurable: true, value: originalLocation });
+            modelManagerSpy.mockReset();
         });
         it('should fetch model on history push', () => {
             window.history.pushState({}, '', '/test');
