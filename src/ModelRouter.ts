@@ -76,7 +76,7 @@ export class RouterModes {
  * @return
  */
 export function getModelPath(url?: string | null | URL): string | null {
-    const localUrl = url || window.location.pathname;
+    const localUrl = (url || window.location.pathname) as string;
 
     return PathUtils.sanitize(localUrl);
 }

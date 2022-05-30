@@ -191,7 +191,7 @@ export class PathUtils {
      * to make sure only properly formatted paths (e.g., "/content/mypage") are stored.
      * @param path - Path of the page to be sanitized.
      */
-    public static sanitize(path: string | null | URL): string | null {
+    public static sanitize(path: string | null): string | null {
         if (!path || (typeof path !== 'string')) {
             return null;
         }
@@ -497,12 +497,14 @@ export class PathUtils {
 
         const splitPaths = path.split(`/${Constants.JCR_CONTENT}/`);
 
-        const split = {
+        const split:{
+            pagePath: string;
+            itemPath?: string;
+        } = {
             pagePath: splitPaths[0]
         };
 
         if (splitPaths.length > 1) {
-            // @ts-ignore
             split.itemPath = splitPaths[1];
         }
 
