@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.0...v1.4.1) (2022-05-31)
+
+
+### Bug Fixes
+
+* window.history updated only on init ([dd052bd](https://github.com/adobe/aem-spa-page-model-manager/commit/dd052bd019798d2b168516b21c97e19f6223b62c))
+
 # [1.4.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.3.12...v1.4.0) (2021-08-20)
 
 
