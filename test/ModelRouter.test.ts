@@ -13,7 +13,9 @@
 import MetaProperty from '../src/MetaProperty';
 import { Model } from '../src/Model';
 import ModelManager from '../src/ModelManager';
-import { dispatchRouteChanged, getModelPath, getRouteFilters, isModelRouterEnabled, isRouteExcluded, routeModel, RouterModes } from '../src/ModelRouter';
+import {
+    dispatchRouteChanged, getModelPath, getRouteFilters, initModelRouter, isModelRouterEnabled, isRouteExcluded, routeModel, RouterModes,
+} from '../src/ModelRouter';
 import { PathUtils } from '../src/PathUtils';
 
 let metaProps: { [key: string]: string } = {};
@@ -145,5 +147,36 @@ describe('ModelRouter ->', () => {
             expect(isRouteExcluded(MODEL_ROUTE_FILTERS[1])).toEqual(true);
             expect(isRouteExcluded(MODEL_ROUTE_FILTERS[2])).toEqual(true);
         });
+    });
+
+    describe('router model on history ->', () => {
+        const originalLocation = window.location;
+
+        beforeEach(() => {
+            initModelRouter();
+            modelManagerSpy.mockResolvedValue(TEST_MODEL as Model);
+        });
+
+        afterAll(() => {
+            Object.defineProperty(window, 'location', { configurable: true, value: originalLocation });
+            modelManagerSpy.mockReset();
+        });
+        it('should fetch model on history push', () => {
+            window.history.pushState({}, '', '/test');
+            expect(modelManagerSpy).toHaveBeenCalledWith({ path: '/test' });
+        });
+        it('should fetch model on history replace', () => {
+            window.history.replaceState({}, '', '/test');
+            expect(modelManagerSpy).toHaveBeenCalledWith({ path: '/test' });
+        });
+        it('should fetch model on history pop', () => {
+            Object.defineProperty(window, 'location', {
+                configurable: true,
+                value: { pathname: '/test' }
+            });
+            window.dispatchEvent(new Event('popstate'));
+            expect(modelManagerSpy).toHaveBeenCalledWith({ path: '/test' });
+        });
+
     });
 });

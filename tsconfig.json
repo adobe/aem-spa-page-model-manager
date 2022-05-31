@@ -22,5 +22,5 @@
   },
   "include": [
     "src/**/*"
-  ]
+, "tsconfig.base.json"  ]
 }
