@@ -23,8 +23,8 @@
   "types": "dist/types.d.ts",
   "scripts": {
     "build:production": "NODE_ENV=production npm run build",
-    "build:types": "tsc -p tsconfig.types.json",
-    "build": "npm run clean && npm run lint && npm run build:types && webpack",
+    "build:types": "tsc -p src/tsconfig.types.json",
+    "build": "npm run clean && npm run lint && webpack && npm run build:types",
     "clean": "rm -rf dist/",
     "docs": "npm i && npx typedoc --excludePrivate ./src --out ./dist/docs",
     "lint": "eslint .",
