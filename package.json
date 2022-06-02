@@ -32,7 +32,7 @@
     "test:coverage": "jest --clearCache && jest --coverage",
     "test:debug": "jest --coverage --watchAll",
     "test": "jest --clearCache && jest"
-  },
+  }, 
   "dependencies": {
     "clone": "^2.1.2",
     "path-browserify": "^1.0.1",
