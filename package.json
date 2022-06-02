@@ -23,8 +23,8 @@
   "types": "dist/types.d.ts",
   "scripts": {
     "build:production": "NODE_ENV=production npm run build",
-    "build:types": "tsc -p tsconfig.types.json",
-    "build": "npm run clean && npm run lint && npm run build:types && webpack",
+    "build:types": "tsc -p src/tsconfig.types.json",
+    "build": "npm run clean && npm run lint && webpack && npm run build:types",
     "clean": "rm -rf dist/",
     "docs": "npm i && npx typedoc --entryPointStrategy expand --excludePrivate ./src --out ./dist/docs",
     "lint": "eslint .",
@@ -32,7 +32,7 @@
     "test:coverage": "jest --clearCache && jest --coverage",
     "test:debug": "jest --coverage --watchAll",
     "test": "jest --clearCache && jest"
-  },
+  }, 
   "dependencies": {
     "clone": "^2.1.2",
     "path-browserify": "^1.0.1",
