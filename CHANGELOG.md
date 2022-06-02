@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.1...v1.4.2) (2022-06-02)
+
+
+### Bug Fixes
+
+* release docs ([2d96493](https://github.com/adobe/aem-spa-page-model-manager/commit/2d96493b3c97d568c36d472d9cf9379f74f434fb))
+
 ## [1.4.1](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.0...v1.4.1) (2022-05-31)
 
 
