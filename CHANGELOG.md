@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.2...v1.4.3) (2022-06-02)
+
+
+### Bug Fixes
+
+* ts config paths ([76fc0c0](https://github.com/adobe/aem-spa-page-model-manager/commit/76fc0c04f45d6611ea38e331d584de9ab8484af4))
+
 ## [1.4.2](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.1...v1.4.2) (2022-06-02)
 
 
