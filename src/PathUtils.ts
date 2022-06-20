@@ -558,7 +558,7 @@ export class PathUtils {
      * @returns Updated path to match against
      */
     public static toAEMPath(path: string, aemHost: string, rootPath: string): string {
-        const isLoadedInAEM = window.location.origin === aemHost;
+        const isLoadedInAEM = this.isBrowser() && window.location.origin === aemHost;
 
         if (isLoadedInAEM) {
             // Remove leading and trailing slashes, if any
