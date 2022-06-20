@@ -49,6 +49,11 @@ describe('ModelRouter ->', () => {
         it('should get the current window URL', () => {
             expect(getModelPath('/zyx/abc?date=03.10.2021')).toEqual('/zyx/abc');
         });
+        it('should return null', () => {
+            const isBrowserSpy = jest.spyOn(PathUtils, 'isBrowser').mockImplementation(() => false);
+            expect(getModelPath()).toBeNull();
+            isBrowserSpy.mockRestore();
+        });
     });
 
     describe('dispatchRouteChanged ->', () => {
