@@ -152,7 +152,6 @@ export const ERROR_PAGE_MODEL_404: PageModel = {
     ':type': 'we-retail-react/components/structure/page'
 };
 
-
 export const ERROR_PAGE_MODEL_500: PageModel = {
     'designPath': '/libs/settings/wcm/designs/default',
     'title': 'Example Error Page 500',

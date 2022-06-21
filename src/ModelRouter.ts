@@ -76,9 +76,13 @@ export class RouterModes {
  * @return
  */
 export function getModelPath(url?: string | null | URL): string | null {
-    const localUrl = (url || window.location.pathname) as string;
+    const localUrl = (url || (PathUtils.isBrowser() && window.location.pathname)) as string;
 
-    return PathUtils.sanitize(localUrl);
+    if (localUrl) {
+        return PathUtils.sanitize(localUrl);
+    }
+
+    return null;
 }
 
 /**
@@ -179,7 +183,7 @@ export function routeModel(url?: string | undefined | null | URL): void {
 
 export function initModelRouter(): void {
     // Activate the model router
-    if (isModelRouterEnabled() && typeof window !== 'undefined') {
+    if (isModelRouterEnabled() && PathUtils.isBrowser()) {
         // Encapsulate the history.pushState and history.replaceState functions to prefetch the page model for the current route
         const pushState = window.history.pushState;
         const replaceState = window.history.replaceState;

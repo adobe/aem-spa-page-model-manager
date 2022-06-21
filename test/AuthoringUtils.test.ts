@@ -11,10 +11,10 @@
  */
 
 import * as assert from 'assert';
-import {AuthoringUtils} from '../src/AuthoringUtils';
-import {PathUtils} from '../src/PathUtils';
-import {AEM_MODE} from '../src/Constants';
-import MetaProperty from "../src/MetaProperty";
+import { AuthoringUtils } from '../src/AuthoringUtils';
+import { PathUtils } from '../src/PathUtils';
+import { AEM_MODE } from '../src/Constants';
+import MetaProperty from '../src/MetaProperty';
 
 describe('AuthoringUtils ->', () => {
     let authoringUtils: AuthoringUtils;
@@ -94,7 +94,7 @@ describe('AuthoringUtils ->', () => {
 
                 // then
                 Object.entries(AuthoringUtils.AUTHORING_LIBRARIES.META).forEach((entry) => {
-                    const [key, val] = entry;
+                    const [ key, val ] = entry;
 
                     assert.ok(libs.querySelectorAll('meta[property="' + key + '"][content="' + val + '"]'));
                 });
@@ -230,7 +230,6 @@ describe('AuthoringUtils ->', () => {
             assert.ok(!AuthoringUtils.isEditMode());
         });
     });
-
 
     describe('isPreviewMode', () => {
         it('should be false if both indicators are falsy', () => {
