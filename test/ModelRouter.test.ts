@@ -14,7 +14,7 @@ import MetaProperty from '../src/MetaProperty';
 import { Model } from '../src/Model';
 import ModelManager from '../src/ModelManager';
 import {
-    dispatchRouteChanged, getModelPath, getRouteFilters, initModelRouter, isModelRouterEnabled, isRouteExcluded, routeModel, RouterModes,
+    dispatchRouteChanged, getModelPath, getRouteFilters, initModelRouter, isModelRouterEnabled, isRouteExcluded, routeModel, RouterModes
 } from '../src/ModelRouter';
 import { PathUtils } from '../src/PathUtils';
 
@@ -51,6 +51,7 @@ describe('ModelRouter ->', () => {
         });
         it('should return null', () => {
             const isBrowserSpy = jest.spyOn(PathUtils, 'isBrowser').mockImplementation(() => false);
+
             expect(getModelPath()).toBeNull();
             isBrowserSpy.mockRestore();
         });

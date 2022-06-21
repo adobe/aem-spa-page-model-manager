@@ -190,7 +190,9 @@ describe('ModelStore ->', () => {
     describe('setData', () => {
         it('should set data', () => {
             let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+
             item[TEST_FIELD] = TEST_FIELD_DATA;
+
             const val = {
                 key: 'child1000',
                 value: item
@@ -204,11 +206,14 @@ describe('ModelStore ->', () => {
 
         it('should set empty string on removed data', () => {
             let item: any = modelStore.getData('/content/test/child_page_1/jcr:content/root/child1000');
+
             item[TEST_FIELD] = TEST_FIELD_DATA;
+
             const val = {
                 key: 'child1000',
                 value: item
             };
+
             modelStore.setData('/content/test/child_page_1/jcr:content/root/child1000', val);
 
             delete item[TEST_FIELD];

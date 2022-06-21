@@ -17,7 +17,7 @@ import EventType from '../src/EventType';
 import InternalConstants from '../src/InternalConstants';
 import MetaProperty from '../src/MetaProperty';
 import { ModelClient } from '../src/ModelClient';
-import ModelManager, {ModelManagerConfiguration} from '../src/ModelManager';
+import ModelManager, { ModelManagerConfiguration } from '../src/ModelManager';
 import { isRouteExcluded } from '../src/ModelRouter';
 import { PathUtils } from '../src/PathUtils';
 import { content_test_page_root_child0000_child0010, PAGE_MODEL, ERROR_PAGE_MODEL_404, ERROR_PAGE_MODEL_500 } from './data/MainPageData';
@@ -44,7 +44,7 @@ jest.mock('../src/ModelRouter');
 
 const REQUEST_MAP:{[key:string]:any} = {};
 
-fetchMock.mockResponse( (req) => {
+fetchMock.mockResponse((req) => {
     if (REQUEST_MAP[req.url]) {
         return Promise.resolve({
             body: JSON.stringify(REQUEST_MAP[req.url])
@@ -231,6 +231,7 @@ describe('ModelManager ->', () => {
 
             it('should fetch data once on initialization when sub page route path is excluded', () => {
                 isRouteExcludedSpy.mockReturnValue(true);
+
                 return ModelManager.initialize({ path: PAGE_PATH, modelClient: modelClient }).then((data) => {
                     expectPageModelLoadedEventFired();
                     verify(ModelClientMock.fetch(anyString())).times(1);
@@ -345,10 +346,12 @@ describe('ModelManager ->', () => {
                 errorPageRoot: ERROR_PAGE_ROOT
             };
             const data:Model = await ModelManager.initialize(configuration);
+
             verify(modelClient.fetch(anyString()));
             assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
 
             const nonExistingData = await ModelManager._fetchData(NON_EXISTING_PATH);
+
             assert.deepEqual(nonExistingData, ERROR_PAGE_MODEL_404, 'data should be correct');
 
         });
@@ -361,10 +364,12 @@ describe('ModelManager ->', () => {
                 errorPageRoot: ERROR_PAGE_ROOT
             };
             const data:Model = await ModelManager.initialize(configuration);
+
             verify(modelClient.fetch(anyString()));
             assert.deepEqual(data, PAGE_MODEL, 'data should be correct');
 
             const nonExistingData = await ModelManager._fetchData(PAGE_WITH_ERROR_PATH);
+
             assert.deepEqual(nonExistingData, ERROR_PAGE_MODEL_500, 'data should be correct');
 
         });
