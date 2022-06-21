@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.3...v1.4.4) (2022-06-21)
+
+
+### Bug Fixes
+
+* check the existence of the window object in places where is not yet verified ([#86](https://github.com/adobe/aem-spa-page-model-manager/issues/86)) ([316aeb6](https://github.com/adobe/aem-spa-page-model-manager/commit/316aeb667d0ab704b77ebe5840c11f70cab33fb8))
+
 ## [1.4.3](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.2...v1.4.3) (2022-06-02)
 
 
