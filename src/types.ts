@@ -15,6 +15,7 @@ import './ModelRouter';
 export { default as ModelManager } from './ModelManager';
 export * from './ModelClient';
 export * from './Model';
+export * from './ModelStore';
 export * from './PathUtils';
 export * from './AuthoringUtils';
 export { AEM_MODE, default as Constants } from './Constants';
