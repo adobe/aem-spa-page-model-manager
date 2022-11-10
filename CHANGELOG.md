@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.4...v1.5.0) (2022-11-10)
+
+
+### Features
+
+* export ModelStore for standalone usage ([9a725d8](https://github.com/adobe/aem-spa-page-model-manager/commit/9a725d885c182126cd7734b9d708a43173bf23c0))
+
 ## [1.4.4](https://github.com/adobe/aem-spa-page-model-manager/compare/v1.4.3...v1.4.4) (2022-06-21)
 
 

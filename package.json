@@ -1,6 +1,6 @@
 {
   "name": "@adobe/aem-spa-page-model-manager",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "description": "An interpreter between AEM Editor and the AEM SPA Editor.",
   "keywords": [
     "spa",
